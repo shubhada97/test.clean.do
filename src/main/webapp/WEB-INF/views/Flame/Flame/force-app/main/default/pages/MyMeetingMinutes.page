@@ -1,0 +1,237 @@
+<!--
+ @Author: Sharath
+ @Dated: 11 Feb 2109
+ @VF Page Name: ShowCourseConnection
+ @Description : On this binding list of CourseConnection and Course Feedback
+ 
+-->
+
+<apex:page docType="html-5.0" controller="MeetingMinutesController" lightningStylesheets="true"  standardStylesheets="false" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+<apex:slds />
+<c:Flame_HeadResource />         
+    <!-- page css -->
+    
+    <!-- jquery datepicker plugin -->
+    
+    
+    <style>
+       
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }      
+        .table_area{
+        display:inline-block;
+        	width:100%;
+        	overflow:hidden;
+        	overflow-x:scroll;
+        }
+    </style> 
+<head>
+     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+</head>         
+    <script type="text/javascript" >
+    $(document).ready(function() {     
+        //applyDatatable();                               
+    });
+    function applyDatatable(){             
+        //var table = $('#caseTicketTbl').dataTable({"pageLength": 10 ,"searching": false,order: [[0, 'desc']]});  
+        //table.order([ 0, 'asc' ]).draw();
+        //$('div.dataTables_length').css("display", "none");
+    } 
+    </script>
+   
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header--> 
+               
+                <div class="content mt-3">          
+                  
+                        <div class="col-lg-12">
+                        
+                            <div class="pay-content-area">
+                             
+                                                   
+                                <div>
+                           
+                                    <apex:outputText rendered="{!if(lstofWrapperClass1.size ==0,true,false)}" > 
+                                        <center> <h4 style="font-size: 1.0rem;"> Currently there are no Meeting Minutes. </h4></center>
+                                    </apex:outputText>
+                                    
+                                </div>
+                                  
+                    <div id="IdPageBtn" class="slds-align_absolute-center hideComponent" style="margin-bottom: 10px; padding-top: 15px; float:left;">
+                    <apex:commandButton styleClass="slds-button slds-button_neutral"  style="float:left;" value="Add Minutes" action="{!redirectToFlameEvent}"/>
+                    </div>                        
+                                
+                          <apex:outputPanel rendered ="{!if(lstofWrapperClass1.size >0,true,false)}" >
+                           <div class="table_area">
+                               
+                            
+                            <table style="margin-top:20px; margin-bottom:10px;" BORDERCOLOR= "#e9ecef" border="1" align="center" class="slds-table--bordered slds-table--striped slds-button--" cellspacing="0" cellpadding="0">
+                            <tr class="headerRow" >
+                            <td rowspan="2" style="text-align: center; font-weight:bold;" >Date and Time</td>
+                            <td rowspan="2" style="text-align: center; font-weight:bold;" >Meeting Title</td>
+                            <td rowspan="2" style="text-align: center; font-weight:bold; width:120px;" >Type of Meeting</td>
+                            <td rowspan="2" style="text-align: center; font-weight:bold; width:440px;" >Attachment</td>
+                          <!---  <td rowspan="2" style="text-align: center; font-weight:bold; width:440px;" >Notes</td> --->
+                            </tr>
+                            
+                            <tbody>
+       <apex:repeat value="{!lstofWrapperClass1}" var="objFE">  
+          
+            <tr>  
+
+        <td style="text-align: center;">           
+        <apex:outputtext style="margin-left:10px;" value="{0,date, dd/MM/yyyy, hh:mm aaa}">
+        <apex:param value="{!objFE.strdatetime+offset}"/>
+        </apex:outputtext> 
+        </td>  
+        
+        <td style="text-align: center;">
+       {!objFE.strTitle}
+        </td>
+       
+        <td style="text-align: center;">
+       {!objFE.strTypeofMeeting}
+        </td>
+        
+        <td style="text-align: center;">
+            <!--<td width="30%" style="border-bottom:1px solid #000000;font-size:11px !important; text-align:left;">-->
+             <apex:repeat value="{!objFE.Atts}" var="wo">
+            <apex:outputLink value="https://techila-flame.cs74.force.com/servlet/servlet.FileDownload?file={!wo.Att.Id}" target="_blank">
+                <br/>{!wo.Att.name}
+            
+            </apex:outputLink>
+            </apex:repeat>
+        </td>
+                
+      <!---  <td style="text-align: center;">
+        <apex:outputText escape="false" value="{!objFE.strcontent}" ></apex:outputText>
+        </td>
+      --->  
+        </tr> 
+
+        </apex:repeat> 
+                    </tbody>
+           </table> 
+     </div>
+</apex:outputPanel> 
+                   </div>
+                        </div>
+                                  
+                </div> 
+            </div>
+        </apex:form>
+         <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_minutes_ele").addClass("active");
+           $(".flm_minutes_ele").addClass("show");
+           $(".flm_minutes_ele > .sub-menu").addClass("show");
+           $(".flm_minutesUpload_ele").addClass("active");
+
+           $(".flm_menu").click(function(){
+                $(".flm_menu").removeClass("show");
+                $(".flm_menu > .sub-menu").removeClass("show");
+                
+           })
+        });
+    </script> 
+    </body>
+ 
+</apex:page>

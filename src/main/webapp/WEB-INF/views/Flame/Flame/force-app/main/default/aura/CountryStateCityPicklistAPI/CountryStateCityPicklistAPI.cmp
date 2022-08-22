@@ -1,0 +1,85 @@
+<aura:component controller="PickListController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction"  access="global" >
+    <!--<ltng:require scripts="{!$Resorce.gogglemapAPILibrary + '/library.js'}"></ltng:require>-->
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+    <aura:attribute name="objectName" type="String" access="public"/>
+    <aura:attribute name="countryFieldAPIName" type="String" access="public"/>
+    <aura:attribute name="stateFieldAPIName" type="String" access="public"/>
+    <aura:attribute name="cityFieldAPIName" type="String" access="public"/>
+    <aura:attribute name="addressType" type="String" access="public"/>
+    
+    <aura:attribute name="recordId" type="String" />
+    <!--  <aura:attribute name="recordTypeName" type="String" />
+    <aura:attribute name="contactAddress" type="String" />
+    <aura:attribute name="mailingAddress" type="String" /> -->
+    
+    <aura:attribute name="countryOptions" type="List" />
+    <aura:attribute name="countryIso" type="String" />
+    
+    <aura:attribute name="stateOptions" type="List" />
+    <aura:attribute name="stateIso" type="String" /> 
+    
+    <aura:attribute name="cityOptions" type="List" />
+    <aura:attribute name="cityIso" type="String" /> 
+    
+    
+    <div class="slds-section slds-is-open" aura:id="conactSection">
+        <!--section header-->
+        <h3 class="slds-section__title">
+            <button aria-controls="ContactList" class="slds-button slds-section__title-action">
+                <span onclick="{!c.toggleSection}" data-auraId="conactSection">
+                    <lightning:icon iconName="utility:switch"
+                                    size="x-small"
+                                    class="slds-section__title-action-icon slds-button__icon_left"
+                                    alternativeText="button icon" 
+                                    />
+                </span>
+                <span class="slds-truncate" title="{!v.addressType}">{!v.addressType}</span>
+            </button>
+        </h3>
+        <!--section body-->
+        <div class="slds-section__content" id="ContactList">
+            <p>
+                <lightning:select label="Country" aura:id="countryId" value="{!v.countryIso}" onchange="{!c.onCountryChange}">
+                    <option value="">-- None --</option>
+                    <aura:iteration items="{!v.countryOptions}" var="item" indexVar="index">
+                        
+                        <option text="{!item.name}" value="{!item.iso}"  />
+                    </aura:iteration>
+                </lightning:select> 
+            </p>
+            <p>
+                <lightning:select label="State" aura:id="statedId" value="{!v.stateIso}" onchange="{!c.onStateChange}">
+                    <option value="">-- None --</option>
+                    <aura:iteration items="{!v.stateOptions}" var="item" indexVar="index">
+                        
+                        <option text="{!item.name}" value="{!item.iso}" />
+                    </aura:iteration>
+                </lightning:select> 
+            </p>
+            <p>
+                <lightning:select label="City" aura:id="cityId">
+                    <option value="">-- None --</option>
+                    <aura:iteration items="{!v.cityOptions}" var="option">
+                        
+                        <option text="{!option.name}" value="{!option.name}" />
+                    </aura:iteration>
+                </lightning:select> 
+            </p>
+            <p class="buttontopalign">
+                <div class="buttontopalign">
+                    <lightning:button aura:id="SaveContact" variant="brand" type="submit" label="Save"  onclick="{!c.SaveRecordEvent}" /><!--class="slds-align_absolute-center"-->
+                </div>
+            </p>
+            
+            
+        </div>
+    </div>
+    
+    
+    
+    <!--  <aura:if isTrue="{!v.mailingAddress}">
+   
+     
+</aura:if>-->
+    
+</aura:component>

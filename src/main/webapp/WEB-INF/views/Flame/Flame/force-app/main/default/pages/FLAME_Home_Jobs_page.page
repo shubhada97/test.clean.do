@@ -1,0 +1,703 @@
+<apex:page controller="Flame_jobs_controller" docType="html-5.0"  standardStylesheets="fales" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+ <html lang='en'>
+ <meta charset='UTF-8'/>
+ <link rel='stylesheet' href='styles.css'/>
+ <meta name='viewport'
+      content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type='text/css' media='all'/> 
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" /> 
+   
+   <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800&subset=latin,greek,vietnamese,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'/>
+   <link href='https://fonts.googleapis.com/css?family=Noto+Sans:400,700&subset=latin,greek,greek-ext,vietnamese,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'/>  
+ <style>
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ html {
+font-size: 10px;
+font-family: sans-serif;
+}
+body {
+
+    margin: 0;
+    padding: 0;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    background-color: #fff;
+    position: relative;
+    font: 400 12px/20px 'Roboto Slab', serif;
+    color: #5b5b5b;
+
+}
+ 
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    background: #fff;
+    color: #191919;
+    border: 1px solid #d9d9d9;
+    padding: 40px;
+    position: relative;
+    width: 1160px;
+    z-index: 1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+ 
+  
+  
+}
+#header {
+
+    width: 100%;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border: 0px solid #666;
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+*{ margin:0; padding:0; outline:none;}
+body{ margin:0; padding:0; -ms-word-wrap:break-word; word-wrap:break-word; background-color:#fff; position:relative; font:400 12px/20px 'Roboto Slab', serif; color:#5b5b5b;}
+.row {
+
+    margin-right: -15px;
+    margin-left: -15px;
+
+}
+#header .logo {
+
+    float: left;
+    margin-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+.logo {
+
+    margin: 0 auto 0 0;
+        margin-top: 0px;
+
+}
+img {
+
+    margin: 0;
+    padding: 0;
+    border: none;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+.top-social {
+
+    margin: 0;
+    text-align: right;
+    margin-top:25px;
+    float:right;
+
+}
+.top-social a {
+
+    color: #c5c5c5;
+    background-color: none;
+    margin-right: 5px;
+    text-align: right;
+}
+.top-social a .fa {
+
+    border: 1px solid #c5c5c5;
+    display: inline-table;
+    text-align: center;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+
+}
+.fa-lg {
+
+    font-size: 1.33333333em;
+    line-height: 0.75em;
+    vertical-align: -15%;
+
+}
+.fa {
+      padding: 12px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+      
+      
+    }
+    
+    .fa:hover {
+        opacity: 0.7;
+    }
+    .fa-facebook {
+                  background: #3B5998;
+                  color: white;
+                }
+                 
+                 .fa-twitter {
+                  background: #55ACEE;
+                  color: white;
+                }
+                .fa-linkedin {
+                  background: #007bb5;
+                  color: white;
+                }
+                 
+                 .fa-youtube {
+                  background: #bb0000;
+                  color: white;
+                }
+                
+                .fa-instagram {
+                  background: #125688;
+                  color: white;
+                }
+                 .topnav-right {
+                  float: right;
+                }
+                    
+  #appoint:hover {
+ background-color: #08466f;
+} 
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+
+}
+ .clear {
+clear: both;
+}
+.content-area {
+   width: 1160px;
+    margin: 0 auto;
+    padding: 50px 0;
+ border: 0px solid #666;
+} 
+
+
+.copyright-wrapper {
+
+    position: relative;
+    padding: 10px 0;
+    background-color: #08466F;
+    color: #ffffff;
+    border-top: #F9A91C 3px solid;
+
+}
+.copyright-wrapper .inner {
+
+    width: 1170px;
+    margin: auto;
+
+}
+.copyright {
+
+    margin: auto;
+    text-align: center;
+
+}
+p {
+
+    
+    padding: 0;
+    margin: 10px 0;
+}
+
+
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
+.main-menu:hover,nav.main-menu.expanded {
+width:100px;
+overflow:visible;
+}
+
+
+.main-menu {
+position:absolute;
+border: 2px solid #c2e9fb;
+left:-10px;
+width:40px;
+overflow:hidden;
+-webkit-transition:width .03s linear;
+transition:width .03s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+border-radius: 0 5px 5px 0;
+color: white;
+text-decoration: none;
+font-size: 20px;
+
+}
+
+.main-menu>ul {
+margin:7px 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+}
+
+.main-menu li>a {
+position:relative;
+
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:100px;
+font-family: 'Titillium Web', sans-serif;
+color: white;
+}
+
+
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+/*background-color:#5fa2db;*/
+}
+#home {
+  top: 200px;
+  
+  background-color: #4CAF50;
+}
+
+#jobs{
+top: 260px;
+background-color: #2196F3;
+}
+#about {
+  top: 320px;
+  background-color: #555;
+}
+
+#contact {
+  top: 380px;
+  background-color: #f44336;
+}
+ .margen{
+margin-bottom:10%;
+} 
+  /* Section A */
+
+#section-a {
+ 
+  padding-bottom: 1em;
+  
+  
+}  
+/* Section B */
+
+#section-b {
+  padding: 2em 1em 1em;
+  background: #28609014;
+  font-size: 15px;
+}
+
+#section-b ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#section-b li {
+  margin-bottom: 1em;
+  background: #fff;
+  color: #5b5b5b;
+}
+
+.card-content {
+  padding: 1.5em;
+} 
+/* Section C */
+
+#section-c {
+  background: #fff;
+  color: #333;
+  padding: 2em;
+ 
+}
+
+/* Section D / Boxes */
+
+#section-d .box {
+  padding: 2em;
+  color: #fff;
+  
+}
+
+#section-d .box:first-child {
+  background: #2690d4;
+}
+
+/* Footer */
+
+#main-footer {
+  padding: 0.3em;
+  background: #084d89;
+  color: #fff;
+  text-align: center;
+  border-top: #F9A91C 3px solid;
+}
+
+#main-footer a {
+  color: #2690d4;
+  text-decoration: none;
+}   
+/* Media Queries */
+
+@media (min-width: 700px) {
+  .grid {
+    display: grid;
+   
+  }
+
+  #section-a .content-text {
+    columns: 2;
+    column-gap: 2em;
+  }
+
+  #section-a .content-text p {
+    padding-top: 0;
+  }
+
+  .content-wrap,
+  #section-b ul {
+    grid-column: 2/4;
+  }
+
+  .box,
+  #main-footer div {
+    grid-column: span 2;
+  }
+
+  #section-b ul {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #section-b li {
+    width: 31%;
+  }
+}
+/* Header Showcase */
+#showcase {
+  
+  color: #fff;
+  text-align: center;
+}  
+h2.entry-title, h1.page-title {
+
+    padding-bottom: 20px;
+    font-size: 25px;
+    color: #08466f;
+    
+
+}
+
+.main-container{margin:1px; padding:0;background: #F9A91C 3px ;padding-bottom: 1em; width:100%; }                    
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+@media screen and (max-width:479px) {
+
+*{box-sizing:border-box;}
+    #header{ width:100%; padding:15px 0;}
+    #header .logo{ float:none;}
+    .copyright-wrapper .inner{ width:100%;}
+    .copyright{ float:none; text-align:center; margin-bottom:10px;}
+    .sicons { width:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    .copyright-txt, .design-by { text-align:center; float:none;}
+    .container { padding:0 20px;}
+    #header { width:100%; padding:0 20px; position:inherit !important;}
+    .logo { float:none; text-align:center;}
+    .content-area{ width:auto; margin:0 20px; padding:30px 0;}
+    .site-main{ width:auto; margin:0; padding:0; float:none;}
+    h2.entry-title { font-size:20px;}
+    #CurrentOpenings{margin-left:120px;}
+}
+/* Mobile Landscape View */
+
+@media screen and (max-width:719px) and (min-width:480px) { 
+    *{box-sizing:border-box;}
+    #appoint .appoint-inner .appoint-col .appoint-details h4 { font-size:13px;}
+    .container { width:auto; padding:0 20px;}
+    #header { padding:0 20px; position:inherit !important;}
+    .logo { float:none; text-align:center;}
+    .top-social{ float:none; text-align:center;}
+    .alignleft, img.alignleft { float:none; display:block;}
+    .sicons { width:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    .copyright-txt, .design-by { text-align:center; float:none;}
+    #header .logo{ float:none;}
+    .copyright-wrapper .inner{ width:100%;}
+    .foot-top { width:auto; text-align:center;}
+    .copyright{ float:none; text-align:center; margin-bottom:10px;}
+     section{ padding:40px 0;}
+     .content-area{ width:auto; margin:0 20px; padding:30px 0;}
+    .site-main{ width:auto; margin:0; padding:0; float:none;}
+    a.contact{ margin-top:5px !important; font-size:12px !important;}
+    .nivo-directionNav a{ top:39% !important;}
+     h2.section-title{ margin-bottom:5px;}
+    #CurrentOpenings{margin-left:120px;}
+    }
+    /* Tablet View */
+
+@media screen and (max-width:999px) and (min-width:720px) { 
+    *{box-sizing:border-box;}
+    .container { width:auto; padding:0 20px;}
+    #header { padding:0 20px;}
+    .sicons { width:94%; margin:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    #header .logo{ float:none; text-align:center;}
+    .top-social{ float:none; text-align:center;}
+    .content-area{ width:auto; margin:0 20px; padding:30px 0;}
+    .copyright-wrapper .inner{ width:95%; margin: auto;}
+    .social-icons a { margin-right:6px;}
+    #main-footer, .copyright ul li, .footer-menu ul li a{ font-size:14px;}
+    .foot-top { width:auto; text-align:center;}
+   #CurrentOpenings{margin-left:120px;}
+    }
+    @media screen and (min-width: 1000px) {
+    
+    
+    }
+    @media screen and (min-width:1000px) and (max-width:1159px){
+    .copyright-wrapper .inner{ width:95%;}
+    .nivo-caption{ top:17% !important; height:auto !important;}
+    .cat_comments .cat{ width:48%;}
+    .top-search input.search-submit { top:-39px;}
+    .content-area{ width:95%; padding:50px 0; margin:0 auto;}
+}
+</style>
+<style type="text/stylesheet">
+        @-webkit-viewport   { width: device-width; }
+        @-moz-viewport      { width: device-width; }
+        @-ms-viewport       { width: device-width; }
+        @-o-viewport        { width: device-width; }
+        @viewport           { width: device-width; }
+    </style>
+
+<head>
+
+</head>
+ <apex:form >
+ <body>
+ 
+<header id="header" >
+<div class="container">
+<div class="row">
+<div class="logo">
+ <a href=" {!$Site.BaseUrl}/apex/FLAME_Home_Jobs_page"  rel="home" itemprop="url">
+    <img width="240" height="79" src="{!URLFOR($Resource.flamejobportal)}"  />
+    </a>             
+</div>
+<div>
+<div class="top-social">
+   <a href="https://www.facebook.com/FlameUniversity/" target = "_blank"><i class="fa fa-facebook fa-lg " ></i></a>
+        <a href="https://twitter.com/flameuniversity/" target = "_blank"><i class="fa fa-twitter fa-lg"></i></a>
+        <a href="https://www.linkedin.com/company/flameuniversity/ " target = "_blank"><i class="fa fa-linkedin fa-lg"></i></a>
+        <a href="https://www.youtube.com/user/FLAMEUniversity/" target = "_blank"><i class="fa fa-youtube  fa-lg"></i></a>
+        <a href="https://www.instagram.com/flameuniversity/" target = "_blank"><i class="fa fa-instagram fa-lg"></i></a>
+    </div>
+    </div>
+</div>
+</div>
+
+</header>
+<div class="clear"></div>
+     
+<div class="appoint">
+<div class="main-container">
+ </div>
+</div>
+<div class="clear"></div>
+<div class="content-area">
+  <div class="main-menu" id="home" >
+            <ul>
+            <li class="home"  >
+            <apex:commandLink action="{!FLAMEjobHome}" id="theCommandLink" styleClass="click" > 
+            <span style="color:#f5f5f5;"><i class="fa fa-lg fa-home"></i></span>Home
+            </apex:commandLink>
+            </li>
+            </ul>
+             
+        </div>
+    
+  <div class="main-menu" id="jobs"> 
+        <ul>
+             <li class="jobs" >
+                        
+                          <apex:commandLink action="{!FLAMEjobs}" >
+                           <span style="color:#f5f5f5;"><i class="fa fa-lg fa-suitcase"></i></span>Jobs
+                           </apex:commandLink>  
+                        </li>
+            </ul>
+             
+        </div>
+        
+        
+        <div class="main-menu" id="about"> 
+        <ul>
+             <li class="about Us" >
+                        
+                          <apex:commandLink action="{!FLAMEjobAboutUs}" >
+                           <span style="color:#f5f5f5;" ><i class="fa fa-lg fa-user"></i></span>About
+                           </apex:commandLink>  
+                        </li>
+            </ul>
+             
+        </div>
+  
+  <div class="main-menu" id="contact"> 
+        <ul>
+             <li class="Contact" >
+                        
+                          <apex:commandLink action="{!FLAMEjobcontactus}" >
+                           <span style="color:#f5f5f5;" ><i class="fa fa-lg fa-envelope"></i></span>Contact 
+                           </apex:commandLink>  
+                        </li>
+            </ul>
+             
+        </div>
+     <div class="clear"></div>  
+     <div id="CurrentOpenings"><h4><apex:commandlink value="Current Openings" action="{!FLAMEjobs}" /></h4></div>
+    <div class="clear"></div>
+      <!-- Section B -->
+  <section id="section-b" class="grid" >
+    <ul>
+      <li>
+        <div class="card" >
+          <img  src="{!URLFOR($Resource.sideimage)}"  alt=""/>
+          <div class="card-content">
+            <h3 class="card-title">The FLAME Vision</h3>
+            <p>FLAME University exists to build an aspirational destination for students and faculty, to push the design and nature of studies and to create a societal upgradation phenomenon particularly in the fields of liberal education and leadership.</p>
+
+<p>FLAME will be amongst India’s most reputed and respected universities. We will be the university of choice for higher education in India. We will be recognized for the impact our teaching has on our students and the community at large. Further, we will be the leader in creating and disseminating knowledge in the disciplines we offer. With that, we will pioneer the advancement of knowledge in these disciplines.</p>
+
+<p>FLAME is conceptualized with a desire to give something back to society. We believe in sharing of “Gyan” or knowledge since the ultimate goal for all human beings in the accumulation of knowledge. With that dictum, FLAME aims inculcate a habit of lifelong learning and inquiry amongst students, leading to the advancement of their well-being.</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+          <img  src="{!URLFOR($Resource.sideimage3)}"  alt=""/> 
+          <div class="card-content">
+            <h3 class="card-title">Accreditation</h3>
+            <p>FLAME University has been established as a state private university vide the FLAME University Act 2014 (Maharashtra Act No. II of 2015) of the Government of Maharashtra. FLAME University is recognized by the University Grants Commission (UGC) under Section 2(f), and degrees awarded by the University are recognized under Section 22 of the UGC Act, 1956.</P>
+            <p>Our postgraduate business program offered by FLAME School of Business is accredited by the National Board of Accreditation (NBA) for a period of five years. This program has also been accepted into the CFA University Affiliation Program.</p>
+          </div>
+        </div>
+      </li>
+      <li>
+        <div class="card">
+         <img  src="{!URLFOR($Resource.jobportalpanel3)}"  alt=""/>
+          <div class="card-content">
+            <h3 class="card-title"> Why join FLAME?</h3>
+            <p>FLAME is a world-class institution with matching opportunities. Working at FLAME brings forth several benefits – an opportunity to be part of the growing education sector, challenging work environment, wonderful infrastructure and outstanding teammates.</p>
+
+<p>Professionalism, Respect, Quality, Team Work, Work-Life Balance, People Development and Outstanding Achievement is what we look for in individuals.</p>
+          </div>
+        </div>
+      </li>
+
+    </ul>
+  </section>
+
+  <!-- Section C -->
+ <!-- <section id="section-c" class="grid" >
+    <div class="content-wrap" >
+      <h2 class="entry-title">We handle all of your digital needs</h2>
+    <p>FLAME University exists to build an aspirational destination for students and faculty, to push the design and nature of studies and to create a societal upgradation phenomenon particularly in the fields of liberal education and leadership.</p>
+    <p>FLAME University aspires to be amongst India’s most reputed and respected universities. We will be the University of Choice for higher education in India. We will be recognized for the impact our teaching has on our students and the community at large. Further, we will be the leader in creating and disseminating knowledge in the disciplines we offer.</p>
+    <p>FLAME University provides an environment that is conducive to evolving new knowledge and encourages the assimilation, dissemination, and generation of new ideas. It stimulates the latent curiosity in every individual, encourages students to challenge the status quo and to create the spirit of inquiry. It creates awareness about the responsibility and accountability that go hand in hand with freedom.</p>
+    </div>
+  </section> -->
+</div>
+<!--footer-->
+<div class="margen"></div>
+<div class="clear"></div>
+<div class="copyright-wrapper">
+<div class="inner">
+<div class="copyright">
+<p>FLAME University  Job Portal 2020 | <a style="color:#fff;" href="http://www.flame.edu.in/" target = "_blank">www.flame.edu.in</a></p>               
+</div><!-- copyright --><div class="clear"></div>           
+</div><!-- inner -->
+</div>
+    </body>
+ </apex:form>
+ </html>
+</apex:page>

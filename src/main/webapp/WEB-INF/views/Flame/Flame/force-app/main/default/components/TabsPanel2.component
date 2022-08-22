@@ -1,0 +1,230 @@
+<apex:component controller="ProgressBarCtrl" extensions="Flame_Community">
+
+    <apex:attribute type="String" name="staticconid" assignTo="{!StaticContactId}" description="Value to pass into the controller" required="true"/>
+   
+<style>
+    .disabled{
+        pointer-events:none;
+        opacity:0.6;
+    }
+</style>
+<script>
+        /*function noRefresh(){              
+              window.bn_clicked = true;
+          }
+          window.onbeforeunload = function(){              
+              if(!window.bn_clicked){
+                  window.bn_clicked = false;
+                  return '';
+              }
+          };*/
+          //$(document).on('click', '.tab-nav a,.btn', offBeforeUnload);
+          var inputChanged = true;
+          function offBeforeUnload() {
+              console.log('offevt2');
+              //var source = event.target || event.srcElement;
+              //console.info(source);
+              //var labelFor = source.getAttribute('for');
+              inputChanged = false;
+              /*if(labelFor!=undefined && labelFor.indexOf('myFile') != -1){
+                  inputChanged = true;
+              }*/
+              
+              //$(window).off('beforeunload');
+          }
+
+         window.onbeforeunload = function (e) {
+            if(inputChanged) {
+              var message = "Are you sure you want leave?";
+              e.returnValue = message;
+              inputChanged = true;
+              return message;
+            }
+            return;
+          };
+          
+          
+
+       $(document).ready(function(){
+                console.log('ready----');               
+                $('.tab-nav a,.btn').each(function (){
+                  var attrClick = $(this).attr('onclick');
+                  console.info($(this));
+                  if(attrClick){
+                    if(!$(this).attr('for') || $(this).attr('for').indexOf('myFile') == -1){
+                      $(this).attr('onclick','offBeforeUnload();'+attrClick);
+                    }
+                  }
+                  else {
+                    if(!$(this).attr('for') || $(this).attr('for').indexOf('myFile') == -1){
+                      $(this).attr('onclick','offBeforeUnload();');
+                    }
+                  }
+                });                
+                var baseURL = '{!$Site.CurrentSiteUrl}';
+                var completedStages = '{!applicationCompStages1}';
+                var CurrentPage ='{!$CurrentPage.Name}';
+                var broadCast = '{!IsBroadcasted}';
+                
+               if(completedStages.search("Program & Test") == -1 && '{!$CurrentPage.Name}' != 'Index'){
+                    window.location = baseURL + 'Index';
+                }
+                else if(completedStages.search("ThankyouDone") == -1 && '{!$CurrentPage.Name}' != 'Index'){
+                    window.location = baseURL + 'Index';
+                }
+                   
+           
+        // Change made by <<Akhilesh>> at Techila <<>> on <<19-09-2016>>. <<To add class disable to disable the sop on photograph upload page>>        
+                            
+                if( ('{!$CurrentPage.Name}' == 'PhotographUpload' || '{!$CurrentPage.Name}' == 'Index' ) && completedStages.search("SOP") == -1 ){
+                    $('#StatementOfPurpose').addClass('disabled');
+                }
+                
+                if( ('{!$CurrentPage.Name}' == 'PhotographUpload' || '{!$CurrentPage.Name}' == 'Index' ) && completedStages.search("Photograph Upload") != -1  ){
+                    // $('#StatementOfPurpose').addClass('complete-status'); 
+                     $('#StatementOfPurpose').removeClass('disabled');
+                }
+               
+                
+                if(completedStages.search("Photograph Upload") != -1 && '{!$CurrentPage.Name}' != 'PhotographUpload'){
+                    $('#PhotographUpload').addClass('complete-status'); 
+                }
+               
+           
+                if(completedStages.search("SOP") != -1 && '{!$CurrentPage.Name}' != 'StatementOfPurpose'){
+                    $('#StatementOfPurpose').addClass('complete-status');
+                    $('#StatementOfPurpose').removeClass('disabled'); 
+                }
+                 else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#StatementOfPurpose').addClass('disabled');
+                    
+                }
+           
+                if(completedStages.search("Application PDF") != -1 && '{!$CurrentPage.Name}' != 'ApplicationFormPDF'){
+                    $('#ApplicationFormPDF').addClass('complete-status'); 
+                    $('#ApplicationFormPDF').removeClass('disabled');
+                    
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#ApplicationFormPDF').addClass('disabled');
+                    
+                }
+                
+                if(completedStages.search("Admit Card") != -1 && '{!$CurrentPage.Name}' != 'AdmitPage' &&  '{!IsBroadcasted}' == 'true' ){
+                    $('#AdmitPage').addClass('complete-status'); 
+                    $('#AdmitPage').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#AdmitPage').addClass('disabled');
+                }
+                
+                if(completedStages.search("Admission Status") != -1 && '{!$CurrentPage.Name}' != 'ApplicationStatus' && '{!Isempty}' == 'true'){
+                    $('#ApplicationStatus').addClass('complete-status'); 
+                    $('#ApplicationStatus').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#ApplicationStatus').addClass('disabled');
+                }
+                if('{!appsubmissionStatus}' == 'Submitted & Paid' && completedStages.search("Upload Documents") == -1){
+                    $('#UploadDocuments').removeClass('disabled');
+                }
+                else if(completedStages.search("Upload Documents") != -1 && '{!$CurrentPage.Name}' != 'UploadDocuments'){
+                    $('#UploadDocuments').addClass('complete-status'); 
+                    $('#UploadDocuments').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#UploadDocuments').addClass('disabled');
+                }
+                
+                //disable the tabs Modified by Kartheek Nov 21 to fix Jira ticket #104
+                 if(completedStages.search("Photograph Upload") != -1){
+                     $('#StatementOfPurpose').removeClass('disabled');
+                     $('#ApplicationFormPDF').addClass('disabled');
+                }
+                
+                
+                
+                     if(completedStages.search("SOP") != -1){
+                    $('#PhotographUpload').addClass('disabled');
+                    $('#StatementOfPurpose').addClass('disabled');
+                   
+                } 
+                
+                
+                
+                
+                if('{!$CurrentPage.Name}' == 'Index'){
+                    $('#index').addClass('active');
+                }if('{!$CurrentPage.Name}' == 'PhotographUpload'){
+                    $('#PhotographUpload3').addClass('active');
+                    
+                }else if('{!$CurrentPage.Name}' == 'StatementOfPurpose'){
+                    $('#StatementOfPurpose').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'UploadDocuments'){
+                    $('#UploadDocuments').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ApplicationFormPDF'){
+                    $('#ApplicationFormPDF').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'AdmitPage'){
+                    $('#AdmitPage').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ApplicationStatus'){
+                    $('#ApplicationStatus').addClass('active');
+                }
+       });
+    </script> 
+   
+   <div class="tab-nav">
+                  
+                    <ul>
+                   
+                        <li class="home" id="Index1" >
+                       <!--     <a href="/application/Index"  > -->
+                          <apex:commandLink action="{!CustomIndex}" id="theCommandLink" styleClass="click"> 
+                                <span class="pull-left"><i class="fa fa-home"></i></span>
+                                 </apex:commandLink>
+                      <!--      </a>  -->
+                               
+                        </li> 
+                       
+                         
+                        <li id="PhotographUpload">
+                          <apex:commandLink action="{!CustomSave7}" style="text-decoration:none;" id="theCommandLink7" >
+                                    <span class="pull-left"><i class="icon-photograph"></i></span>
+                                <div class="media-body">Photograph Upload</div>
+                          </apex:commandLink>
+                        </li>
+
+                        <li id="StatementOfPurpose">
+                          <apex:commandLink action="{!CustomSave8}" style="text-decoration:none;" id="theCommandLink8" >
+                                    <span class="pull-left"><i class="icon-sop"></i></span>
+                                <div class="media-body">Statement Of Purpose</div>
+                          </apex:commandLink>
+                        </li>
+           
+                        <li id="ApplicationFormPDF">
+                          <apex:commandLink action="{!CustomSave9}" style="text-decoration:none;" id="theCommandLink9" >
+                                    <span class="pull-left"><i class="icon-applipdf"></i></span>
+                                <div class="media-body"> Application PDF</div>
+                          </apex:commandLink>
+                        </li>
+                        <li id="AdmitPage">
+                          <apex:commandLink action="{!CustomSave10}" style="text-decoration:none;" id="theCommandLink10" >
+                                    <span class="pull-left"><i class="icon-admitcard"></i></span>
+                                <div class="media-body">Admit Card</div>
+                          </apex:commandLink>
+                        </li>
+                       
+                        <li id="UploadDocuments">
+                          <apex:commandLink action="{!CustomSave12}" style="text-decoration:none;" id="theCommandLink12" styleClass="uploaddoc" >
+                                    <span class="pull-left"><i class="icon-uploaddocs"></i></span>
+                                <div class="media-body">Upload Documents</div>
+                          </apex:commandLink>
+                        </li>
+                         <li id="ApplicationStatus">
+                          <apex:commandLink action="{!CustomSave11}" style="text-decoration:none;" id="theCommandLink11" >
+                                    <span class="pull-left"><i class="icon-addmissionstatus"></i></span>
+                                <div class="media-body">Admission Status</div>
+                          </apex:commandLink>
+                        </li>
+                    </ul>
+    </div>
+</apex:component>

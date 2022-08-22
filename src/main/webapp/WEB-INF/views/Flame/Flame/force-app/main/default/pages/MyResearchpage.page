@@ -1,0 +1,194 @@
+<apex:page controller="MyResearchcontroller" docType="html-5.0"  lightningStylesheets="true"  standardStylesheets="false" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" /> 
+      <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />       
+    
+    
+    <meta charset='UTF-8'/>
+    <link rel='stylesheet' href='styles.css'/>
+    <meta name='viewport'
+          content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    
+    
+    <script type='text/javascript' src='http://code.jquery.com/jquery-1.11.1.min.js'></script> 
+    <script type='text/javascript' src='//cdn.datatables.net/1.10.4/js/jquery.dataTables.min.js'></script> 
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.4/css/jquery.dataTables.css"/> 
+    
+   
+    <script>
+    j$ = jQuery.noConflict();
+    j$(document).ready( function () {
+        var contactTable = j$('[id$="contacttable"]').DataTable({
+            order: [[2, 'asc']],
+            "searching": false,
+            "info": true,         
+            "lengthChange":true 
+        });
+        
+        
+    });
+    </script> 
+    
+    
+    
+    
+    <style>
+       
+        .navbar .navbar-nav > .flm_Assist > a, .navbar .navbar-nav > .flm_Assist > a:focus, .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }              
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        
+    </style>      
+    
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                                         
+                    <div class="col-lg-12"> 
+                        <div class="sub-heading">
+                            <h6>My Research</h6>
+                        </div>
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:75px;">                                
+                                <!-- Show Dining details start -->
+                                <!-----------------------------------------------------------------------------------------------------------------------> 
+                                
+                                
+                                                 
+                               <apex:pageMessages id="errors"/>
+                                
+                                <div class="table-responsive">
+                            <div class=" float-left">   
+                            <apex:commandButton value="New Publication" action="{!NewPublication}" styleClass="slds-button slds-button_neutral saveBtn" />
+                            </div>        
+                            <br/><br/>
+                                    <table id="contacttable" class="table table-striped table-bordered table-sm table-list" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr >
+                                                
+                                    <th style="font-size: 13px;" scope="col">Year of Publication</th>
+                                    <th style="font-size: 13px;" scope="col">Publication Category</th>
+                                 <!--   <th style="font-size: 15px;">Author Name</th> -->
+                                    <th style="font-size: 13px;" scope="col">Co-authors</th>
+                                    <th style="font-size: 13px; width: 20% " scope="col" >Title of publication</th>
+                                    <th style="font-size: 13px;" scope="col">Publisher</th>
+                                    <th style="font-size: 13px;" scope="col">V</th>
+                                    <th style="font-size: 13px;" scope="col">I</th>
+                                    <th style="font-size: 13px;" scope="col">PP</th>
+                                    <th style="font-size: 13px;" scope="col">Article DOI</th>
+                                     <th style="font-size: 13px;" scope="col">Rated </th>
+                                 <!--    <th style="font-size: 13px;" scope="col">Rating Category </th> -->
+                                    <th style="font-size: 13px;" scope="col">Approved </th>
+                                  <!--  <th style="font-size: 13px;" scope="col">Rewarded</th> -->
+                                    <th></th>                              
+                                            </tr>
+                                        </thead>
+                                        
+                                        <tbody>
+                                      <apex:repeat value="{!Researchs}" var="rechs">      
+                                  <tr>
+                                    <td ><apex:outputField value="{!rechs.Year_of_Publication__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Publication_Category__c}" /></td>
+                                  <!--  <td ><apex:outputField value="{!rechs.Author_Name__r.Name}" /></td> -->
+                                    <td ><apex:outputField value="{!rechs.Co_authors__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Title_of_publication__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Name_of_journal_publisher_txt__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Volume__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Issue__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.PP__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Article_Book_URL__c}" /></td>
+                                    <td ><apex:outputField value="{!rechs.Rating_Claimed__c}" /></td>
+                               <!--     <td ><apex:outputField value="{!rechs.Category_Claimed__c}" /></td> -->
+                                    <td ><apex:outputField value="{!rechs.Approved__c}" /></td>
+                                 <!--   <apex:outputPanel rendered="{!rechs.Approved__c != true}"> -->
+                                    <td> <apex:commandLink value="Edit" action="{!NewPublicationedit}" styleClass="slds-m-top_xx-small slds-button slds-button_neutral btnSubmit" style="margin:0 auto;" rendered="{!IF(rechs.Approved__c== true, false, true)}" >  
+                                         <apex:param name="{!rechs.id}" value="{!rechs.id}" assignTo="{!editId}"/>
+                                         </apex:commandLink>
+                                    </td>
+                               <!--   </apex:outputPanel> -->
+                                  </tr>
+                                       </apex:repeat>     
+                                        </tbody>
+                                    </table>  
+                                    
+                                </div>  
+                                
+                    
+                  
+     <!---------------------------------------------------------------------------------------------------------->             
+                
+                 
+                                
+    <!---------------------------------------------------------------------------------------------------------------------->                       
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->                        
+           <apex:actionStatus id="IdStatus">
+                <apex:facet name="start">
+                    <div class="loadingBG" >
+                        &nbsp;
+                    </div>  
+                    <div class="loadingBGP" >                        
+                        <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                    </div>            
+                </apex:facet>           
+            </apex:actionStatus>
+       <apex:includeScript value="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js" />
+    <apex:stylesheet value="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" />  
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>       
+ <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_research_ele").addClass("active");
+           $(".flm_research_ele").addClass("show");
+           $(".flm_research_ele > .sub-menu").addClass("show");
+           $(".flm_researchMyres_ele").addClass("active");
+
+           $(".flm_menu").click(function(){
+                $(".flm_menu").removeClass("show");
+                $(".flm_menu > .sub-menu").removeClass("show");
+                
+           })
+        });
+    </script>      
+</apex:page>

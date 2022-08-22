@@ -1,0 +1,26 @@
+<apex:component >
+                <c:HeaderAndTabs />
+                <div class="tab-container">
+                    <div class="tab-content active home-content" id="tab2">
+                    <h4 class="sub-ttl">Welcome !</h4>
+                        <p>Dear<strong> {!$User.FirstName} {!$User.LastName},</strong>
+                        <br/><br/>
+                        <strong>Thank you for registering at the FLAME University Online Application Portal.</strong>
+                        <br/><br/>
+                        The application consists of seven easy steps: program and test details, personal details, education and work details, statement of purpose, declaration, application fees and upload documents. You can upload your documents like transcripts, mark sheets, transfer certificates, migration certificates, recommendation letters, work experience documents and other extracurricular certificates at a later point in time, even after submission of your application. Your application would be deemed complete upon submission of application fees. FLAME University's Admissions Committee will review your application upon completion.
+                        <br/><br/>
+                        Please enter your details carefully. You do not need to complete the application in one sitting. You may save the application and return to this application as often as you would like until final payment. After payment of application fees, you will not be able to make any changes to your application, except uploading of documents.
+                        <br/><br/>
+                        The application fee has to be remitted by any of the following methods: Debit Card, Credit Card, Demand Draft or the Scratch Card which you can purchase from our student counselors/representatives.
+                        <br/><br/>
+                        While utmost care has been taken to make FLAME University's online application portal error free and flexible, we request you to bring any problems/issues to our notice before you submit the application. You will not be able to make any changes after submission. If you need any help proceeding with the online application, you can reach us by toll free at <a href="callto://1800-209-4567">1800-209-4567</a>,or email us at <a style="text-decoration: none;color:#F58634" href="mailto:admission@flame.edu.in">admission@flame.edu.in</a>
+                        </p>
+                        <br></br>
+                        Yours Sincerely,
+                        <br></br>
+                        <strong>FLAME University Admissions Committee</strong>
+                        <br></br>
+                        <apex:outputLink value="mailto:admission@flame.edu.in">admission@flame.edu.in</apex:outputLink>
+                </div>
+                </div>
+</apex:component>

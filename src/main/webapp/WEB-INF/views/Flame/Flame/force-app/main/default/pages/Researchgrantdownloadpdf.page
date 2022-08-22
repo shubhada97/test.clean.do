@@ -1,0 +1,469 @@
+<apex:page renderAs="pdf" docType="html-5.0" controller="Researchgrantcontroller"   showChat="false" showHeader="false" sidebar="false" title="Research Grant PDF"  >
+<apex:form >
+   
+        <script>
+          
+           
+        </script>
+       <script>
+           pdffun()
+           {
+             alert('vcr--inside--pdffun');
+             savepdf();
+           }
+           
+        </script>
+ 
+  </apex:form>
+  <h3 style="text-align:center;font-weight: normal">Research Grant Request</h3>
+   <table border="1"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border:0px solid #525252;">
+        <thead>
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 12px;font-weight: 600;margin-top: 0;padding: 8px;  width:100%;" colspan="2">Research Grant Details </th>
+            </tr>
+        </thead>
+        <tbody>
+         <apex:repeat value="{!RecordFetching}" var="fetch">  
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <strong>Project Name</strong>
+                </td>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <apex:outputtext value="{!fetch.Title_of_publication__c}"/>
+                </td>
+            </tr>
+             <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <strong>Principal Faculty </strong>
+                </td>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <apex:outputtext value="{!fetch.Principal_Faculty__c}"/>
+                </td>
+            </tr>
+             <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <strong> Department </strong>
+                </td>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <apex:outputtext value="{!userContact.Department__c}"/>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                    <strong> Application Date </strong>
+                </td>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="50%">
+                   <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Application_Date__c}"/></apex:outputText>
+                </td>
+            </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+    <table border="1"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border:0px solid #525252;">
+        <thead>
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 12px;font-weight: 600;margin-top: 0;padding: 8px;  width:100%;" colspan="2"> Scope </th>
+            </tr>
+        </thead>
+        <tbody>
+         <apex:repeat value="{!RecordFetching}" var="fetch">  
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="100%">
+                <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong>Background and Scope of project</strong>
+                </div>
+                     <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Background_Scope__c}" escape="false"/>
+                </div>
+                </td>
+               
+            </tr>
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="100%">
+                 <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong >Statement of Problem/Research Questions</strong>
+                 </div>
+                     <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Research_Questions__c}" escape="false"/>
+                </div>
+                </td>
+                
+            </tr>
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="100%">
+                <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong>Brief Literature Review</strong>
+                    </div>
+                    <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Brief_Review__c}" escape="false"/>
+                </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="100%">
+                <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong>Methodology</strong>
+                </div>
+                    <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Methodology__c}" escape="false"/>
+                </div>
+                </td>
+            </tr>
+            </apex:repeat>
+        </tbody>
+    </table>
+  
+   <table cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border: 1px solid #525252;">
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 11px;font-weight: 600;margin-top: 0;padding: 8px;width:100%;" colspan="2">Milestones</th>
+            </tr>
+            <tr>
+            <td style="font-size: 11px;" width="100%; padding:0px;">
+                <table cellpadding="0" cellspacing="0" style="width:100%; border: 1px solid #d3d3d3;">
+                        
+                        <tr>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">S.No</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">Milestone Description</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">Expected Completion Date</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; ">Expected Outcome</th>
+                        </tr>
+                        <apex:repeat value="{!RecordFetching}" var="fetch">   
+                            <tr >
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="1" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_1_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                   <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_1_Exp_Comp_Date__c}"/></apex:outputText>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_1_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr >
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="2" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_2_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_2_Exp_Comp_Date__c}"/></apex:outputText>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_2_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="3" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_3_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                   <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_3_Exp_Comp_Date__c}"/></apex:outputText>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_3_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="4" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_4_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                  <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_4_Exp_Comp_Date__c}"/></apex:outputText>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center;border-bottom: 1px solid #525252; ">
+                                    <apex:outputtext value="{!fetch.Milestone_4_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                             <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="5" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_5_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                   <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_5_Exp_Comp_Date__c}"/></apex:outputText>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_5_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr >
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="6" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_6_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                   <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_6_Exp_Comp_Date__c}"/></apex:outputText>   </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center;border-bottom: 1px solid #525252; ">
+                                    <apex:outputtext value="{!fetch.Milestone_6_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                             <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                    <apex:outputtext value="7" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Milestone_7_Description__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                  <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}"><apex:param value="{!fetch.Milestone_7_Exp_Comp_Date__c}"/></apex:outputText>
+                                    
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; ">
+                                    <apex:outputtext value="{!fetch.Milestone_7_Outcome__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                        </apex:repeat>
+                </table>
+            </td>
+        </tr>
+    </table>
+   <table border="1"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border:0px solid #525252;">
+        <thead>
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 12px;font-weight: 600;margin-top: 0;padding: 8px;  width:100%;" colspan="2">Deliverables </th>
+            </tr>
+        </thead>
+        <tbody>
+         <apex:repeat value="{!RecordFetching}" var="fetch">  
+            <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252;" width="100%">
+                 <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong>Expected outcome/Deliverable of the proposed research project: Research Papers/ Publication in Journal (Tentative Names)/ Book/ Book Chapter</strong>
+                    </div>
+                    <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Expected_Outcome__c}" escape="false"/>
+                </div>
+                </td>
+               
+            </tr>
+             <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252; border-bottom: 1px solid #525252; " width="100%">
+                 <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong >Significance/Utility of the Study </strong>
+                    </div>
+                    <div style="padding:8px; font-size: 12px;">
+                    <apex:outputtext value="{!fetch.Significance__c}" escape="false"/>
+                </div>
+                </td>
+               
+            </tr>
+            
+            </apex:repeat>
+        </tbody>
+    </table>
+   <table border="1"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border:0px solid #525252;">
+        <thead>
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 12px;font-weight: 600;margin-top: 0;padding: 8px;  width:100%;" colspan="2">Collaboration </th>
+            </tr>
+        </thead>
+        <tbody>
+         <apex:repeat value="{!RecordFetching}" var="fetch">  
+           
+             <tr>
+                <td style="padding:5px; font-size: 12px; border-right: 1px solid #525252;" width="100%">
+                 <div style=" border-bottom: 1px solid #525252;width:100%;" >
+                    <strong>Details of collaboration, if any, intended: a. Technical b. Academic c. Financial (Brief description)</strong>
+                 </div>
+                <div style="padding:8px; font-size: 12px;">
+                <apex:outputtext value="{!fetch.Collaboration_Details__c}" escape="false"/>
+                </div>
+                </td>
+             
+                
+            </tr>
+            
+            </apex:repeat>
+        </tbody>
+    </table>
+        
+    
+     <table cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border: 1px solid #525252;">
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 11px;font-weight: 600;margin-top: 0;padding: 8px;width:100%;" colspan="2">Funding</th>
+            </tr>
+            <tr>
+            <td style="font-size: 11px;" width="100%; padding:0px;">
+                <table cellpadding="0" cellspacing="0" style="width:100%; border: 1px solid #d3d3d3;">
+                        
+                        <tr>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">S.No</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">Financial Assistance Item</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #d3d3d3;">Item Expected Expenditure</th>
+                            <th style="background: #084d89;color: #fff;font-size: 11px;padding:5px; text-align:center; ">Item % of Total Expenditure</th>
+                        </tr>
+                        <apex:repeat value="{!RecordFetching}" var="fetch">   
+                            <tr >
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="1" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_1__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_1_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_1_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr >
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="2" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_2__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_2_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_2_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="3" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_3__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_3_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_3_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="4" styleClass="form-control"/>
+                                </td>
+                              <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_4__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_4_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_4_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                             <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="5" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_5__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_5_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_5_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td>                                
+                            </tr>
+                            <tr >
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="6" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_6__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_6_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_6_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                             <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="7" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Financial_Assistance_Item_7__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_7_Expenditure__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-bottom: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.FA_Item_7_Percentage_Expenditure__c}" styleClass="form-control"/>
+                                </td> 
+                                
+                            </tr>
+                            <tr>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                    <apex:outputtext value="" styleClass="form-control"/>
+                                </td>
+                               <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                    <label>Total Estimated Cost of Project</label>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; border-right: 1px solid #525252;">
+                                    <apex:outputtext value="{!fetch.Total_Cost__c}" styleClass="form-control"/>
+                                </td>
+                                <td style="font-size: 11px;padding:5px; text-align:center; ">
+                                   
+                                </td> 
+                                
+                            </tr>
+                        </apex:repeat>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <table  cellpadding="0" cellspacing="0" style=" page-break-inside:avoid;font-family:sans-serif; width:100%;margin-top:10px; border: 1px solid #525252;">
+        <thead>
+            <tr>
+                <th style="background: #084d89;color: #fff;font-size: 12px;font-weight: 600;margin-top: 0;padding: 8px;" colspan="2">Undertaking</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding:8px; font-size: 12px;">
+                <p> I/We undertake to 
+                <li>Complete the research project in the stipulated period.</li>
+                <li>Submit a Final copy of the research report to the University and a copy each to the Library and the Research Committee of the University.</li>
+                <li>I/We understand that if the University is not satisfied with the progress of the research project, it may terminate the project immediately.</li>
+                <li>I/We make commitment that in any publication/s arising out of this research project we would explicitly state that the FLAME University has provided full support (financial and others) for the project.</li>
+                
+                </p>
+                    
+                </td>
+            </tr>
+        </tbody>
+    </table>
+     <table cellpadding="0" cellspacing="0" style="font-family:sans-serif; width:100%;margin-top:10px;">
+      <apex:repeat value="{!RecordFetching}" var="fetch">
+        <tr><td style="padding:5px; font-size: 12px;">Principal Researcher :&nbsp;<apex:outputText value="{!fetch.Author_Name__r.Name}"/></td></tr>
+       <tr> <td style="padding:5px; font-size: 12px;">Co-Researcher/s (if Any) :&nbsp;<apex:outputText value="{!fetch.Co_authors__c}"/></td></tr>
+        <tr><td style="padding:5px; font-size: 12px;">Dean/Head of Department :&nbsp;<apex:outputText value="{!fetch.Dean_HOD__c}"/></td></tr>
+        </apex:repeat>
+    </table> 
+</apex:page>

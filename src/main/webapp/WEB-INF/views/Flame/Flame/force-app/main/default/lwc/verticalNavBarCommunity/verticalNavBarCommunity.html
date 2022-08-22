@@ -1,0 +1,78 @@
+<template>
+    <div style="width:100%; border-right: 1px solid #e7e7e7;">
+        <lightning-layout>
+            <lightning-layout-item>
+                <lightning-vertical-navigation selected-item={selectedItem} onselect={handleSelect} class="navigation">
+                    <lightning-vertical-navigation-section>
+                        <lightning-vertical-navigation-item label="Feed" name="feed">
+                        </lightning-vertical-navigation-item>
+                        <lightning-vertical-navigation-item label="Events" name="events">
+                        </lightning-vertical-navigation-item>
+                        <lightning-vertical-navigation-item label="Announcements" name="announcements">
+                        </lightning-vertical-navigation-item>
+                        <lightning-vertical-navigation-item label="News" name="news">
+                        </lightning-vertical-navigation-item>
+                        <lightning-vertical-navigation-item-badge label="Saved" name="saved">
+                        </lightning-vertical-navigation-item-badge>
+                        <lightning-vertical-navigation-item label="My Profile" name="my_profile">
+                        </lightning-vertical-navigation-item>
+                        <lightning-vertical-navigation-overflow>
+                            <template for:each={groupList} for:item="group">
+                                <p key={group.Id}>
+                                    <lightning-vertical-navigation-item label={group.Name} name="reports_extra1">
+                                    </lightning-vertical-navigation-item>
+                                </p>
+                            </template>
+                        </lightning-vertical-navigation-overflow>
+
+                    </lightning-vertical-navigation-section>
+                </lightning-vertical-navigation>
+
+
+
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-medium">
+
+
+                <template if:true={announcementsValue}>
+                    <lightning-card title="Announcements">
+                        <lightning-button variant="base" label="See all" title="Preview" class="slds-m-left_x-small"
+                            slot="actions" onclick={openFullPage}></lightning-button>
+                        <div class="slds-m-around_medium">
+                            <!--div class="outputFont"-->
+                            <template for:each={listOfFlame} for:item="acc">
+
+                                <h1 class="outputFont" key={acc.Id}>
+                                    <a href="https://www.zerobounce.net/" target="_blank"> {acc.Heading} </a>
+                                </h1>
+                                <p key={acc.id}>{acc.FirtsContent} <a href="https://www.zerobounce.net/"
+                                        target="_blank"> Read more </a> <br><br><br></p>
+
+                            </template>
+                        </div>
+                        <!--/div-->
+                    </lightning-card>
+                </template>
+
+                <template if:true={newsValue}>
+                    <lightning-card title="News">
+                        <lightning-button variant="base" label="See all" title="Preview" class="slds-m-left_x-small"
+                            slot="actions" onclick={openFullPage}></lightning-button>
+                        <div class="slds-m-around_medium">
+                            <!--div class="outputFont"-->
+                            <template for:each={listOfFlameNews} for:item="acc">
+
+                                <h1 class="outputFont" key={acc.Id}>
+                                    <a href="https://www.zerobounce.net/" target="_blank"> {acc.Heading} </a>
+                                </h1>
+                                <p key={acc.id}>{acc.FirtsContent} <a href="https://www.zerobounce.net/"
+                                        target="_blank"> Read more </a> <br><br><br></p>
+
+                            </template>
+                        </div>
+                    </lightning-card>
+                </template>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+</template>

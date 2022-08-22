@@ -1,0 +1,19 @@
+<template>
+    <lightning-card title="Announcements">
+        <lightning-button variant="base" label="See all" 
+                title="Preview" class="slds-m-left_x-small" 
+                slot="actions" onclick={openFullPage}></lightning-button>
+        <div class="slds-m-around_medium">
+        <!--div class="outputFont"-->    
+        <template for:each={listOfFlame} for:item="acc">
+           
+            <h1 class="outputFont" key={acc.Id}  >
+                <a href="https://www.zerobounce.net/" target="_blank"> {acc.Heading} </a>   
+            </h1>
+            <p key={acc.id}>{acc.FirtsContent} <a href="https://www.zerobounce.net/" target="_blank"> Read more </a>  <br><br><br></p>
+            
+        </template>
+    </div>
+    <!--/div-->
+    </lightning-card>
+</template>

@@ -1,0 +1,48 @@
+<apex:page controller="Ledger_ContactPayment_controller" action="{!PaymentSuccess}" showHeader="false"  readOnly="" showChat="false" sidebar="false" standardStylesheets="false" docType="HTML-5.0" >
+<apex:form > 
+<c:ResourceFiles />
+        <apex:pageBlock >
+                      
+           
+         
+          <div class="main-dashboard">
+          <div class="container">
+          <div class="dashboard-inner">
+        <br></BR>
+        <table>
+        <thead>   
+        <tr width="100%" border="0">
+        <tr></tr><br></br>
+        <tr></tr>
+        <tr></tr>
+        <tr></tr>
+        <!-- <td><h4>Thank you for the payment, please go to Payment History by clicking on button below to receive the payment receipt in your FLAME registered email address.</h4> </td> -->
+        <td><h4>Thank you for the payment. You will receive receipt via email.</h4> </td>
+        </tr>  
+        </thead>
+        </table>
+       <br></br>
+        <br></br>
+         <br></br>
+          <br></br>
+           <br></br>
+  <div class="form-buttons">
+    <apex:commandButton value="Go to Payment History" action="{!GoToPaymentHistory}" styleClass="btn next-btn"/>&nbsp;
+    <apex:commandButton value="Back to Pending Payments" action="{!Redirecttobackpage}" styleClass="btn save-btn" />
+           <!-- Begin Default Content REMOVE THIS -->
+ 
+ 
+  </div>
+          </div>
+          </div>
+          </div>
+           
+    
+                
+             
+           
+            </apex:pageBlock>
+            
+  </apex:form> 
+  
+</apex:page>

@@ -1,0 +1,22 @@
+<apex:page controller="parseCSVDataController">
+    <apex:form >
+        <apex:pagemessages />
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="4"> 
+                  <apex:inputFile value="{!csvFileBody}"  filename="{!csvAsString}"/>
+                  <apex:commandButton value="Import Raw Employe Records" action="{!importCSVFile}"/>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:pageBlock >
+           <apex:pageblocktable value="{!rawlist}" var="raw">
+              <apex:column value="{!raw.Timelog__c}" />
+              <apex:column value="{!raw.Event_Type__c}" />
+              <apex:column value="{!raw.Severity__c}" />
+              <apex:column value="{!raw.Message__c}" />
+              <apex:column value="{!raw.User_Name__c }" />
+              <apex:column value="{!raw.Source__c }" />
+              <apex:column value="{!raw.Status__c }" />
+        </apex:pageblocktable>
+     </apex:pageBlock>
+   </apex:form>
+</apex:page>

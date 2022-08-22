@@ -1,0 +1,216 @@
+<apex:component controller="ProgressBarCtrl_1">
+<style>
+    .disabled{
+        pointer-events:none;
+        opacity:0.6;
+    }
+</style>
+<script>
+ /*function noRefresh(){              
+              window.bn_clicked = true;
+          }
+          window.onbeforeunload = function(){              
+              if(!window.bn_clicked){
+                  window.bn_clicked = false;
+                  return '';
+              }
+          };*/
+          //$(document).on('click', '.tab-nav a,.btn', offBeforeUnload);
+          var inputChanged = true;
+          function offBeforeUnload() {
+              console.log('offevt2');
+              //var source = event.target || event.srcElement;
+              //console.info(source);
+              //var labelFor = source.getAttribute('for');
+              inputChanged = false;
+              /*if(labelFor!=undefined && labelFor.indexOf('myFile') != -1){
+                  inputChanged = true;
+              }*/
+              
+              //$(window).off('beforeunload');
+          }
+
+         window.onbeforeunload = function (e) {
+            if(inputChanged) {
+              var message = "Are you sure you want leave?";
+              e.returnValue = message;
+              inputChanged = true;
+              return message;
+            }
+            return;
+          };
+ $(document).ready(function(){
+                console.log('ready----');               
+                $('.tab-nav a,.btn').each(function (){
+                  var attrClick = $(this).attr('onclick');
+                  console.info($(this));
+                  if(attrClick){
+                    if(!$(this).attr('for') || $(this).attr('for').indexOf('myFile') == -1){
+                      $(this).attr('onclick','offBeforeUnload();'+attrClick);
+                    }
+                  }
+                  else {
+                    if(!$(this).attr('for') || $(this).attr('for').indexOf('myFile') == -1){
+                      $(this).attr('onclick','offBeforeUnload();');
+                    }
+                  }
+                });                
+                var baseURL = '{!$Site.CurrentSiteUrl}';
+                var completedStages = '{!applicationCompStages1}';
+                var CurrentPage ='{!$CurrentPage.Name}';
+                var broadCast = '{!IsBroadcasted}';
+                
+               if(completedStages.search("Program & Test") == -1 && '{!$CurrentPage.Name}' != 'Index'){
+                    window.location = baseURL + 'Index';
+                }
+                else if(completedStages.search("ThankyouDone") == -1 && '{!$CurrentPage.Name}' != 'Index'){
+                    window.location = baseURL + 'Index';
+                }
+                   
+           
+        // Change made by <<Akhilesh>> at Techila <<>> on <<19-09-2016>>. <<To add class disable to disable the sop on photograph upload page>>        
+                            
+                if( ('{!$CurrentPage.Name}' == 'PhotographUpload_1' || '{!$CurrentPage.Name}' == 'Index' ) && completedStages.search("SOP") == -1 ){
+                    $('#StatementOfPurpose').addClass('disabled');
+                }
+                
+                if( ('{!$CurrentPage.Name}' == 'PhotographUpload_1' || '{!$CurrentPage.Name}' == 'Index' ) && completedStages.search("Photograph Upload") != -1  ){
+                    // $('#StatementOfPurpose').addClass('complete-status'); 
+                     $('#StatementOfPurpose').removeClass('disabled');
+                }
+               
+                
+                if(completedStages.search("Photograph Upload") != -1 && '{!$CurrentPage.Name}' != 'PhotographUpload_1'){
+                    $('#PhotographUpload').addClass('complete-status'); 
+                }
+               
+           
+                if(completedStages.search("SOP") != -1 && '{!$CurrentPage.Name}' != 'StatementOfPurpose_1'){
+                    $('#StatementOfPurpose').addClass('complete-status');
+                    $('#StatementOfPurpose').removeClass('disabled'); 
+                }
+                 else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#StatementOfPurpose').addClass('disabled');
+                    
+                }
+           
+                if(completedStages.search("Application PDF") != -1 && '{!$CurrentPage.Name}' != 'ApplicationFormPDF_1'){
+                    $('#ApplicationFormPDF').addClass('complete-status'); 
+                    $('#ApplicationFormPDF').removeClass('disabled');
+                    
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#ApplicationFormPDF').addClass('disabled');
+                    
+                }
+                
+                if(completedStages.search("Admit Card") != -1 && '{!$CurrentPage.Name}' != 'AdmitPage_1' &&  '{!IsBroadcasted}' == 'true' ){
+                    $('#AdmitPage').addClass('complete-status'); 
+                    $('#AdmitPage').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#AdmitPage').addClass('disabled');
+                }
+                
+                if(completedStages.search("Admission Status") != -1 && '{!$CurrentPage.Name}' != 'ApplicationStatus_1' && '{!Isempty}' == 'true'){
+                    $('#ApplicationStatus').addClass('complete-status'); 
+                    $('#ApplicationStatus').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#ApplicationStatus').addClass('disabled');
+                }
+                if('{!appsubmissionStatus}' == 'Submitted & Paid' && completedStages.search("Upload Documents") == -1){
+                    $('#UploadDocuments').removeClass('disabled');
+                }
+                else if(completedStages.search("Upload Documents") != -1 && '{!$CurrentPage.Name}' != 'UploadDocuments_1'){
+                    $('#UploadDocuments').addClass('complete-status'); 
+                    $('#UploadDocuments').removeClass('disabled');
+                }
+                else if(completedStages.search("Photograph Upload") == -1 || completedStages.search("SOP") == -1){
+                    $('#UploadDocuments').addClass('disabled');
+                }
+                
+                //disable the tabs Modified by Kartheek Nov 21 to fix Jira ticket #104
+                 if(completedStages.search("Photograph Upload") != -1){
+                     $('#StatementOfPurpose').removeClass('disabled');
+                     $('#ApplicationFormPDF').addClass('disabled');
+                }
+                
+                
+                
+                     if(completedStages.search("SOP") != -1){
+                    $('#PhotographUpload').addClass('disabled');
+                    $('#StatementOfPurpose').addClass('disabled');
+                   
+                } 
+                
+                
+                
+                
+                if('{!$CurrentPage.Name}' == 'Index'){
+                    $('#index').addClass('active');
+                }if('{!$CurrentPage.Name}' == 'PhotographUpload_1'){
+                    $('#PhotographUpload3').addClass('active');
+                    
+                }else if('{!$CurrentPage.Name}' == 'StatementOfPurpose_1'){
+                    $('#StatementOfPurpose').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'UploadDocuments_1'){
+                    $('#UploadDocuments').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ApplicationFormPDF_1'){
+                    $('#ApplicationFormPDF').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'AdmitPage_1'){
+                    $('#AdmitPage').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ApplicationStatus_1'){
+                    $('#ApplicationStatus').addClass('active');
+                }
+       });
+    </script> 
+    <div class="tab-nav">
+        <ul>
+            <li class="home" id="index" style="text-decoration:none;">
+                <a href="/application/Index" data-target="#tab1">
+                    <span class="pull-left">
+                        <i class="fa fa-home"></i>
+                    </span>
+                </a>    
+            </li>
+            <li id="PhotographUpload">
+                 <a href="/application/PhotographUpload_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-photograph"></i></span>
+                    <div class="media-body">Photograph Upload</div>
+                </a>
+            </li>
+            <li id="StatementOfPurpose">
+                <a href="/application/StatementOfPurpose_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-sop"></i></span>
+                    <div class="media-body">Statement Of Purpose</div>
+                </a>
+            </li>
+            <li id="ApplicationFormPDF">
+                <a href="/application/ApplicationFormPDF_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-applipdf"></i></span>
+                    <div class="media-body">Download Application</div>
+                </a>
+            </li>
+            <li id="AdmitPage">
+                <a href="/application/AdmitPage_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-admitcard"></i></span>
+                    <div class="media-body">Admit Card</div>
+                </a>
+            </li>
+            
+            <li id="UploadDocuments"> <!-- class="complete-status"  -->
+                <a href="/application/UploadDocuments_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-uploaddocs"></i></span>
+                    <div class="media-body">Upload Documents</div>
+                </a>
+            </li>
+            <li id="ApplicationStatus">
+                <a href="/application/ApplicationStatus_1" style="text-decoration:none;">
+                    <span class="pull-left"><i class="icon-addmissionstatus"></i></span>
+                    <div class="media-body">Admission Status</div>
+                </a>
+            </li>
+        </ul>
+    </div>
+</apex:component>

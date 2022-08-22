@@ -1,0 +1,240 @@
+<apex:page controller="Flame_Community" doctype="HTML-5.0" sidebar="false" showChat="false" showHeader="false" 
+standardStylesheets="false" action="{!checkPaymentIsDone}" cache="false" title="Application Fees">
+   <html lang="en">
+    <head>
+    <c:ResourceFiles />
+    <apex:includeScript value="{!URLFOR($Resource.flameZip, 'js/custom.js')}"/>
+    </head>
+    <body>
+    <!-- HEADER START -->
+    <div class="header">
+        <div class="container">
+            <div class="brand">
+            <a href="javascript:void(0)"><apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+            </div>
+            <c:FU_TopNavigation ConName="{!FlameCont.Name}" ConId="{!con.Id}"/>
+        </div>
+    </div>
+    <!-- HEADER END -->
+   <!-- DASHBOARD START -->
+    
+    <div class="main-dashboard">
+        <div class="container">
+            <div class="dashboard-inner">
+            <apex:form >
+           
+            <c:HeaderAndTabs staticconid="{!ContactId}"/>
+            </apex:form>
+                <div class="tab-container">
+                    <div class="tab-content active">
+                        <apex:form id="rerenderForm">
+                            <apex:outputText id="onlinePaymentError" value="{!paymentErrorMsg}" style="Color:red;"/>
+                            <form>
+                            <div>Dear <b>{!FlameCont.Name} </b>,<br/></div>
+                              <!--  <apex:iframe src="{!URLFOR($Resource.PaymentStaticContent)}" height="40px"/> -->
+                              <div class="payment-box">
+                              <p>Thank you for applying to FLAME University. Please pay the application fee to proceed further in your application process. </p>
+                              </div>
+                                <p id="topError" Style="Color:red;"/>
+                                <h4 class="sub-ttl"> Payment mode</h4>
+                                
+                                <div class="payment-order" id="paymentMode">
+                                    <apex:selectRadio layout="pageDirection" id="fatocc" rendered="true" value="{!paymentType}" onclick="changeText();">                            
+                                        <div class="radio">
+                                            <apex:selectOption id="optionsRadios1" itemValue="olpayment" itemLabel="Online Payment"/>
+                                        </div>
+                                        <div class="radio">
+                                            <apex:selectOption id="optionsRadios2" itemValue="scratchCard" itemLabel="Scratch Card"/>
+                                        </div>
+                                        <div class="radio">
+                                            <apex:selectOption id="optionsRadios3" itemValue="demandDraft" itemLabel="Demand Draft"/>
+                                        </div>
+                                    </apex:selectRadio>
+                                    <span class="payModeMsg errorMsg"></span>
+                                </div>
+                                
+                                <div class="paybox ol-payment">
+                                    <h4 class="sub-ttl"> Online Payment</h4>
+                                    <div class="payment-box">
+                                        <p>FLAME University accepts various types of online payment modes. The application fee is INR 2,000/-. </p>
+                                    </div>
+                                </div>
+                                
+                                <div class="paybox scratchCard">
+                                    <h4 class="sub-ttl"> Scratch Card</h4>
+                                    <div class="payment-box">
+                                        <p>Applicants paying via Scratch Card are requested to keep their scratch cards (purchased from our regional counselors) ready. Please enter the unique voucher code in the application form. The application fee to FLAME University is INR 2,000/-. </p><br/>
+                                        <div class="row">
+                                            <div class="col-sm-4 col-xs-12" ><strong>Scratch Card Number</strong> <span class="errorMsg">*</span></div>
+                                            <div class="col-sm-4 col-xs-12" id="scratchCard"><apex:inputText id="scratchCardNo" styleClass="form-control" value="{!scarchCardNo}"/><span Class="ErrorMsg"><apex:pageMessages id="ErrorMsg" ></apex:pageMessages></span>
+                                                <span class="scrMsg errorMsg"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="paybox demandDraft">
+                                    <h4 class="sub-ttl"> Demand Draft</h4>
+                                    <div class="payment-box">
+                                        <p>Applicants paying via Demand Draft are requested to keep their demand drafts ready. The application fee to FLAME University is INR 2,000/-. Please write the applicant name and applicant number on the backside of the demand draft and the envelope in which it is enclosed. Please draw the draft in the name of, ‘FLAME University Pune’, payable in Pune. Submit the demand draft to: The Admission Office, Foundation For Liberal And Management Education, 401, Phoenix Complex, Bund Garden Road, Opposite Residency Club, Pune 411001, Maharashtra, India.</p><br/>
+                                        
+                                        <p id="ddErrors" style="color:red;">
+                                            
+                                        </p>
+                                        <div class="row form-group" id="paidBy">
+                                            <div class="col-sm-4 col-xs-12"><strong>Paid By</strong> <span class="errorMsg">*</span></div>
+                                            <div class="col-sm-4 col-xs-12"><apex:selectList multiselect="false" size="1" styleClass="form-control" value="{!paidBy}">
+                                                <apex:selectOption itemLabel="Bank Draft/DD" itemValue="Demand Draft"/>
+                                                </apex:selectList>
+                                                <span class="bDraftMsg errorMsg"></span></div>
+                                        </div>
+                                        <div class="row form-group" id="dDNumber">
+                                            <div class="col-sm-4 col-xs-12"><strong>DD Number</strong> <span class="errorMsg">*</span></div>
+                                            <div class="col-sm-4 col-xs-12"><apex:inputText id="ddNo" styleClass="form-control" value="{!ddNumber}"/>
+                                                <span class="ddMsg errorMsg"></span>    
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row form-group" id="ddDrawn">
+                                            <div class="col-sm-4 col-xs-12"><strong>Drawn on(Bank Name)</strong> <span class="errorMsg">*</span></div>
+                                            <div class="col-sm-4 col-xs-12"><apex:inputText id="ddBank" styleClass="form-control" value="{!ddDrwanBank}"/>
+                                                <span class="bankNMsg errorMsg"></span></div>
+                                        </div>
+                                        <div class="row form-group" id="banBranch">
+                                            <div class="col-sm-4 col-xs-12"><strong>Branch</strong> <span class="errorMsg">*</span></div>
+                                            <div class="col-sm-4 col-xs-12"><apex:inputText id="bankBranch" styleClass="form-control" value="{!bankBranch}"/>
+                                                <span class="bBranchMsg errorMsg"></span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-buttons" id="paymentBtn">
+                                    <apex:commandButton id="payNowBtn" value="PAY NOW" action="{!payNowMethod}" onclick="if(payMentValid()==false){return false;};" styleClass="btn next-btn"/>
+                                </div>
+                            </form>
+                            <c:ChangePasswordComponent />
+                        </apex:form>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <c:FooterComponent />
+    
+    <script type="text/javascript">
+    var a = $('#paymentMode input[type="radio"]:checked').val();
+    if(a == "scratchCard"){
+        $('.scratchCard').show();
+        $('.messageCell').addClass('errorMsg');
+    }
+    function payMentValid(){
+        var counter = 0;
+        var a=$('#paymentMode input[type="radio"]:checked');
+        var b=a.length;
+        if(b == 0){
+            $('.payModeMsg').text('Please Select A Payment Mode.');
+            counter++;
+        }else{
+            $('.payModeMsg').text('');
+        }
+        var c=a.val();
+        if(c=="demandDraft"){
+            var ddNo = document.getElementById("{!$Component.rerenderForm.ddNo}").value;
+            if(ddNo == ""){
+                $('.ddMsg').text('DD Number is required.');
+                counter++;
+            }else{
+                $('.ddMsg').text('');
+            }
+            var ddBank = document.getElementById("{!$Component.rerenderForm.ddBank}").value;
+            if(ddBank == ""){
+                $('.bankNMsg').text('Bank Name is required.');
+                counter++;
+            }else{
+                $('.bankNMsg').text('');
+            }
+            var ddBranch = document.getElementById("{!$Component.rerenderForm.bankBranch}").value;
+            if(ddBranch == ""){
+                $('.bBranchMsg').text('Bank Branch is required.');
+                counter++;
+            }else{
+                $('.bBranchMsg').text('');
+            }
+        }
+        if(c == "scratchCard"){
+            var e=$('#scratchCard input[type="text"]').val();
+            if(e == ""){
+                $('.scrMsg').text('Scratch Card Number is required.');
+                counter++;
+            }else{
+                $('.scrMsg').text('');
+            }
+        }
+        console.log('Errors : ',counter);
+        if(counter > 0){
+            return false;
+        }else{
+            console.log('true');
+            return true;
+        }
+        
+    }
+    function numOnly(){
+        this.value = this.value.replace(/[^0-9]/g, '');
+        //.substring(0, 25);        
+    }
+    $(document).on('keyup','#dDNumber input[type="text"]',numOnly);
+    
+    function changeText()
+    {
+      <!--  alert('vcr--inside option selected'); -->
+        var a = $('#paymentMode input[type="radio"]:checked').val();
+        if(a == "scratchCard" || a == "demandDraft"){
+            $('#paymentBtn input[type="submit"]').val('SUBMIT');
+        }
+        else
+        {
+            $('#paymentBtn input[type="submit"]').val('PAY NOW');
+        }
+        if(a == 'olpayment'){
+        <!--    alert('vcr--online pay selected'); --->
+            $('.payModeMsg').text('');
+            $('.ddMsg').text('');
+            $('.bankNMsg').text('');
+            $('.bBranchMsg').text('');
+            $('.scrMsg').text('');
+            $('.messageCell').text('');
+            $('#scratchCard input[type="text"]').val('');
+            document.getElementById("{!$Component.rerenderForm.ddNo}").value = '';
+            document.getElementById("{!$Component.rerenderForm.ddBank}").value = '';
+            document.getElementById("{!$Component.rerenderForm.bankBranch}").value = '';
+        }else if(a == 'scratchCard'){
+            
+            $('.payModeMsg').text('');
+            $('.ddMsg').text('');
+            $('.bankNMsg').text('');
+            $('.bBranchMsg').text('');
+            document.getElementById("{!$Component.rerenderForm.ddNo}").value = '';
+            document.getElementById("{!$Component.rerenderForm.ddBank}").value = '';
+            document.getElementById("{!$Component.rerenderForm.bankBranch}").value = '';
+            
+        }else if(a == 'demandDraft'){
+            
+            $('.scrMsg').text('');
+            $('.messageCell').text('');
+            $('#scratchCard input[type="text"]').val('');
+        }
+    }
+    $( document ).ready(function(){
+        var a = $('#paymentMode input[type="radio"]:checked').val();
+   <!--     alert('vcr--a value--'+a); --->
+        if(a == 'olpayment'){
+            $('.ol-payment').show();
+        }
+        changeText();
+    });
+    </script>
+    </body>
+    </html>
+</apex:page>

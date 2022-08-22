@@ -1,0 +1,188 @@
+<apex:page controller="ResourcePageController"   docType="html-5.0" lightningStylesheets="true"  standardStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >       
+    <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    <!-- page css -->
+    <script type="text/javascript">
+    
+    function dosomething(val){
+        console.log(val);
+        actFunction(val);
+    }
+     function dosomething1(val){
+        console.log(val);
+        actionFun(val);
+    }
+    
+    </script>
+    
+    <script>
+        $(window).resize(function() {
+        var viewportWidth = $(window).width();
+            // Handler for .ready() called.
+            if( viewportWidth <= 768){
+               $('.onclick-scroll').click(function(){
+                    $('html, body').animate({
+                        scrollTop: $('#scroll-top').offset().top + 700
+                    }, 'slow');
+                });
+            }
+        });
+
+    </script> 
+    
+    <style>
+        .navbar .navbar-nav > .flm_Resources > a, .navbar .navbar-nav > .flm_Resources > a:focus, .navbar .navbar-nav > .flm_Resources > a:hover {
+            color: #fff !important;
+            background-color: #fbb601 !important;
+            padding-left: 10px;
+        }
+        .resource-side-menu .dropdown {
+            margin-bottom:10px;
+        }
+        .resource-side-menu .btn-primary {
+            color: #fff;
+            background-color: #027cb3;
+            border-color: #027cb3;
+            width: 100%;
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 14px;
+            padding:10px;
+        }
+        .resource-side-menu .dropdown-menu.show {
+            top: 36px !important;
+            width: 100%;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding-bottom: 0;
+        }
+        .resource-side-menu .dropdown-menu.show .dropdown-item {
+            //color: #084d89;
+            font-size: 14px;
+            padding: 10px;
+            border-bottom: 1px solid #ccc;
+        }
+        .resource-side-menu .dropdown-menu.show .dropdown-item:hover {
+            background-color: #ededed;
+            text-decoration: none;
+            //color: #fff;
+        }
+        .resource-side-menu .dropdown-toggle::after {
+            float: right;
+            margin-top: 10px;
+        }
+        .resource-side-menu .show>.btn-primary.dropdown-toggle {
+            background-color: #027cb3;
+            border-color: #027cb3;
+        }
+        
+        .resource-content-area {
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #eae9e9;
+            font-size: 14px;
+            float: left;
+            width: 100%;
+        }
+        
+        .resource-content-area .heading {
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        .resource-content-area .sections {
+            background-color: #fbfbfb;
+            padding: 10px 15px 0;
+            border: 1px solid #efeeee;
+            margin-bottom: 10px;
+        }
+        .resource-content-area .sections h3 {
+            font-size: 14px;
+            color: #084d89;
+            margin-bottom: 10px;
+        }
+        .resource-content-area .sections p {
+        font-size: 14px;
+        }
+        .resource-content-area .sections a {
+        color: #084d89;
+        //font-weight: bold;
+            word-break: break-all;
+        }
+        .slds-scope a:hover, .slds-scope a:focus {
+        
+            color: #000 !important;
+        }
+        .slds-scope a {
+            color: #000 !important;
+        }
+        .loadingBG{
+            position: fixed;
+            top: 0; 
+            left: 0;
+            right: 0; 
+            bottom: 0; 
+            opacity: 0.5; 
+            z-index: 1000; 
+            background-color:#084d89;
+        }
+        .loadingBGP{
+            position: fixed; 
+            left: 0; top: 0; 
+            bottom: 0; 
+            right: 0; 
+            z-index: 1001; 
+            margin: 15% 50%;        
+        } 
+        i.custom {font-size: 1em; color: red;}
+        
+        .resource-side-menu .slds-select {
+            text-align: left;
+            height: 40px;
+            color: #566573;
+        }
+       
+    </style>
+    
+    <body>
+        <apex:form id="IdFrm">        
+            <!-- Left Panel -->
+           
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+           
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->  
+                <div class="sub-heading">
+                        <h6>Resources</h6>
+                    </div>  
+                    
+                   <div class="col-lg-12">                                   
+                                <div class="resource-content-area" id="resource-content-area">
+                                    <div class="heading"><b>{!Header}</b></div>
+                                    <apex:repeat value="{!resourceList}" var="rList"> 
+                                     <h3>Name : {!rList.Document_Name__c}</h3> 
+                                   
+                    </apex:repeat>
+                                               
+                <!--Main container --> 
+                 <apex:outputText value="{!htmlText}" escape="false"/> 
+                  <br/><br/>
+                 <div class="form-buttons">
+                        <apex:commandButton value="Back to Resources" action="{!proceedtoback}" id="IdTicketBtn" styleClass="slds-button slds-button_neutral slds-float_right" style="margin-top:35px;"/>
+                    </div> 
+                     
+               </div>
+                             
+                  </div></div>
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>
+    
+</apex:page>

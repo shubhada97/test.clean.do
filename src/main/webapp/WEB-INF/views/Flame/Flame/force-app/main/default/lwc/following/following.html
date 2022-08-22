@@ -1,0 +1,16 @@
+<template>
+    <lightning-card >
+        <div class="slds-align_absolute-center">
+        <p>Following({size})</p>
+    </div><br>
+    <template for:each={followingList} for:item="group">
+            
+    
+        <p key={group.Id}  >
+           
+            <a href="#"> {group.Name}</a>
+       
+        </p>
+    </template>
+    </lightning-card>
+    </template>

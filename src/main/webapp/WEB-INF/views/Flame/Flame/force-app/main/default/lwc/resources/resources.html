@@ -1,0 +1,154 @@
+<template> 
+<div class="slds-theme_shade">
+    <div class="slds-grid">
+        <p style="font-size: 20px; font-weight: 500; padding-left: 20px;padding-top: 15px;">Resources</p>
+    </div>
+    <br>
+
+    <div class="slds-grid " style="margin-bottom: 39px;">
+        
+        <div class="slds-col slds-size_8-of-12">
+            <div class="slds-grid " >
+
+            
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="Academic" onclick={handleAcedemic} class="slds-m-left_medium"></lightning-button>
+            </div>
+
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="Campus" onclick={handleCampus}></lightning-button>
+                
+            </div>
+
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="ERP" onclick={handleERP}></lightning-button>
+                
+            </div>
+
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="Research" onclick={handleResearch}></lightning-button>
+                
+            </div>
+
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="Quick Links" onclick={handleQuickLinks}></lightning-button>
+                
+            </div>
+
+            <div class="slds-col slds-size_2-of-12">
+                <lightning-button label="Knowledge Base" onclick={handleKnowledgeBase}></lightning-button>
+            </div>
+        </div>
+        </div>
+
+        <div class="slds-col slds-size_4-of-12">
+
+        </div>
+        
+    
+</div>
+<template if:true={showOnClickOfAcademic}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+            <lightning-button label="Bodies, Centres and Committees" style="margin-bottom: 20px ;"></lightning-button>
+            <lightning-button label="Examination Resources" style="margin:30px; margin-bottom: 20px;"></lightning-button>
+            <lightning-button label="Forms" style="margin:30px"></lightning-button>
+            <lightning-button label="Handbooks & Annexures" style="margin:30px"></lightning-button>
+            <lightning-button label="IRB Resources" style="margin:30px"></lightning-button>
+            <lightning-button label="Library Resources" style="margin:30px"></lightning-button>
+            <lightning-button label="Schedules" style="margin:30px"></lightning-button>
+            
+        </div>
+    </div>
+</template>
+
+<template if:true={showOnClickOfCampus}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+            <lightning-button label="Campus1" style="margin:30px"></lightning-button>
+            <lightning-button label="Campus2" style="margin:30px"></lightning-button>
+            <lightning-button label="Campus3" style="margin:30px" ></lightning-button>
+            <lightning-button label="Campus4" style="margin:30px"></lightning-button>
+            
+        </div>
+    </div>
+</template>
+
+<template if:true={showOnClickOfERP}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+            <lightning-button label="ERP1" style="margin:30px"></lightning-button>
+            <lightning-button label="ERP2" style="margin:30px"></lightning-button>
+            <lightning-button label="ERP3" style="margin:30px"></lightning-button>
+            <lightning-button label="ERP4" style="margin:30px"></lightning-button>
+            
+        </div>
+    </div>
+</template>
+
+<template if:true={showOnClickOfResearch}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+            <lightning-button label="Research1" style="margin:30px"></lightning-button>
+            <lightning-button label="Research2" style="margin:30px" ></lightning-button>
+            <lightning-button label="Research3" style="margin:30px"></lightning-button>
+            <lightning-button label="Research4" style="margin:30px"></lightning-button>
+        
+        </div>
+    </div>
+</template>
+
+<template if:true={showOnClickOfQuickLinks}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+            <lightning-button label="QuickLinks1" style="margin:30px"></lightning-button>
+            <lightning-button label="QuickLinks2" style="margin:30px"></lightning-button>
+            <lightning-button label="QuickLinks3" style="margin:30px"></lightning-button>
+            <lightning-button label="QuickLinks4" style="margin:30px"></lightning-button>
+            
+        </div>
+    </div>
+</template>
+
+<template if:true={showOnClickOfKnowledgeBase}>
+    <div class="slds-grid">
+        <div class="slds-col" style="padding-left: 20px;margin: 20px;border-radius: 5px;">
+          
+                       <lightning-input type="text" onchange={handleKnowledgeBase1} label="Enter some text"></lightning-input>
+                <br/>
+                <lightning-button label="Search" 
+                                  variant="brand" 
+                                  onclick={handleSearch}></lightning-button>
+            
+        
+
+        <div>
+<template for:each={storeTitle} for:item="item">
+    <ul key={item}>
+        <li>{item}</li>
+    </ul>
+</template>
+            <!-- <ul >
+                <li>{storeTitle}</li><br>
+            </ul> -->
+            <!-- <p>{storeTitlenew}</p> -->
+        </div>
+
+    <div if:true={searchData}>
+        <lightning-datatable data={searchData} 
+                             columns={columns} 
+                             key-field="id"
+                             hide-checkbox-column="true"></lightning-datatable>
+    </div>
+            <!-- <lightning-button label="KnowledgeBase1"></lightning-button>
+            <lightning-button label="KnowledgeBase2"></lightning-button>
+            <lightning-button label="KnowledgeBase3"></lightning-button>
+            <lightning-button label="KnowledgeBase4"></lightning-button> -->
+            
+        </div>
+    </div>
+</template>
+
+    
+</div>
+</template>

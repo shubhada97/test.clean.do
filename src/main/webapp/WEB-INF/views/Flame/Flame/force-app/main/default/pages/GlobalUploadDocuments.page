@@ -1,0 +1,99 @@
+<apex:page controller="Flame_Community" action="{!UploadDocuments}" sidebar="false" showChat="false" showHeader="false" standardStylesheets="false">
+    <head>
+        <c:ResourceFiles />
+        <title>Upload Documents</title>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/bootstrap.filestyle/1.1.0/js/bootstrap-filestyle.min.js"> </script>
+        <script>
+            var files;
+            $(document).ready(function(){
+                function getUrlVars(param)
+                {
+                    var vars = [], hash;
+                    var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+                    for(var i = 0; i < hashes.length; i++)
+                    {
+                        hash = hashes[i].split('=');
+                        vars.push(hash[0]);
+                        vars[hash[0]] = hash[1];
+                    }
+                    return vars[param];
+                }
+                if(getUrlVars('FileUpload') == '1'){
+                    $("[id$='myForm']").hide();
+                    window.top.location = '/a00N000000CfXee';
+                }
+                if($("[id$='myFile']").val() == ''){
+                    $("[id$='uploadButton']").attr('disabled','disabled');
+                }
+                
+                $("[id$='myFile']").change(function() {
+                    if($("[id$='myFile']").val() != ''){
+                        var size = $("[id$='myFile']")[0].files[0].size;
+                        if($("[id$='selectedDocument']").val() != '--None--'){
+                            if(size < 6000000){
+                                $("[id$='uploadButton']").removeAttr('disabled');
+                                $("#error").hide();
+                            }
+                            else{
+                                $("[id$='uploadButton']").attr('disabled','disabled');
+                                $("#error").show();
+                            }
+                        }
+                    }   
+                });
+                
+                $("[id$='selectedDocument']").change(function() {
+                    if($("[id$='selectedDocument']").val() != '--None--' && $("[id$='myFile']").val() != ''){
+                            var size = $("[id$='myFile']")[0].files[0].size;
+                            if(size < 6000000){
+                                $("[id$='uploadButton']").removeAttr('disabled');
+                            }
+                            else{
+                                $("[id$='uploadButton']").attr('disabled','disabled');
+                            }
+                        }
+                        else{
+                            $("[id$='uploadButton']").attr('disabled','disabled');
+                        }
+                    }); 
+            });
+        </script>
+        </head>
+    <body>
+        <apex:form id="myForm">
+            <div class="container">
+                <h4 class="sub-ttl">Documents to Upload</h4>
+                <div class="doc-upload">
+                            <div class="row form-group">
+                                <div class="col-sm-4"><p>Document Type*</p></div>
+                                <div class="col-sm-4">
+                                    <apex:selectList value="{!selectedDocument}" styleClass="form-control" size="1" id="selectedDocument">
+                                        <apex:selectOptions value="{!documentTypes}"/>
+                                    </apex:selectList>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-4"><p>Description</p></div>
+                                <div class="col-sm-4">
+                                    <apex:inputTextarea value="{!documentDescription}" styleClass="form-control"></apex:inputTextarea>
+                                </div>
+                            </div>
+                            <div class="row form-group">
+                                <div class="col-sm-4"><p>Upload Documents* (MAX 6MB)</p></div>
+                                <div class="col-sm-4">
+                                    <p><apex:inputFile value="{!file}" filename="{!fileName}" id="myFile" styleClass="filestyle"/></p>
+                                    <span id="error" style="color:red;display:none;">You cannot upload a file of size more than 6MB</span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <apex:commandButton id="uploadButton" action="{!UploadDoc}" styleClass="btn save-btn" value="Upload Documents"/>
+                                </div>
+                            </div>
+                        </div>
+            </div>
+        </apex:form>
+        <style>
+            body{background: url() top center no-repeat !important};
+            
+        </style>
+    </body>
+</apex:page>

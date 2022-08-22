@@ -1,0 +1,27 @@
+.THIS.slds-button slds-button_brand { 
+    width:120px;
+}
+.THIS.dvClass{
+       width:30%;
+    }
+.THIS.search_block_Area {
+    overflow: auto;
+    display: inline-block;
+    width: 100%;
+}
+.THIS.search_block_Area .search_right_Area {
+    width: 60%;
+    max-width:100px;
+    float: right;
+}
+.THIS.slds-scope{
+    width : 400px;
+}
+.THIS.my-button-text:hover{
+    background-color: #fbb601
+}
+.THIS.Map-center{
+    max-width: min-content;
+  max-height: 100px;
+ 
+}

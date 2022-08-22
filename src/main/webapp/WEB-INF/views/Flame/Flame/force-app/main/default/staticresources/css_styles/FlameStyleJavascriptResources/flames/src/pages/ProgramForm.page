@@ -1,0 +1,165 @@
+<apex:page standardController="Application__c" showHeader="false" sidebar="false" extensions="ProgramFormController">
+    <style type="text/css">
+        body .bPageBlock, body #bodyCell .bResource .secondaryPalette, body .secondaryPalette.bPageBlock, body .individualPalette .secondaryPalette.bPageBlock, body .bodyDiv .genericTable, body .genericPageBlockTable, body .bodyDiv .bSubBlock, body .bComponentBlock .bPageBlock, body .bMyDashboard .bPageBlock, body.rlHoverFrame .bPageBlock, body.subjectSelectionPopup div.choicesBox, body.lookupTab .secondaryPalette.bPageBlock, body.popupTab .secondaryPalette.bPageBlock, body.UserTagStatsPage .secondaryPalette.bPageBlock
+        {
+            background-color: rgba(52, 84, 53, 0.14);
+            border-bottom: 1px solid #eaeaea;
+            border-left: 1px solid #eaeaea;
+            border-right: 1px solid #eaeaea;
+            -moz-border-radius: 4px;
+            -webkit-border-radius: 4px;
+            border-radius: 46px;
+        }
+        body 
+        {
+            background-repeat: repeat-x;
+            background-position: left top;
+            font-size: 80%;
+        }
+        .bPageBlock .detailList .dataCol 
+        {
+            width: 0%;
+        }
+        .bPageBlock .dataCol
+        {
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 42px;
+            text-align: center;
+        }
+        .bPageBlock .detailList .data2Col 
+        {
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 6px;
+            text-align: left;
+            width: 82%;
+        }
+        .apexp .bPageBlock p 
+        {
+            margin-bottom: 11px;
+            margin-left: 288px;
+            font-weight:bold;
+        }
+        .rowstyle 
+        {
+            border-bottom-style:solid;
+            border-bottom-width:1px;
+            border-bottom-color:#E8E8E8 
+        } 
+        /*.bPageBlock .dataCol 
+        {
+            padding-top: 2px;
+            padding-right: 2px;
+            padding-bottom: 2px;
+            padding-left: 91px;
+            text-align: left;
+        }
+        */
+    </style>
+    <apex:form id="formId">
+        <apex:pageBlock id="trainersBlock" title="Program and Test">
+        
+            <!-- Section for Programs -->
+            
+            <apex:pageBlockSection title="Please Select The Program You Are Applying For" collapsible="false" columns="1">
+                <apex:selectList value="{!program}" size="1">
+                    <apex:selectOption itemValue="Select the Program" itemLabel="Select the Program" />
+                    <apex:selectOptions value="{!Programs}" />
+                    <apex:actionSupport event="onchange" rerender="applicationSection,GDPIrounds,GDPIcenters" />
+                </apex:selectList>
+            </apex:pageBlockSection>
+            
+            <!-- Section for Competitve Exam Checkboxes -->
+            
+            
+            <apex:outputPanel id="applicationSection" rendered="{!IF(program == 'Undergraduate (B.A.,BBA,B.Sc.)', false, true)}">
+            
+                <!--apex:pageBlockSection collapsible="false" columns="7" title="Test Appeared/Appearing for (All applicants must appear for either one of the tests): " >
+                    <apex:selectCheckboxes value="{!compExam}" layout="pageDirection" id="exm" rendered="true">
+                        <apex:selectOptions value="{!examComp}"/><br/>
+                        <apex:actionsupport event="onclick" reRender="trainersBlock,ExamsList" action="{!AddCompetitionExams}"/>
+                    </apex:selectCheckboxes>
+                </apex:pageBlockSection>-->
+                
+            <apex:repeat value="{!examComp}" var="option">
+                <apex:commandButton value="{!option.label}" onclick="addExamAction('{!option.value}');return false;"/>
+            </apex:repeat>
+                
+            </apex:outputPanel>
+            
+            <apex:outputPanel id="ExamsList">
+                <apex:pageBlockSection >
+                    <apex:pageBlockTable value="{!lstOfCompetitionExams}" var="exams" >
+                        <apex:column headerValue="Name">
+                            <apex:outputlabel value="{!exams.Competitive_Exams__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Registeration No">
+                            <apex:inputField value="{!exams.Registration_No__c}" />
+                        </apex:column>
+                        <apex:column headerValue="Score">
+                            <apex:inputField value="{!exams.Score__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Percentile">
+                            <apex:inputField value="{!exams.Percentile__c}"/>
+                        </apex:column>
+                        <apex:column headerValue="Result Awaited">
+                            <apex:inputField value="{!exams.Result_Awaited__c}"/>
+                        </apex:column>
+                    </apex:pageBlockTable>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+            
+            <!-- Section for GDPI Rounds and GDPI Centers-->
+            
+            <apex:pageBlockSection title="Please Select Your GD/PI Round AND Center Choices" collapsible="false" columns="1">
+                
+                <!-- Section for GDPI Rounds-->
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel value="GD and PI Round" id="GDPIrounds"/>
+                    <apex:selectList size="1" value="{!round}">
+                        <apex:selectOption itemValue="Select GD and PI Round" itemLabel="Select GD and PI Round"/>
+                        <apex:selectOptions value="{!Rounds}"/>
+                        <apex:actionSupport event="onchange" reRender="GPI"/>
+                    </apex:selectList>
+                </apex:pageblockSectionItem>
+                
+                <!-- Section for GDPI Centers -->
+                
+                <apex:pageblockSectionItem >
+                    <apex:outputLabel value="GD and PI Center" id="GDPIcenters"/>
+                    <apex:selectList size="1" value="{!center}" id="GPI">
+                        <apex:selectOption itemValue="Select GD and PI Center" itemLabel="Select GD and PI Center"/>
+                        <apex:selectOptions value="{!centers}"/>
+                    </apex:selectList>
+                </apex:pageblockSectionItem>
+            </apex:pageBlockSection>
+        </apex:pageBlock>
+        <apex:actionFunction name="addExamAction" action="{!AddCompetitionExams}" reRender="formId">
+            <apex:param name="selectedExam" assignTo="{!selectedExam}" value=""/>
+        </apex:actionfunction>
+        <apex:actionFunction name="removeExamAction" action="{!RemoveCompetitionExams}" reRender="formId">
+            <apex:param name="selectedExam" assignTo="{!selectedExam}" value=""/>
+        </apex:actionfunction>
+        <script>
+            function addRemoveExam()
+            {
+            }
+            var count = 1;
+            function setColor(btn, color) {
+                var property = document.getElementById(btn);
+                if (count == 0) {
+                    property.style.backgroundColor = "#FFFFFF"
+                    count = 1;        
+                }
+                else {
+                    property.style.backgroundColor = "#7FFF00"
+                    count = 0;
+                }
+            }
+        </script>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,32 @@
+<apex:page showHeader="false" sidebar="false" showChat="false" standardStylesheets="false">
+    <head>
+    <c:ResourceFiles />
+    </head>
+    <body style="font-family: 'Open Sans', sans-serif;">
+    <!-- HEADER START -->
+    <div class="header">
+        <div class="container">
+            <div class="brand"><a href="javascript:void(0)"><img src="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a></div>
+        </div>
+    </div>
+    <!-- HEADER END -->
+    <!-- DASHBOARD START -->
+    <apex:form >
+        <div class="main-dashboard">
+        <div class="container">
+            <div class="dashboard-inner">
+                <div class="tab-container">
+                    <div class="tab-content" id="tab2">
+                        <h1 style="text-align:Center">
+                            Something Went Wrong. Please Try Again.
+                        </h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </apex:form>
+    <!-- DASHBOARD END -->
+    <!-- FOOTER START -->
+    </body>
+</apex:page>

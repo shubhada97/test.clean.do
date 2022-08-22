@@ -1,0 +1,129 @@
+<apex:page Controller="Flame_Community" action="{!Flame_Communitymethod}" standardStylesheets="false" sidebar="false" showHeader="false" doctype="HTML-5.0" title="Home">
+    <c:ResourceFiles />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+   <script>
+  $( document ).ready(function() 
+  {
+     if(window.location.href.indexOf("LoginPage") > -1) { 
+       $('.click').trigger('click');
+     }
+     
+  });
+</script>
+<head>
+<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-N6V423B');</script>
+<!-- End Google Tag Manager -->
+</head>
+
+<body>
+<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N6V423B"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->
+
+    <style>
+       .wel-text{margin-top:10px;}
+    </style>
+    <apex:form >
+        
+        <div class="header">
+            <div class="container">
+             <div class="brand">
+                 <a href="javascript:void(0)"><apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+             </div>
+             <c:FU_TopNavigation ConName="{!con.Name}" ConId="{!con.Id}" />   
+            </div>
+        </div>
+    <!-- First Page-->    
+         <apex:outputPanel rendered="{!IF(AND(indexSwitch==false,indexSwitch2==false), TRUE, FALSE)}">
+        <div class="main-dashboard">
+            <div class="container">
+                <div class="dashboard-inner">
+                <c:HeaderAndTabs staticconid="{!ContactId}"/>
+                    <div>    
+                    <!-- <h4 class="sub-ttl wel-text">Welcome!</h4> -->
+                    <br/>
+                    <p>Dear<strong> {!con.Name}</strong>,</p>
+                    </div> 
+                    <apex:outputText value="{!htmlText}" escape="false"/>
+                   
+                 <!-- <apex:outputPanel rendered="{!App.Completed_Stages__c ==' Education & Work'}"> -->
+                   <div class="form-buttons">
+                    <apex:commandButton value="PROCEED TO APPLICATION" action="{!proceedApplication}" disabled="{!If(CONTAINS(App.Completed_Stages__c, "Education & Work"),true,false)}"  styleClass="btn save-btn"/>
+                       
+                    </div>
+              <!--   </apex:outputPanel > -->
+                   </div>
+                   </div>
+                   </div>
+                  </apex:outputPanel>
+       
+    <!-- Second page-->  
+      
+        <apex:outputPanel rendered="{!IF(AND(indexSwitch==true,indexSwitch2==false), TRUE, FALSE)}">
+        <div class="main-dashboard">
+            <div class="container">
+                <div class="dashboard-inner">
+                
+                    <c:TabsPanel2 staticconid="{!ContactId}"/>
+                    <div>    
+                    <!-- <h4 class="sub-ttl wel-text">Welcome!</h4> -->
+                    <br/>
+                    <p>Dear<strong> {!con.Name}</strong>,</p>
+                    </div> 
+                     <apex:outputText value="{!htmlText1}" escape="false"/>
+                   
+                     <div class="form-buttons">
+                        <apex:commandButton value="Photograph Upload" action="{!proceedApplication}" disabled="{!App.FUA_SOP_Submitted__c}" styleClass="btn save-btn"/>
+                    </div>
+                  
+                </div>
+            </div>
+        </div>
+        </apex:outputPanel>
+        <!--- Third page  -->
+      
+      <apex:outputPanel rendered="{!IF(AND(indexSwitch==true,indexSwitch2==true), TRUE, FALSE)}">
+        <div class="main-dashboard">
+            <div class="container">
+                <div class="dashboard-inner">
+                
+                    <c:TabsPanel3 staticconid="{!ContactId}"/>
+                    <div>    
+                    <h4 class="sub-ttl wel-text">Welcome!</h4>
+                    <p>Dear<strong> {!con.Name}</strong>,</p>
+                    </div> 
+                     <apex:outputText value="{!htmlText2}" escape="false"/>
+                      
+                     <div class="form-buttons">
+                   <!--     <apex:commandButton value="Photograph Upload" action="{!proceedApplication}" styleClass="btn save-btn"/> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        </apex:outputPanel> 
+        <!--add new modification--->
+        <c:ChangePasswordComponent />
+        <c:FooterComponent />
+       
+       
+       
+        
+</apex:form>
+<!-- add new modification-->
+
+<apex:outputPanel id="JSPanel">
+                <script>
+                    function redirectBack() {
+                         window.location.href = "{!$Site.Prefix}/secur/logout.jsp";
+                    }
+                    
+                </script>
+</apex:outputPanel> 
+</body>
+</apex:page>

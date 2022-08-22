@@ -1,0 +1,12 @@
+.tabContent
+{
+    display:block;
+     padding:15px;
+      font-size:14px; overflow: hidden;
+      width: 70%;
+    }
+    .outputFont {
+      font-weight:bold;
+  }
+
+

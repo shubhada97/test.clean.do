@@ -1,0 +1,648 @@
+<apex:page docType="html-5.0" controller="StudentRegistrationcontroller"  standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >       
+    <!-- VF componen which hold the common java script and css for all pages action="{!popupaction}" -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    <!-- page css -->
+    
+    <!-- jquery datepicker plugin -->
+    
+    
+    <style>
+        .navbar .navbar-nav > .flm_Assist > a,
+        .navbar .navbar-nav > .flm_Assist > a:focus,
+        .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }       
+    </style>      
+   
+    <body>
+        <apex:form id="pb1" html-autocomplete="off">
+            <!-- Left Panel -->
+           <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside> 
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar /> 
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <div class="col-lg-3">
+                        <div class="assist-side-menu">                             
+                                                     
+                        </div> 
+                    </div>
+                    <div class="col-lg-12"> 
+                    <div class="sub-heading" ><h6>Student Data Verification  </h6></div>                     
+                     <!--   <div class="assist-content-area"> -->
+                            <div class="services-content" style="padding-bottom:75px;">
+                                <!-- page load  msg section start -->
+                               
+                                <!-- Show ticket details start -->
+                               <apex:outputPanel id="IdTicketDetails"> 
+                                    <apex:outputPanel rendered="{!IsCreated}">
+                                        <script type="text/javascript" >
+                                        $(document).ready(function() {
+                                            var fileName = 'Thank you, record has been saved.';
+                                            $('#modalText').text(fileName);
+                                            //$('#myModal').modal('show');
+                                            $( "#modalBtn" ).trigger( "click" );
+                                        });     
+                                        </script>
+                                    </apex:outputPanel> 
+                  <apex:repeat value="{!contact}" var="conn">      
+                             <div class="col-lg-6"> 
+                            <table class="table information">
+                            <tbody>
+                            <th class="sub-heading">Student Number - {!conn.CVUE_Student_Number__c} </th>
+                             <tr>
+                            <th scope="row"> First Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FirstName}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Middle Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Middle_Name__c}"  />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Last Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.LastName}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Program </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Program_Interested_In__c}" html-disabled="true"  />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Date of Birth </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Date_of_Birth__c}"  required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Application No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.App_Reference_ID__c}" html-disabled="true"  />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Religion </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Religion__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Mother Tongue </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_Tongue__c}" required="true"/>
+                            </td>
+                            </tr>
+                         
+                            </tbody>
+                            </table>
+                            </div>
+                           
+                           
+                           <div class="col-lg-6"> 
+                           <table class="table information">
+                           <tbody>
+                          
+                             <th class="p-4  text-warning">  </th>
+                             <tr>
+                            <th scope="row"> Gender </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Gender__c}" required="true"/>
+                            </td>
+                            </tr>
+                             
+                            <tr>
+                            <th scope="row"> Student PAN No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Student_PAN_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Student Mobile No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.MobilePhone}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Student AADHAAR No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Student_AADHAAR_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Scholastic Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Scholastic_Name__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Physical Disability </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Physical_Disability__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Category </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Category__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Blood Group </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Blood_Group__c}" required="true"/>
+                            </td>
+                            </tr>
+                           
+                           </tbody>
+                           </table>
+                           </div>
+                           
+                      </apex:repeat>      
+                   <!---->
+                    <div class="col-lg-12">
+                    <apex:repeat value="{!contact}" var="conn">      
+                             <div class="col-lg-6"> 
+                              <div class="sub-heading">
+                            <h6> Address Information </h6>
+                            </div>
+                            <table class="table information">
+                            <tbody>
+                            <th class="sub-heading">Permanent Address </th>
+                              <tr>
+                            <th scope="row">Permanent Address Line-1 </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Permanent_Address_Line_1__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                           
+                            <tr>
+                            <th scope="row"> Permanent Address Line-2 </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Permanent_Address_Line_2__c}" />
+                            </td>
+                            </tr>
+                            
+                            <tr id="countryId">
+                            <th scope="row"> Country </th>
+                            <td>
+                           
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Other_Country__c}"  onchange="changeData(this);" required="true"/>
+                           
+                            </td>
+                            </tr>
+                           
+                            <tr id="data1" >
+                            <th scope="row"> State / State of Domicile </th>
+                            <td>
+                            
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Other_State__c}"  />
+                            
+                            </td>
+                            </tr>
+                           
+                           
+                            <tr id="data2">
+                            <th scope="row"> City </th>
+                            <td>
+                           
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Other_City__c}"    />
+                            
+                            </td>
+                            </tr>
+                           
+                            <tr id="data3">
+                            <th scope="row"> Other City </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Other_City__c}"  />
+                            </td>
+                            </tr>
+                            
+                           <tr>
+                            <th scope="row">Postal Code </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Permanent_Postal_Code__c}" required="true"/>
+                            </td>
+                            </tr>
+                          <tr>
+                            <th scope="row">Indian </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Are_you_an_Indian__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Residence Status </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Residence_Status__c}" required="true"/>
+                            </td>
+                            </tr> 
+                         
+                            </tbody>
+                            </table>
+                            </div>
+                             <script type="text/javascript">
+                                
+                                function changeData(ele){
+                                var value = $(ele).val();
+                                if(value=='India'){
+                                $('#data3').hide();
+                                $('#data1').show();
+                                $('#data2').show();
+                                }else{
+                                 $('#data3').show();
+                                 $('#data1').hide();
+                                 $('#data2').hide();
+                                }                       
+                              }  
+                            </script>
+                           
+                           <div class="col-lg-6"> 
+                           <table class="table information">
+                           <tbody>
+                            <th class="p-4  text-warning">  </th>
+                             <th class="p-4  text-warning">  </th>
+                            <tr>
+                            <th class="sub-heading">Mailing Address </th>
+                            </tr>
+                            <tr>
+                            <th scope="row"> Mailing Address Line-1 </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mailing_Address_Line_1__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Mailing Address Line-2 </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mailing_Address_Line_2__c}" />
+                            </td>
+                            </tr>
+                            
+                             <tr>
+                            <th scope="row"> Country </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Mailing_Country__c}" required="true"  onchange="changeData1(this);"/>
+                            </td>
+                            </tr>
+                            
+                             <tr id="data5">
+                            <th scope="row"> State </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Mailing_State__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr id="data4">
+                            <th scope="row">City </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FU_Applicant_Mailing_City__c}" required="true" />
+                            </td>
+                            </tr>
+                            <tr id="data6">
+                            <th scope="row"> Other City </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mailing_City__c}"  />
+                            </td>
+                            </tr>
+                           
+                            <tr>
+                            <th scope="row"> Postal Code </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mailing_Postal_Code__c}" required="true"/>
+                            </td>
+                            </tr>
+                           
+                           </tbody>
+                           </table>
+                           </div>
+                           <script type="text/javascript">
+                                
+                                function changeData1(ele){
+                                var value = $(ele).val();
+                                if(value=='India'){
+                                $('#data6').hide();
+                                $('#data5').show();
+                                $('#data4').show();
+                                }else{
+                                 $('#data6').show();
+                                 $('#data5').hide();
+                                 $('#data4').hide();
+                                }                       
+                              }  
+                            </script>
+                      </apex:repeat>      
+                   </div>
+                  <!---->
+                   <apex:repeat value="{!contact}" var="conn">
+                  <div class="col-lg-12">
+                  <div class="col-lg-6"> 
+                              <div class="sub-heading">
+                            <h6> Parent Information </h6>
+                            </div>
+                  <table class="table information">
+                            <tbody>
+                            <th class="sub-heading">Father Details </th>
+                            <tr>
+                            <th scope="row">Father First Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Father_s_First_Name__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Father Last Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Father_s_Last_Name__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                             <tr>
+                            <th scope="row">Father's PAN No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Father_PAN_No__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Father's AADHAAR No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Father_AADHAAR_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Father's Mobile No</th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FUA_Father_s_Mobile_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Father's Email ID </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Father_s_Email_ID__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Reported on Campus </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Reported_on_Campus__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            
+                           
+                      
+                         
+                            </tbody>
+                            </table>
+                   </div>
+                    <div class="col-lg-6"> 
+                              
+                  <table class="table information">
+                            <tbody>
+                           
+                            <th class="p-4  text-warning">  </th>
+                            <tr>
+                           <th class="sub-heading">Mother Details </th>
+                             </tr>
+                             
+                            <tr>
+                            <th scope="row"> Mother First Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_s_First_Name__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Mother Last Name </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_s_Last_Name__c}" required="true"/>
+                            </td>
+                            </tr> 
+                             
+                             
+                             
+                            <tr>
+                            <th scope="row"> Mother's PAN No  </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_PAN_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row">Mother's AADHAAR No </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_AADHAAR_No__c}" required="true" />
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Mother's Mobile No</th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.FUA_Mother_s_Mobile_No__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                            <tr>
+                            <th scope="row"> Mother's Email ID </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Mother_s_Email_ID__c}" required="true"/>
+                            </td>
+                            </tr>
+                            
+                             <tr>
+                            <th scope="row">Comments </th>
+                            <td>
+                            <apex:inputField styleClass="slds-input" value="{!conn.Withdrawal_Details_Comments__c}" />
+                            </td>
+                            </tr>
+                      
+                         
+                            </tbody>
+                            </table>
+                   </div>
+                   
+                     </div>                                              
+                    </apex:repeat>  
+   
+        
+           
+         
+         
+          <!------------------------------------------------------------>                
+            </apex:outputPanel> 
+                            </div>
+                             </div>
+                          <!--    </div> -->
+        <apex:outputPanel Id="IdTicketOP" >
+        <apex:outputPanel >
+        <div align="center" >
+        <apex:commandButton value="Save"   action="{!popupsubmit}" styleClass="slds-button slds-button_brand " onclick="{!if(IsCreated==true,false,true)}"  reRender="IdTicketOP,IdTicketDetails"/> 
+        </div>
+        </apex:outputPanel>
+        </apex:outputPanel>     
+                              
+                              
+                              </div></div>
+               
+            <!-- Modal -->            
+            <button type="button" id="modalBtn" class="showUpload" data-toggle="modal" data-target="#myModal" style="display:none;">Open Modal</button>
+            <!-- Right Panel -->
+            <div class="modal fade" id="myModal" role="dialog" style="top:30%;">
+                <div class="modal-dialog">                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fbb601;">                            
+                            <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+                                <svg class="slds-button__icon " aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align:center;color:#23466c;">
+                            <h6 id="modalText" class="slds-text-heading_small"></h6> 
+                            <br/>
+                             <apex:commandButton value="Ok" action="{!datauploaded}"  title="Close" />                       
+                        </div> 
+                                              
+                    </div>
+                </div>
+            </div>           
+            <apex:actionStatus id="IdStatus1">
+                <apex:facet name="start">
+                    <div class="loadingBG" >
+                        &nbsp;
+                    </div>  
+                    <div class="loadingBGP" >                        
+                        <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                    </div>            
+                </apex:facet>           
+            </apex:actionStatus>
+                           
+                    
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>    
+    
+</apex:page>

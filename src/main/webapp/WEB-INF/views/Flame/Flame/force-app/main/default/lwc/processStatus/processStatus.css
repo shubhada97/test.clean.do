@@ -1,0 +1,7 @@
+.available{
+    --sds-c-card-color-background: lightgrey;
+}
+.outputFont {
+    font-size: 16px;
+    font-weight:bold;
+}

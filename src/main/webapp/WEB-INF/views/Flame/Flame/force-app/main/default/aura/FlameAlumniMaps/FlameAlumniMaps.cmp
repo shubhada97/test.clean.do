@@ -1,0 +1,84 @@
+<aura:component controller="FlameAlumniController" implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" >
+    <!-- aura attributes to store Map component information -->
+    <aura:attribute name="ContactData" type="Object"/>
+    <aura:attribute name="mapMarkersData" type="Object" access="global" />
+    <aura:attribute name="center" type="Object" />
+    <aura:attribute name="zoomLevel" type="Integer" default="2" />
+    <aura:attribute name="showFooter" type="Boolean" default="false"/>
+     <aura:attribute name="btn" type="Boolean" default="true"/>
+    <aura:attribute name="selectedMarkerValue" type="String" />
+    <aura:attribute name="markersTitle" type="String" />
+    <aura:attribute name="searchString" type="String" default="" />
+    <aura:attribute name="ErrorMessage" type="string"/>
+    <aura:attribute name="PageNumber" type="integer" default="1"/>
+    <aura:attribute name="TotalPages" type="integer" default="0"/>
+    <aura:attribute name="TotalRecords" type="integer" />
+    <aura:attribute name="RecordStart" type="integer" default="0"/>
+     <aura:attribute name="totalcount" type="integer" default="0"/>
+    <aura:attribute name="RecordEnd" type="integer" default="0"/>
+   <aura:attribute name="pageSize" type="Integer" default="1000"/>
+      <aura:attribute name="isSending" type="boolean" />
+     <aura:attribute name="serchcomp" type="boolean" default ="false"/>
+   <!--  init handler which will call 'doInit' fucntion on component load-->
+    
+    <aura:handler name="init" value="{!this }" action="{!c.doInit }"/>
+    
+    <!-- render map component only when we have at least 1 record in list.(mapMarkersData) -->   
+         
+           <div style="position:relative">
+               <aura:if isTrue="{!v.isSending}">
+                    <div class="slds-spinner_container">
+                        <div class="slds-spinner--brand slds-spinner slds-spinner--medium" role="alert">
+                            <span class="slds-assistive-text">Loading</span>
+                            <div class="slds-spinner__dot-a"></div>
+                            <div class="slds-spinner__dot-b"></div>
+                        </div>
+                    </div>
+                </aura:if>
+
+            <div class="slds-grid slds-wrap">
+                			
+                <div  class="slds-col slds-size_1-of-1 slds-large-size_6-of-12">
+                   
+                    <lightning:input  style="width:75%   " type="text" name="input" value="{!v.searchString}" oncommit="{!c.onChangeText}" variant="label-hidden" placeholder="Search Alumni By Name, City, State, Country"/>
+                
+
+                    <p class="slds-text-color_error slds-m-bottom_small"><b>{!v.ErrorMessage}</b></p>
+                </div>
+                <div  class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+                </div>
+                <div  class="slds-col slds-size_1-of-1 slds-large-size_3-of-12">
+                    <div class="slds-align_absolute-center slds-m-bottom_small">
+                        <lightning:button  class="slds-button slds-button_brand  slds-m-right_xx-large my-button-text cFlameAlumniMaps" disabled="{!v.PageNumber == 1}" variant="Brand"  aura:id="prevPage" label="Previous" onclick="{!c.handlePrev}" />            
+                        <lightning:button  class="slds-button slds-button_brand my-button-text cFlameAlumniMaps" disabled="{!v.PageNumber == v.TotalPages}" aura:id="nextPage" variant="Brand"  label="Next  " onclick="{!c.handleNext}"/>
+                    </div>
+                </div>
+            </div>
+
+   
+        <!-- <div onkeyup="{!c.onChangeText}">
+
+        <lightning:input aura:id="searchKnowledgeInput" name="searchKnowledgeInput" label="" type="search" placeholder="Type Alumni Name, City, State..."
+             />
+    </div>-->
+        <aura:if isTrue="{!v.mapMarkersData.length > 0}" >
+            <!-- the map component -->
+            
+            <lightning:map  mapMarkers ="{!v.mapMarkersData}"
+                            markersTitle="Alumni"
+                            zoomLevel ="{!v.zoomLevel}"
+                            selectedMarkerValue="{!v.selectedMarkerValue}"
+                            center="{! v.center }"
+                           />
+            
+            
+            <!--onmarkerselect="{!c.handleMarkerSelect}"-->
+            <!--listView ="hidden"-->
+        </aura:if>
+               
+              
+    </div>
+     <aura:if isTrue="{!v.serchcomp}" >
+               <b> Total Records {!v.totalcount} </b>
+    </aura:if>
+</aura:component>

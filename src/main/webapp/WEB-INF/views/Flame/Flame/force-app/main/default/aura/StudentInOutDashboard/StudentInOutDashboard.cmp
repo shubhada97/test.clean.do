@@ -1,0 +1,9 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickAction" access="global" controller="StudentInOutDashboardController" >
+    <aura:attribute name="batch" type="List"/>
+    <aura:handler name="init" value="{! this }" action="{! c.doInit }"/>
+	<lightning:select name="select" label="Batch" required="true">
+        <aura:iteration items="{!v.Batch}" var="batch">
+                <option text="{!batch}"></option>
+            </aura:iteration>
+    </lightning:select>
+</aura:component>

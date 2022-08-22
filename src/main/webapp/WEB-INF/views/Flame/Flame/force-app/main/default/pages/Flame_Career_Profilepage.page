@@ -1,0 +1,832 @@
+<apex:page docType="html-5.0" controller="Flame_Careerservicesprofilecontroller" lightningStylesheets="true" id="myPage"  standardStylesheets="false" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <apex:slds />
+    <meta charset='UTF-8'/>
+    <link rel='stylesheet' href='styles.css'/>
+    <meta name='viewport'
+    content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <c:Flame_HeadResource /> 
+    
+    <style>
+        .navbar .navbar-nav > .flm_Assist > a,
+        .navbar .navbar-nav > .flm_Assist > a:focus,
+        .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        } 
+       
+       .astrick {
+        color: red;
+        margin-right: 1.25em;
+        display: inline-block;
+        }   
+         
+        
+        .table_Edu_detail_area {
+            width: 100%;
+            overflow: scroll;
+        }
+        .table_Edu_detail_area .table_Edu_detail {
+            width: 100%;
+            overflow: scroll;
+            table-layout: auto;
+        }
+        
+       
+    </style>      
+    
+    <body>
+        
+        <apex:form id="IdFrm" html-autocomplete="off" >
+            <aside id="left-panel" class="left-panel" >
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->    
+            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                
+                
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+              
+                    <div class="col-lg-12">                     
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:75px;">
+               
+         <!-- --------------start page----------------------------- --> 
+        
+         <div class="sub-heading"><h6>Career Services Profile</h6></div>
+       
+         <apex:outputPanel >
+         <apex:repeat value="{!reserList}" var="objContact">
+                              
+                             <div class="col-lg-6"> 
+                              <table class="table information ">
+                               <tbody>
+                                    <tr>
+                                    <th scope="row">First Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.FirstName}"/></td>
+                                    
+                                    </tr>
+                                    <tr>
+                                    <th scope="row">Gender</th>
+                                    <td><apex:outputText value="{!objContact.conn.Gender__c}"/></td>
+                                   
+                                    </tr>
+                                    
+                                   
+                                    <tr>
+                                    <th scope="row">Student Number</th>
+                                    <td><apex:outputText value="{!objContact.conn.CVUE_Student_Number__c}"/></td>
+                                   
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">Program</th>
+                                    <td><apex:outputText value="{!objContact.conn.Program_Interested_In__c}"/></td>
+                                   
+                                    </tr>
+                              
+                               <!--     <tr>
+                                    <th scope="row">Specialization Interest Area</th>
+                                    <td><apex:outputText value="{!objContact.conn.Program_Interested_In__c}"/></td>
+                                   
+                                    </tr> -->
+                                    <tr>
+                                    <th scope="row">Major</th>
+                                    <td><apex:outputText value="{!objContact.conn.Major__c}"/></td>
+                                   
+                                    </tr>
+                              <tr>
+                                    <th scope="row">Father First Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_First_Name__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Father Last Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_Last_Name__c}"/></td>
+                                   
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">Father Email</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_Email_ID__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">Occupation</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_Occupation__c}"/></td>
+                                   
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">Company</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_Current_Company__c}"/></td>
+                                    
+                                    </tr>
+                              
+                              <tr>
+                                    <th scope="row">Designation</th>
+                                    <td><apex:outputText value="{!objContact.conn.Father_s_Designation__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                 
+                              
+                              </tbody>
+                              
+                               </table>
+                               </div>
+                              <div class="col-lg-6"> 
+                               <table class="table information">
+                               <tbody>
+                                    <tr>
+                                    <th scope="row">Last Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.LastName}"/></td>
+                                    
+                                    </tr>
+                              
+                               <tr>
+                                    <th scope="row">Mobile Number</th>
+                                    <td><apex:outputText value="{!objContact.conn.MobilePhone}"/></td>
+                                   
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Email ID</th>
+                                    <td><apex:outputText value="{!objContact.conn.Email}"/></td>
+                                   
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Date of Birth</th>
+                                    <td>
+                                    <apex:outputText value="{0,date,dd/MM/yy}" >
+                                    <apex:param value="{!objContact.conn.Date_of_Birth__c}" />
+                                    </apex:outputText>
+                                   
+                                    </td>
+                                    </tr>
+                                    
+                                    
+                                <!--     <tr>
+                                    <th scope="row">CGPA (1st Yr.)</th>
+                                    <td><apex:outputText value="{!objContact.conn.First_year_CGPA__c}"/></td>
+                                    
+                                    </tr> -->
+                                     <tr>
+                                    <th scope="row">Minor</th>
+                                    <td><apex:outputText value="{!objContact.conn.Minor__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                    
+                                     <tr>
+                                    <th scope="row">Mother First Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_First_Name__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Mother Last Name</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_Last_Name__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                    
+                                     <tr>
+                                    <th scope="row">Mother Email</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_Email_ID__c}"/></td>
+                                   
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Occupation</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_Occupation__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Company</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_Current_Company__c}"/></td>
+                                    
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">Designation</th>
+                                    <td><apex:outputText value="{!objContact.conn.Mother_s_Designation__c}"/></td>
+                                    
+                                    </tr>
+                              
+                              </tbody>
+                              
+                               </table>
+                            </div>
+                            </apex:repeat>  
+                            
+                           
+                             </apex:outputPanel>  
+               
+             <!--        <apex:commandbutton value="Request Edit" styleClass="slds-button slds-button_neutral saveBtn"  action="{!RequestEdit}" /> -->
+
+                   
+                <!----- education details --->
+    
+       <div class="sub-heading" ><h6>Education Details </h6></div>    
+      <apex:outputPanel >
+                <div class="content table_Edu_detail_area mt-3">
+                
+                <table  class="table table-bordered table_Edu_detail" id="blockId">
+                     <thead>
+                          <tr>
+                                <th scope="col">Year/Class</th>
+                                <th scope="col">Institution / School</th>
+                                <th scope="col">Degree / Certificate (Class XII, Diploma etc.)</th>
+                                <th scope="col">Board / University Examination Body</th>
+                                <th scope="col">Year of Completion</th>
+                                <th scope="col">% or CGPA </th>
+                                <th scope="col">CGPA Out of </th>
+                                <th scope="col">Major Subjects</th>
+                                <th scope="col">Country</th>
+                                <th scope="col">State</th>
+                             <!--   <th scope="col"></th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <apex:repeat value="{!educationList}" var="Education">
+                           
+                                <tr>
+                                    <td>
+                                      
+                                       <apex:outputField value="{!Education.edu.Year_Class__c}" />
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Institution_School__c}" styleClass="form-control" />
+                                       
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Degree_Certificate__c}" styleClass="form-control" />
+                                        
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Board_University__c} " styleClass="form-control" />
+                                        
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Year_of_Completion__c} " styleClass="form-control" />
+                                        
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Percent_CGPA__c} " styleClass="form-control" />
+                                        
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Percent_CGPA_Out_of__c}" styleClass="form-control" />
+                                       
+                                    </td>
+                                    <td>
+                                        <apex:outputField value="{!Education.edu.Major_Subjects__c}" styleClass="form-control" />
+                                       
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Education_Country__c} " styleClass="form-control" />
+                                       
+                                    </td>
+                                    <td>
+                                        <apex:outputfield value="{!Education.edu.Education_State__c} " styleClass="form-control"/>
+                                       
+                                    </td>
+                                    
+                                <!--    <td>
+                                    <apex:commandlink value="Request Edit" action="{!enterInputMode}">
+                                    <apex:param name="rid"  value="{!Education.edu.id}" />
+                                    </apex:commandlink>
+                               
+                                    </td> -->
+                                </tr>
+                                
+                            </apex:repeat>
+                         </tbody> 
+                       
+                    </table>
+             </div>  
+    </apex:outputPanel>
+   
+     <!----- work experence --->
+         
+                <div class="sub-heading"><h6>Work Details / Internship &amp; Projects </h6></div>  
+                <apex:outputPanel id="form">
+                <div class="col-lg-12" >
+                <div class="pay-content-area">
+                <div class="slds-form-element"  id="comp1">
+                <label class="slds-form-element__label" >Company Name <span class="astrick">*</span> </label>
+                <div class="slds-form-element__control"  >                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.Company1__c}"  />
+                </div>
+                <span class="comp1Msg errorMsg"></span>
+                </div>  
+        
+        
+                
+                <div class="form-group row">
+                <div class="col-sm-6" id="fromdate">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >From Date (DD/MM/YYYY) <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input " value="{!Wrkdetls.C1From__c}" id="sDate" html-placeholder="DD/MM/YYYY" type="date"/>
+                
+                 
+                </div>
+                <span class="fromdateMsg errorMsg"></span>
+                </div> 
+                </div>        
+                <div class="col-sm-6" id="todate">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >To Date (DD/MM/YYYY) <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input " value="{!Wrkdetls.C1To__c}"  id="tDate" html-placeholder="DD/MM/YYYY" type="date"/>
+                
+                </div>
+                 <span class="todateMsg errorMsg"></span>
+                </div>
+                </div>               
+                </div>  
+                
+                
+             
+                <div class="slds-form-element"  id="title">
+                <label class="slds-form-element__label" >Project Title <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C1ProjectTitle__c}"  />
+                
+                </div>
+                 <span class="titleMsg errorMsg"></span>
+                </div>  
+                <div class="slds-form-element"  id="msgBox">
+                <label class="slds-form-element__label" >Project Description <span class="astrick">*</span></label>
+                                                   
+                
+                
+                <span class="msgBoxMsg errorMsg"></span>
+                </div> 
+              <apex:inputField style="width:30px" value="{!Wrkdetls.C1projectDescription__c}" html-spellcheck="true" />
+                <apex:pageMessages ></apex:pageMessages>
+                
+                <br/>
+               <div style="padding-bottom:2%;">
+               
+                <apex:commandbutton value="Add More" action="{!toggleContent}"  />
+             </div>
+                </div>
+                </div>
+                </apex:outputPanel> 
+          
+       <br></br> 
+       <!--- second page ------>
+           <apex:outputPanel rendered="{!if(showContent1 == true, false,true)}"> 
+                <div class="col-lg-12">
+                <div class="pay-content-area">
+                <div class="slds-form-element"  id = "comp2">
+                <label class="slds-form-element__label" >Company Name <span class="astrick">*</span></label>
+                <div class="slds-form-element__control"  >                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.Company2__c}"  />
+                
+                </div>
+                 <span class="comp2Msg errorMsg"></span> 
+                </div>  
+                
+                <div class="form-group row">
+                <div class="col-sm-6" id="fromdate2">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >From Date (DD/MM/YYYY)<span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C2From__c}" html-placeholder="DD/MM/YYYY" type="date" />
+                
+                </div>
+                <span class="fromdate2Msg errorMsg"></span> 
+                </div> 
+                </div>        
+                <div class="col-sm-6" id="todate2">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >To Date (DD/MM/YYYY)<span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C2To__c}" html-placeholder="DD/MM/YYYY" type="date" />
+                
+                </div>
+                <span class="todate2Msg errorMsg"></span>
+                </div>
+                </div> 
+                              
+                </div>  
+                
+                <div class="slds-form-element"  id="title2">
+                <label class="slds-form-element__label" >Project Title <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C2ProjectTitle__c}"  />
+                
+                </div>
+                 <span class="title2Msg errorMsg"></span>
+                </div>  
+                <div class="slds-form-element" id="msgBox2">
+                <label class="slds-form-element__label" >Project Description</label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C2ProjectDescription__c}"  />
+                
+                </div>
+                 <span class="msgBox2Msg errorMsg"></span>
+                </div> 
+                
+                <br></br>
+                 <div style="padding-bottom:2%;">
+                <apex:commandbutton value="Add More" action="{!toggleContent1}" />
+                 &nbsp;&nbsp;<apex:commandbutton value="Remove" action="{!RemoveSecondContent}"  />
+                </div>
+                </div>
+                </div>
+               </apex:outputPanel>   
+                 
+           <!--- third page ------>
+          
+            <apex:outputPanel rendered="{!if(showContent2 == true, false,true)}">
+                <div class="col-lg-12" >
+                <div class="pay-content-area">
+                <div class="slds-form-element" id="comp3">
+                <label class="slds-form-element__label" >Company Name <span class="astrick">*</span></label>
+                <div class="slds-form-element__control"  >                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.Company3__c}"  />
+                
+                </div>
+                  <span class="comp3Msg errorMsg"></span>
+                </div>  
+                
+                <div class="form-group row">
+                <div class="col-sm-6" id="fromdate3">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >From Date (DD/MM/YYYY) <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C3From__c}" html-placeholder="DD/MM/YYYY" type="date"/>
+                
+                </div>
+                 <span class="fromdate3Msg errorMsg"></span>
+                </div> 
+                </div>        
+                <div class="col-sm-6" id="todate3">
+                <div class="slds-form-element" >
+                <label class="slds-form-element__label" >To Date (DD/MM/YYYY)<span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C3To__c}" html-placeholder="DD/MM/YYYY" type="date" />
+               
+                </div>
+                 <span class="todate3Msg errorMsg"></span>
+                </div>
+                </div>               
+                </div>  
+                
+                <div class="slds-form-element" id="title3">
+                <label class="slds-form-element__label" >Project Title <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C3ProjectTitle__c}" />
+                
+                </div>
+                <span class="title3Msg errorMsg"></span>
+                </div>  
+                <div class="slds-form-element" id="msgBox3">
+                <label class="slds-form-element__label" >Project Description <span class="astrick">*</span></label>
+                <div class="slds-form-element__control">                                    
+                <apex:inputField styleClass="slds-input" value="{!Wrkdetls.C3projectDescription__c}"  />
+                 
+                </div>
+                <span class="msgBox3Msg errorMsg"></span>
+                </div> 
+                <br/>
+                <div style="padding-bottom:2%;">
+               <apex:commandbutton value="Remove" action="{!RemovethirdContent}"  />
+                </div>
+                
+                </div>
+                </div>
+                </apex:outputPanel>  
+           <!---- --Achievements---------->
+                <div >
+                 <div class="sub-heading"><h6>Achievements</h6></div> 
+               <apex:outputPanel > 
+              
+               <div class="content mt-3">
+               
+               <div class="slds-form-element__control"> 
+              <div style="padding-bottom:2%;">
+               <apex:inputField styleClass="slds-input" value="{!Wrkdetls.Achievement__c}"  />
+               </div>
+                </div>
+                </div>
+               
+                
+               </apex:outputPanel>
+               </div>
+               <!-----Extra Curricular ---->
+           
+            <div class="sub-heading"><h6>Extra Curricular</h6></div>  
+               <apex:outputPanel > 
+               <div class="content mt-3"> 
+               <div class="slds-form-element__control">
+                <div style="padding-bottom:2%;">
+               <apex:inputField styleClass="slds-input " value="{!Wrkdetls.Extra_Curricular__c}"  />
+               </div>
+                </div>
+                </div>
+                
+               </apex:outputPanel>
+               
+       <br></br> 
+         <!-----Languages Known ---->
+       <div class="sub-heading"><h6>Languages Known</h6></div>  
+               <apex:outputPanel > 
+               
+                <div class="content mt-3"> 
+               
+               <apex:inputField styleClass="slds-input " value="{!Wrkdetls.Languages_Known__c}"  />
+               </div>
+                
+                
+               </apex:outputPanel>
+         <!-----Languages Known ---->
+        <div style="margin-bottom:80px;"></div>
+       <div class="sub-heading"><h6>LinkedIn Profile URL</h6></div>  
+               <apex:outputPanel > 
+               
+                <div class="content mt-3"> 
+               
+               <apex:inputField styleClass="slds-input " value="{!Wrkdetls.LinkedIn_Profile_link__c}"  />
+               </div>
+                
+                
+               </apex:outputPanel>
+                
+               <apex:outputPanel > 
+               <div class="content mt-3"> 
+               
+               <apex:commandButton value="Submit" styleClass="slds-button slds-button_neutral saveBtn" style="float:right;"   action="{!SaveAll}" id="button" onclick="return validate()" disabled="{!btnDisabled}"/> 
+             
+                <apex:commandlink value="Download" styleClass="slds-button slds-button_neutral " style="float:left;" action="{!downloadpdf}" target="_blank" rendered="{!if(Wrkdetls.Submit__c==true,true,false)}" /> 
+                
+               </div>
+                
+               </apex:outputPanel>
+        <!-------------End the styles -------------------------->
+         </div></div></div>            
+                </div> <!-- .content -->
+                
+            </div>
+        </apex:form>
+         <c:Flame_FooterResource />
+    </body>      
+    
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+          <script>
+        function validate(){
+        var counter=0; 
+        var a =$('#comp1 input[type="text"]').val();
+        if(a === ""){
+        $('.comp1Msg').text('Company-1 is required.');  
+        document.getElementById("comp1").scrollIntoView();
+         counter++;
+       }else{
+           $('.comp1Msg').text(''); 
+             
+       }
+       
+        var b =$('#fromdate input[type="text"]').val();
+        if(b === ""){
+        $('.fromdateMsg').text('From Date is required.');  
+        document.getElementById("fromdate").scrollIntoView();
+         counter++;
+       }else{
+           $('.fromdateMsg').text(''); 
+             
+       }
+       
+       var c =$('#todate input[type="text"]').val();
+        if(c === ""){
+        $('.todateMsg').text('To Date is required.');  
+        document.getElementById("todate").scrollIntoView();
+         counter++;
+       }else{
+           $('.todateMsg').text(''); 
+             
+       }
+       
+       var d =$('#title input[type="text"]').val();
+        if(d === ""){
+        $('.titleMsg').text('Project Title is required.');  
+        document.getElementById("title").scrollIntoView();
+         counter++;
+       }else{
+           $('.titleMsg').text(''); 
+       }
+       
+        var e =$('#msgBox input[type="text"]').val();
+        if(e === ""){
+        $('.msgBoxMsg').text('Project Description.');  
+        document.getElementById("msgBox").scrollIntoView();
+         counter++;
+       }else{
+           $('.msgBoxMsg').text(''); 
+       }
+       
+       var f =$('#comp2 input[type="text"]').val();
+        if(f === ""){
+        $('.comp2Msg').text('Company-2 is required.');  
+        document.getElementById("comp2").scrollIntoView();
+         counter++;
+       }else{
+           $('.comp2Msg').text(''); 
+             
+       }
+       
+       var g =$('#fromdate2 input[type="text"]').val();
+        if(g === ""){
+        $('.fromdate2Msg').text('From Date is required.');  
+        document.getElementById("fromdate").scrollIntoView();
+         counter++;
+       }else{
+           $('.fromdate2Msg').text(''); 
+             
+       }
+       
+       var h =$('#todate2 input[type="text"]').val();
+        if(h === ""){
+        $('.todate2Msg').text('To Date is required.');  
+        document.getElementById("todate2").scrollIntoView();
+         counter++;
+       }else{
+           $('.todate2Msg').text(''); 
+             
+       }
+       var i =$('#title2 input[type="text"]').val();
+        if(i === ""){
+        $('.title2Msg').text('Project Title is required.');  
+        document.getElementById("title2").scrollIntoView();
+         counter++;
+       }else{
+           $('.title2Msg').text(''); 
+       }
+       
+       var j =$('#comp3 input[type="text"]').val();
+        if(j === ""){
+        $('.comp3Msg').text('Company-3 is required.');  
+        document.getElementById("comp3").scrollIntoView();
+         counter++;
+       }else{
+           $('.comp3Msg').text(''); 
+             
+       }
+       
+       var k =$('#fromdate3 input[type="text"]').val();
+        if(k === ""){
+        $('.fromdate3Msg').text('From Date is required.');  
+        document.getElementById("fromdate3").scrollIntoView();
+         counter++;
+       }else{
+           $('.fromdate3Msg').text(''); 
+             
+       }
+       
+       var l =$('#todate3 input[type="text"]').val();
+        if(l === ""){
+        $('.todate3Msg').text('To Date is required.');  
+        document.getElementById("todate3").scrollIntoView();
+         counter++;
+       }else{
+           $('.todate3Msg').text(''); 
+             
+       }
+       var m =$('#title3 input[type="text"]').val();
+        if(m === ""){
+        $('.title3Msg').text('Project Title is required.');  
+        document.getElementById("title3").scrollIntoView();
+         counter++;
+       }else{
+           $('.title3Msg').text(''); 
+       }
+       
+       
+       if(counter>0){
+            return false;
+           }
+         return true;
+          
+    }
+   
+</script>
+<script type="text/javascript">
+    $(document).ready(function(){
+       $(".flm_careerServices_ele").addClass("active");
+       $(".flm_careerServices_ele").addClass("show");
+       $(".flm_careerServices_ele > .sub-menu").addClass("show");
+       $(".flm_careerServicesPro_ele").addClass("active");
+
+       $(".flm_menu").click(function(){
+            $(".flm_menu").removeClass("show");
+            $(".flm_menu > .sub-menu").removeClass("show");
+            
+       })
+    });
+</script> 
+</apex:page>

@@ -1,0 +1,53 @@
+<aura:component controller="StudentDashboardInOutTest">
+    
+        	<aura:attribute name="accounts" type="Account[]" />
+               <aura:handler name="init" value="{!this}" action="{!c.loadBatchAccount}" />
+                <lightning:select label="Batch" name="a_opt" aura:id="a_opt">
+                    <option value="all" seletect="true">--All--</option>
+                    <aura:iteration items="{!v.accounts}" var="account">
+                        <option value="{!account.Id}">{!account.Name}</option>
+                    </aura:iteration>
+                </lightning:select>
+        
+        
+        	<aura:attribute name="contacts" type="Contact[]" />
+                <aura:handler name="init" value="{!this}" action="{!c.loadPrimaryContact}" />
+                    <lightning:select label="" name="primaryContact" class="primaryContact" aura:id="primaryContact">
+                        <option value="all" seletect="true">--All--</option>
+                        <aura:iteration items="{!v.contacts}" var="contact">
+                            <option value="{!contact.id}">{!contact.name}</option>
+                        </aura:iteration>
+                    </lightning:select>
+    	
+    		<aura:attribute name="maingates" type="List" />
+         		<aura:handler name="init" value="{!this}" action="{!c.loadMainGateEntery}" />
+                    <lightning:select label="MainGate In-Approved" name="mainGateEntery"  aura:id="mainGateEntery">
+                        <option value="all" seletect="true">--All--</option>
+                        <aura:iteration items="{!v.maingates}" var="gate">
+                            <option value="{!gate.id}">{!gate.name}</option>
+                        </aura:iteration>
+                    </lightning:select>
+          
+    
+
+    <aura:attribute name="mycolumn" type="Object[]"/>
+    <aura:attribute type="Employee_Calendar__c[]" name="empCalList"/>
+    <aura:handler name="init" value="{!this}" action="{!c.fetchEmployeeCalendars}"/>
+    <lightning:buttonGroup class="button-action">
+                <lightning:button label="All" onclick="{!c.showAllData}" class="button-area" />
+                <lightning:button label="Show In" onclick="{!c.showInData}" class="button-area"/>
+                <lightning:button label="Show Out" onclick="{!c.showOutData}" class="button-area"/>
+        	</lightning:buttonGroup>
+   
+    <span>
+    	<lightning:input type="search" lable="Search" name="SearchBox" placeholder="Search here.." aura:id="SearchBox"
+                         onchange="{!c.searchTable}" />
+    </span>
+    
+    
+    <lightning:datatable data="{!v.empCalList }" 
+                         columns="{!v.mycolumn }" 
+                         keyField="id"
+                         hideCheckboxColumn="true" />
+   
+</aura:component>

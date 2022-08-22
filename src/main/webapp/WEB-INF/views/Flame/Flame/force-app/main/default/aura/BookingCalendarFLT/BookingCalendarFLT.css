@@ -1,0 +1,77 @@
+.THIS {
+    /*background-color: #1B5875;
+    color: #FFFFFF;*/
+}
+
+.THIS hr {
+    color: #E0E0E0;
+}
+.THIS .halfHour{
+    border-top: 1px dotted red;
+}
+
+.THIS .behind{
+    position: absolute;
+    z-index: 1;
+}
+.THIS .front{
+    position: absolute;
+    z-index: 2;
+}
+.THIS .back-button {
+    background-color: #1C5573;
+    cursor: pointer;
+    border-color: #1C5573;
+}
+.THIS {
+    /*background-color: #ffffff;*/
+    color: #ffffff;
+    overflow-x:hidden;
+    max-width: 100%;
+}
+
+.THIS html {
+    overflow-x:hidden;
+    max-width: 100%;
+}
+
+
+.THIS::-webkit-scrollbar {
+    width: 0px !important;
+    background: transparent;
+    background-color: transparent;
+}
+/*
+.THIS ::-webkit-scrollbar-thumb {
+    background:transparent;
+    background-color: transparent;
+}
+*/
+.THIS body{
+    overflow: hidden;
+}
+.THIS .back-button:active {
+    background: rgb(49,52,88); /* Old browsers */
+    background: -moz-linear-gradient(45deg,  rgba(70, 130, 189,1) 1%, rgb(16, 54, 111) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(45deg,  rgba(70, 130, 189,1) 1%,rgba(16, 54, 111,1) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(45deg,  rgba(70, 130, 189,1) 1%,rgba(16, 54, 111,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#313458', endColorstr='#00778c',GradientType=1 ); /* IE6-9 fallback on horizontal gradient */
+}
+.THIS .back-button {
+    background-color: rgb(12, 69, 112);
+    border: 0px solid rgb(221, 219, 218) !important;
+}
+.THIS .vertical-bt {
+    writing-mode: tb-rl;
+    transform: rotate(-180deg);
+}
+.THIS .header-large {
+    /*transform: rotate(90deg);
+    margin-left: -5rem;*/
+}
+.THIS .resources-button svg {
+    fill: #DFDBDB;
+}
+.THIS .resources-button {
+    cursor: pointer;
+}

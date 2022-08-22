@@ -1,0 +1,829 @@
+<apex:page docType="html-5.0" controller="LeaveApplicationController" lightningStylesheets="true"  standardStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India">
+    <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:includeLightning /> 
+    <apex:slds />
+    
+    <c:Flame_HeadResource />  
+    <head>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.js" ></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.14.1/moment.min.js"></script>
+
+        <script src="sweetalert2.all.min.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    </head>
+    
+    
+    <!-- page css -->
+    <!-- jquery datepicker plugin -->
+    <style>
+        @media screen and (max-width: 800px){
+        
+        .dropdownPG {
+        display:block !important;
+        max-width:70%;
+        }
+        
+        .column {
+        float: left;
+        padding: 10px;
+        
+        }
+        .left {
+        width: 30%;
+        }
+        
+        .MobileDiv{
+        display:block !important;
+        }
+        .DesktopDiv{
+        display:none !important;
+        }
+        .mohide{
+        display:none !important;
+        }
+        .mobileDiv{
+        margin-left: 7%;
+        }
+        .mob{
+        display:block !important;
+        float: left;
+        }
+        .desk{
+        display:none !important;
+        }
+        
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        
+        
+        .icon-bar {
+        display:none !important;
+        }
+        .border-radius{
+        display:none !important;
+        }
+        
+        .col-lg-12{
+        margin-left: -19px; !important;
+        }
+        }
+        
+        table {
+        border-collapse: collapse;
+        border: 1px solid black;
+        }
+        
+        .mob{
+        display:none;
+        }
+        .desk{
+        display:block;
+        }
+        
+        .DesktopDiv{
+        display:block;
+        }
+        
+        .MobileDiv{
+        display:none;
+        }
+        
+        th {
+        background-color: #fbb601;
+        color: white;
+        align-content :center;
+        }
+        .datatables {
+        padding: 3px !important;
+        border: 1px solid black;
+        text-align: center;
+        }
+        fieldset legend {
+        color: white !important;
+        }
+        
+        * {
+        box-sizing: border-box;
+        }
+        .column {
+        float: left;
+        width: 50%;
+        padding: 10px;
+        }
+        
+        .row:after {
+        content: "";
+        display: table;
+        clear: both;
+        }
+        .lookupInput{
+        
+        }
+        .border-radius{
+        border-radius:50px
+        }
+        
+        .margin-bottom{
+        margin-bottom:20px;
+        }
+        .margin-top{
+        margin-top:15px;
+        }
+        
+        .topcorner{
+        position:float;
+        top:0;
+        right:0;
+        }
+        
+        body {margin:0;}
+        
+        .icon-bar {
+        display:block;
+        margin-left: 3%;
+        padding-top: 10px;
+        background-color: #fffefc;
+        overflow: auto;
+        padding-left:15px;
+        }
+        
+        .icon-bar a {
+        float: left;
+        text-align: center;
+        padding: 12px 0;
+        transition: all 0.3s ease;
+        color: white;
+        font-size: 14px;
+        }
+        
+        .icon-bar a:hover {
+        background-color: #fbb601 !important;
+        
+        }
+        
+        .active {
+        background-color: #fbb601 !important;
+        }
+        
+        .inactive {
+        background-color: #f3cf71 !important;
+        }
+        
+        .slds-scope td {
+        text-align: center;
+        }
+        
+        .dropdownPG {
+        display:none;
+        }
+        .dropdownPG:hover .dropdown-content {
+        display: block;
+        }
+        .dropdown-content a:hover{
+        backgrounf-color:white;
+        }
+        .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: white;
+        min-width: 160px;
+        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        padding: 12px 16px;
+        z-index: 4;
+        width: 70%;
+        }
+        .dropdown-content:hover{
+        background-color: #f3cf71 !important
+        }
+        
+        .dateFormat{
+        visibility:hidden;
+        }
+        .popupBackground{
+        background:rgba(0, 0, 0, 0.5);       
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: 97;
+        }
+        .custPopup{
+        background-color: white;
+        border-radius:5px;
+        box-shadow:0 0 8px #000;
+        z-index: 99;
+        position: absolute;
+        transform:translate(-50%, -50%);
+        top:15%;
+        left:53%;
+        width:70% ;
+        }
+        
+        .after-table{
+        border:1px solid #ddd;
+        border-radius:5px;
+        padding:15px;
+        }
+        
+        .after-table .heading{
+        float:left;
+        }
+        tr:hover {background-color:#e5e5e5;}
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        
+        .popup
+        {
+           
+            z-index: 999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:250px;
+        }
+
+        .popupBg
+        {
+            background-color:black;
+            opacity: .5;
+            filter: alpha(opacity = 70);
+           
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 997;
+            position: fixed;
+        }
+        .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 0px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+        }
+        .modal-header {
+        padding: 9px 16px;
+        background-color: #fbb601;
+        color: #fbb601;
+        }
+        /* The Close Button */
+        .close {
+        
+        float: right;
+        font-size: 10px;
+        font-weight: none;
+        color: #fbb601;
+        
+        }
+        
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        
+        }
+        .modal-body {
+        padding: 2px 16px;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        }
+        <!-- page message standared css -->
+        .msgIcon {
+        display: none!important
+        }
+        .customMessage * {
+        color: #fff!important
+        
+        }
+        .customMessage {
+        margin: 5px 0!important;
+        max-width: 1280px;
+        opacity: 1!important;
+        width: 100%;
+        font-size: 12px;
+        border: 0px;
+        padding-left: 10px;
+        }
+        .message {
+        opacity: .6
+        
+        } 
+    </style>
+    <body>
+        <apex:form id="form">
+            <div id="lightning" />
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container --> 
+                <!--<meta name="viewport" content="width=device-width, initial-scale=2.0" />-->
+                
+                <div class="icon-bar">
+                    <!-- <a class="active" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/FlameLMS_StartPage">Home</a> -->
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_EmpInfo">My Info</a> 
+                    <a class="active" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/FlameLeaveApplication">Apply Leave</a> 
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_Regularization">Regularization/Punches</a> 
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_AttendenceInfo">My Calendar</a>
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_TrackLeaves">My Leaves</a>
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/MarkAttendance">Mark Attendance</a> 
+                    <a class="inactive" href="/Flame_ApprovalPage" style="display:{!IF(approvalLinkBool,'block','none')};width:{!IF(approvalLinkBool,'16%','19%')};">Approvals</a>
+                </div>
+                <center>
+                    <div class="dropdownPG">
+                        
+                        <span style="padding:1px;">Apply Leave &nbsp;<i class="fa fa-caret-down"></i></span>
+                        <div class="dropdown-content">
+                            <a href="/Flame_EmpInfo">My Info</a><br/>
+                            <a href="/Flame_Regularization">Regularization/Punches</a><br/>
+                            <a href="/Flame_AttendenceInfo">My Calendar</a><br/>
+                            <a href="/Flame_TrackLeaves">My Leaves</a><br/>
+                            <a href="/MarkAttendance">Mark Attendance</a><br/>
+                            <a href="/Flame_ApprovalPage" style="display:{!IF(approvalLinkBool,'block','none')};">Approvals</a>
+                        </div>
+                        
+                    </div>
+                </center>
+                <div class="col-md-12 margin-bottom margin-top">
+                    <div class="row">
+                        <div class="col-md-6" style="margin-left: 15%;">
+                            
+                        </div>
+                        <div class="col-md-6">
+                        </div>
+                    </div>
+                </div><br/>
+                <apex:outputPanel id="tstpopup">
+                    <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!successBool}"/>
+                    <apex:outputPanel styleClass="popup" layout="block" rendered="{!successBool}">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div Class="close">
+                                    <apex:commandButton value="X" action="{!Cancel}" rendered="{!NOT(errorBool)}" status="pageStatus" reRender="form" style="background-color: #fbb601;border:none;" />
+                                    <apex:commandButton value="X" action="{!toogle}" rendered="{!errorBool}" status="pageStatus" reRender="" style="background-color: #fbb601;border:none;" />
+                                </div>
+                                
+                            </div>
+                            <div class="modal-body">
+                                <apex:pageMessages id="showmsg" ></apex:pageMessages>
+                                <h4> </h4>
+                            </div>
+                            
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                
+                <div class="col-lg-12" style="width: 100%;font-size: 13px;">
+                    
+                    <div class="assist-content-area mobileDiv">
+                        <div class="">
+                            <div class="services-content">
+                            </div>
+                            <div class="">
+                                <div>
+                                    <table style="border:1px;">
+                                        <tr>
+                                            <th class="datatables mohide" style="text-align: center">
+                                                Sr. No.
+                                            </th>
+                                            <th class="datatables" style="text-align: center">
+                                                Leave Code
+                                            </th>
+                                            <th class="datatables mohide" style="text-align: center">
+                                                Leave Name
+                                            </th>
+                                            <th class="datatables" style="text-align: center">
+                                                Leave Balance
+                                            </th>
+                                            <th class="datatables" style="text-align: center">
+                                                Available Balance
+                                            </th>
+                                        </tr>
+                                        <apex:variable value="{!1}" var="count" />
+                                        <apex:repeat value="{!listBalanceData}" var="tl" > 
+                                            <tr>
+                                                <td class="datatables mohide">
+                                                    {!count}
+                                                </td>
+                                                <td class="datatables">
+                                                    {!tl.LeaveCode}
+                                                </td>
+                                                <td class="datatables mohide">
+                                                    {!tl.LeaveName}
+                                                </td>                                            
+                                                <td class="datatables">
+                                                    {!tl.LeaveBalance}
+                                                </td>
+                                                <td class="datatables">
+                                                    {!tl.AvailableBalance}
+                                                </td>
+                                                <apex:variable value="{!count +1}" var="count" />
+                                            </tr>
+                                        </apex:repeat>
+                                    </table>
+                                </div>
+                                <br/>
+                                
+                                
+                                <fieldset style="border: black .7px solid;padding: 10px;" id="a">
+                                    <!--<legend style="border: 1px #382d2d solid;padding: 4px;font-size: 15px;width: auto;border-radius: 5px;background: #fbb601;">
+                                        Leave Request
+                                    </legend>-->
+                                    <div id = "formDiv">
+                                        
+                                        <apex:actionStatus id="pageStatus">
+                                            <apex:facet name="start">
+                                                <div class="loadingBG" >
+                                                    &nbsp;
+                                                </div>  
+                                                <div class="loadingBGP" >                        
+                                                    <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                                                </div>            
+                                            </apex:facet>           
+                                        </apex:actionStatus>
+                                        <apex:actionFunction action="{!Save}" name="submitAF" status="pageStatus" rerender="tstpopup,changev"/>
+                                        <apex:actionFunction action="{!SaveCR}" name="submitCR" status="pageStatus" rerender="tstpopup,changev"/>
+                                            
+                                        <apex:actionFunction action="{!picklistChangeMethod}" rerender="tstpopup,changev,form" name="picklistChange" status="pageStatus" oncomplete="resetForm();"/>
+                                        
+                                        Employee Name &nbsp;&nbsp;:<apex:outputText value="{!currentUser.Name}" style="margin-left: 8px;width:200px;"/><br/><br/>
+                                        Approver Name&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:<apex:outputText value="{!ledger.Apply_To__c}" style="margin-left: 7px;width:200px;"/><br/><br/>
+                                        
+                                        <div>
+                                            
+                                            Leave Type 
+                                            <label class="slds-form-element__label" for="select-01">
+                                                <abbr class="slds-required" title="required">*</abbr></label>:<br/><apex:selectList id="Leave_Ledger" value="{!leavetype}" onchange="getLeaveSand(this.value);" size="1" styleClass="slds-input" style="width: 100%;font-size: 13px;">
+                                            <apex:selectOptions value="{!LeaveTypes}"/>
+                                            </apex:selectList>
+                                            
+                                        </div><br/><br/>
+                                        <apex:outputPanel id="changev">
+                                            <apex:outputPanel id="panel1" layout="block" rendered="{!displayPanel1}">
+                                                <div class="slds-grid slds-wrap">
+                                                    <div class="slds-col slds-size_1-of-13 slds-p-right_x-small">
+                                                        Half-Day&nbsp;&nbsp;:
+                                                    </div>
+                                                    <div class="slds-col slds-size_1-of-12">
+                                                        <apex:inputCheckbox id="check" value="{!ledger.Half_day__c}" style="margin-top: 4px;" onchange="getDate(this);">
+                                                        </apex:inputCheckbox><br/><br/>
+                                                    </div>
+                                                </div>  
+                                                
+                                                <div>
+                                                    <div class="slds-col slds-size_1-of-13">
+                                                        From <label class="slds-form-element__label" for="select-01">
+                                                        <abbr class="slds-required" title="required">*</abbr></label>:
+                                                    </div>
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        <apex:inputField id="fromDate" value="{!ledger.From_Date__c}" styleClass="slds-input" required="true" onchange="changedate(this);"/><br/><br/>
+                                                    </div>
+                                                </div>
+                                                
+                                                <div>
+                                                    <div class="slds-col slds-size_1-of-13">
+                                                        To <label class="slds-form-element__label" for="select-01">
+                                                        <abbr class="slds-required" title="required">*</abbr></label>: 
+                                                    </div>
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        <apex:inputField id="toDate" value="{!ledger.To_Date__c }"  styleClass="slds-input" required="true" onchange="validateToDate();"/><br/><br/>
+                                                    </div>
+                                                </div>
+                                                
+                                            </apex:outputPanel>
+                                            
+                                            <apex:outputPanel id="panel2" layout="block" rendered="{!displayPanel2}">
+                                                
+                                                <div>
+                                                    <div class="slds-col slds-size_1-of-13">
+                                                        Worked On <label class="slds-form-element__label" for="select-01">
+                                                        <abbr class="slds-required" title="required">*</abbr></label>:
+                                                    </div>
+                                                    <div class="slds-col slds-size_12-of-12">
+                                                        <apex:inputField id="fromDate2"  styleClass="slds-input" required="true" value="{!ledger.From_Date__c}" onchange="validateDate();"/><br/><br/>
+                                                    </div>
+                                                </div>
+                                                
+                                            </apex:outputPanel>
+                                            
+                                            <div>
+                                                <div class="slds-col slds-size_1-of-13">
+                                                    Reason <label class="slds-form-element__label" for="select-01">
+                                                    <abbr class="slds-required" title="required">*</abbr></label>:<br/>
+                                                </div>
+                                                <div class="slds-col slds-size_12-of-12">
+                                                    <apex:inputField id="reason" value="{!ledger.Reason__c }" style="max-height: 70px;height: 70px;" styleClass="slds-input"/><br/><br/>
+                                                    <!--<Reason:<br/><apex:inputField value="{!ledger.Reason__c }"  styleClass="slds-input"  onkeyup="myFunction(this.value);"/><br/><br/>-->
+                                                </div>
+                                            </div>
+                                            
+                                           <div class="slds-align_absolute-center">
+                                                <apex:commandButton value="Submit" id="submitbtn" onclick="confirmation(this.value);" status="pageStatus" oncomplete="gotop();" styleClass="btn slds-button slds-button_neutral saveBtn" style="margin-left: 17px;"/>
+                                                <apex:commandButton value="Cancel" action="{!reDirect}" status="pageStatus" reRender="form" styleClass="slds-button slds-button_neutral canclBtn" style="margin-left: 32px;"/>
+                                            </div><br/>
+                                        </apex:outputPanel>
+                                    </div>
+                                    
+                                    <div class="row">
+                                        
+                                        <div class="mob" style="padding-left: 18px;">
+                                            Legend <br/>
+                                            <p style="font-size: small;">EL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Earned Leave</p>
+                                            <p style="font-size: small;">CL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Casual Leave </p>
+                                            <p style="font-size: small;display:{!if (con.Gender__c == 'Male','block','none')};">PL&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Paternity Leave</p>
+                                            <p style="font-size: small;display:{!if (con.Gender__c == 'Female','block','none')};">ML&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:Maternity Leave</p>
+                                            <p style="font-size: small;">COL&nbsp;&nbsp;&nbsp;:CompOff Leave</p>
+                                            <p style="font-size: small;">COR&nbsp;&nbsp;&nbsp;:CompOff Request</p>
+                                            <p style="font-size: small;display:{!if (con.Primary_Contact_Type__c == 'Faculty','block','none')};">FCL&nbsp;&nbsp;&nbsp;&nbsp;:Faculty Consulting Time Off </p>
+                                            <p style="font-size: small;display:{!if (con.Primary_Contact_Type__c == 'Faculty','block','none')};">FRL&nbsp;&nbsp;&nbsp;&nbsp;:Faculty Researching Time Off </p>
+                                        </div>
+                                    </div>
+                                    
+                                </fieldset>
+                                
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                
+                <!--Main container -->
+            </div><!-- /#right-panel -->   
+            
+            <!-- Right Panel -->            
+            <!-- Modal -->
+        </apex:form>
+        
+        <c:Flame_FooterResource />
+    </body> 
+    
+    <script>
+    
+    function getDate()
+    {
+        var x = document.querySelector('[id$="check"]').checked;
+        
+        if(x)
+        {
+            document.querySelector('[id$="toDate"]').value = document.querySelector('[id$="fromDate"]').value;
+            document.querySelector('[id$="toDate"]').disabled = true;
+        }
+        else{
+            document.querySelector('[id$="toDate"]').disabled = false;
+        }
+        cpLeaveValidate();
+    }
+    
+    function changedate()
+    {
+        var y = document.querySelector('[id$="check"]').checked;
+        
+        if(y){
+            document.querySelector('[id$="toDate"]').value = document.querySelector('[id$="fromDate"]').value;
+        }
+        else{
+            document.querySelector('[id$="toDate"]').disabled = false;
+        }
+        cpLeaveValidate();
+        validateToDate();
+    }
+    
+    function gotop(){
+        document.querySelector('body').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function confirmation(label){
+        
+        var reason = document.querySelector('[id$="reason"]').value;
+        var leavetype = document.querySelector('[id$="Leave_Ledger"]').value;
+        var fdate , tdate ;
+        console.log(leavetype);
+        if(leavetype == 'None'){
+            $.alert('Please select leave type.');
+            return false;
+        }
+        
+        
+        if(leavetype == 'CompOff Request'){
+            fdate = document.querySelector('[id$="fromDate2"]').value;
+            tdate = fdate;
+        }
+        else{
+            fdate = document.querySelector('[id$="fromDate"]').value;
+            tdate = document.querySelector('[id$="toDate"]').value;
+            
+        }
+       
+        
+        if(((fdate.trim().length > 0 && tdate.trim().length > 0 ) || ( fdate.trim().length > 0 && leavetype =='CompOff Request' )) && reason.trim().length > 0){
+            
+              if(leavetype =='CompOff Request'){
+                  /*
+                  $.confirm({
+                    title: 'Confirm!',
+                    content: 'Do you Really want to Comp Off Request for '+fdate.trim()+' ?',
+                    buttons: {
+                        yes: function () {
+                            */      
+                            submitCR();
+                            /*         
+                        },
+                        cancel: function () {
+                            $.alert('Cancelled Successfully!');
+                        }
+                    }
+                  });*/
+            }
+            else if(leavetype != 'None'){
+                /*
+                $.confirm({
+                    title: 'Confirm!',
+                    content: 'Do you Really want to '+label+' ?',
+                    buttons: {
+                        yes: function () {
+                        */    
+                            submitAF();
+                /*     
+                        },
+                        cancel: function () {
+                            $.alert('Cancelled Successfully!');
+                        }
+                    }
+                });*/
+            }
+            
+           
+            
+           else{
+                $.alert('Please select leave type.');
+            }
+            
+        }
+        else{
+            $.alert('Please fill the required fields!');
+        }
+        
+   
+    }
+    
+    function validateToDate(){
+        //console.log('Validate to Date function');
+        
+        var wrkFromdate = document.querySelector('[id$="fromDate"]').value;
+        var wrkTodate = document.querySelector('[id$="toDate"]').value;
+        //console.log('wrkdate'+wrkdate);
+        
+        
+        var date1 = $.datepicker.parseDate('dd/mm/yy', wrkFromdate);
+        var date2 = $.datepicker.parseDate('dd/mm/yy', wrkTodate);
+        
+        
+        if(date1 > date2){
+            $.alert('To date can not be less than From date.');
+            //document.querySelector('[id$="toDate"]').value = wrkFromdate;
+        }
+        else{
+            //console.log('in past');
+        }
+        cpLeaveValidate();
+    }
+    
+    
+    //validate compoff date
+    function validateDate(){
+        
+        var currentDate1 = moment().subtract(1, 'days').format('DD/MM/YYYY');
+        
+        var leavetype = document.querySelector('[id$="Leave_Ledger"]').value;
+        var wrkdate = document.querySelector('[id$="fromDate2"]').value;
+        
+        
+        var date1 = $.datepicker.parseDate('dd/mm/yy', wrkdate);
+        var date2 = $.datepicker.parseDate('dd/mm/yy', currentDate1);
+        
+        
+        if(date1 > date2){
+            $.alert('No future date is allowed!');
+            document.querySelector('[id$="fromDate2"]').value = currentDate1;
+        }
+        else{
+            //console.log('in past');
+        }
+    }
+    
+    function getLeaveSand(value){
+        console.log(value);
+        
+        picklistChange();
+    }
+    
+    function cpLeaveValidate(){
+        var leavetype = document.querySelector('[id$="Leave_Ledger"]').value;
+        if(leavetype == 'CompOff Leave'){
+            document.querySelector('[id$="toDate"]').disabled = true;
+            document.querySelector('[id$="toDate"]').value = document.querySelector('[id$="fromDate"]').value;;
+            document.querySelector('[id$="check"]').disabled = true;
+        }
+        else if(!document.querySelector('[id$="check"]').checked){
+            document.querySelector('[id$="toDate"]').disabled = false;
+            document.querySelector('[id$="check"]').disabled = false;
+        }
+    }
+    
+    function resetForm()
+    {
+        var x = document.querySelector('[id$="check"]').checked;
+        var y = document.querySelector('[id$="reason"]').value;
+        if(x){
+            document.querySelector('[id$="check"]').checked = false;
+        }
+        
+        else{
+            //console.log('x');
+        }
+        
+        if(y != ""){
+            var y = document.querySelector('[id$="reason"]').value = "";
+        }
+        
+        else{
+            //console.log('y')
+        }
+        cpLeaveValidate();
+    }    
+    /*function Demo(){
+        
+         var x = document.querySelector('[id$="fromDate"]').value;
+         var y = document.querySelector('[id$="toDate"]').value;
+         if(x>y){
+             $.confirm({
+                 title: 'Warning!',
+                 content: 'HEllo',
+                 buttons: {
+                     Ok: function () {
+                         document.querySelector('[id$="toDate"]').value =null;
+                     },
+                     cancel: function () {
+                         $.alert('Cancelled Successfully!');
+                     }
+                 }
+                
+             });
+              
+         }
+         else{
+                  document.querySelector('[id$="toDate"]').value =null;
+             }
+        
+     }*/ 
+    
+   
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_timeAt_ele").addClass("active");
+        });
+    </script>  
+</apex:page>

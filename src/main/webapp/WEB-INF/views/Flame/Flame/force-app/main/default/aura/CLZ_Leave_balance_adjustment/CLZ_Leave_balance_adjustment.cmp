@@ -1,0 +1,222 @@
+<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,flexipage:availableForRecordHome,force:hasRecordId,forceCommunity:availableForAllPageTypes,force:lightningQuickActionWithoutHeader" 
+                access="global" controller="leaveBalanceController">  
+    <aura:html tag="style">
+        .slds-modal__container{
+        width: 85%;
+        max-width: 85rem;
+        }
+        .modal-body{
+        height : 700px !important;
+        max-height: 700px !important;
+        }
+    </aura:html> 
+    <aura:attribute name="searchKey" type="String" />
+    <aura:attribute name = "quoteLineMap" type = "Map" default = "{}"/>
+    <aura:attribute name = "currentPageRecords" type = "Object[]" />
+    <aura:attribute name = "pageNumber" type = "Integer" default = "1" />
+    <aura:attribute name = "pageSize" type = "Integer" default = "10" />
+    <aura:attribute name = "end" type = "Integer" />
+    <aura:attribute name = "start" type = "Integer" />
+    <aura:attribute name = "totalSize" type = "Integer" />
+    <aura:attribute name="productInterest" type="Object"/>
+    <aura:attribute name = "persistentMap" type = "Map" default = "{}" />
+    <aura:attribute name = "productWrapperList" type = "List" />
+    <aura:attribute name = "isLastPage" type = "Boolean" default = "false"/>
+    <aura:attribute name = "isProductSearched" type = "Boolean" default = "true" />
+    <aura:attribute name = "allSelectedProducts" type = "List" />
+    <aura:attribute name = "isSelectionConfirmed" type = "Boolean" default = "false"/>
+    <aura:attribute name="disableConfig" type="Boolean" default="false"/>
+    <aura:attribute name = "isConfigureDisabled" type = "Boolean" default = "true" />
+    <aura:attribute name = "getProductsCount" type = "Boolean" default = "true" />
+    <aura:attribute name = "hideComponent" type = "Boolean" default = "false" />
+    <aura:attribute name = "totalPages" type = "Integer" />
+    <aura:attribute name = "recordId" type = "Id" />
+    <aura:attribute name = "isMassUpdate" type="Boolean"/>
+    <aura:attribute name ="isPreFine" type="Boolean" default="false"/>
+    <aura:attribute name="isMiniPleat" type="Boolean" default="false"/>
+    <aura:attribute name="isHepa" type="Boolean" default="false"/>
+    <aura:attribute name="isHoodedGel" type="Boolean" default="false"/>
+
+    
+    <aura:handler name="init" action="{!c.doInit}" value="{!this}"/>
+    <aura:handler name="handle" action="{!c.confirmSelection}" value="{!v.disableConfig}"/>
+                  
+    
+    <force:recordData aura:id="contractRecord"
+                      recordId="{!v.recordId}"
+                      fields="Product_Sub_Division__c"
+                      targetFields="{!v.productInterest}" 
+                      recordUpdated = "{!c.doInit}"
+                      />
+    
+    <aura:if isTrue="{!v.hideComponent == false}">
+    <div class="slds-grid slds-grid_vertical  slds-size_1-of-1 " aura:id="ProductSelector">
+        <!-- 1. Header Markup Starts-->
+        <div  class="slds-col slds-align_absolute-center slds-size_1-of-1  slds-page-header ">
+            <center>  
+                <h1 class="inlineTitle slds-p-top--xx_small slds-p-horizontal--xx_small  slds-text-heading--xx_small" 
+                    style="font-size:20px;font-style:bold">
+                    <lightning:icon iconName="standard:cms" alternativeText="Approved" title="Approved" />
+                    Leave Balance Adjustment
+                </h1>
+            </center>
+        </div>
+        <!--Header Markup Ends-->
+        
+        
+        <!-- Error Message-->
+        <aura:if isTrue="{!v.disableConfig}">
+            <div class="slds-form-element__help slds-has-error" id="error-message-unique-id">
+                <div class ="slds-text-color_error">
+                    <div class="slds-text-heading_medium slds-text-align_center">
+                        <b>Please Select a Product</b>
+                    </div>
+                </div>  
+            </div>  
+        </aura:if>
+        
+        <div class="slds-col slds-align_absolute-center slds-size_6-of-6 slds-p-top_medium">
+            <span>
+                <span class="slds-p-left_xx-medium">
+                    <lightning:button label="Mass Update" iconName="utility:adduser" iconPosition="left" variant="brand" onclick="{!c.massupdate}"/>
+                </span>
+            </span>
+        </div>
+        <!-- 2. Seach box Markup Starts-->
+        <div class="slds-col slds-size_1-of-1 ">
+            <span >
+                <div class="slds-p-bottom_medium">
+                    <!--  <div class="slds-align_absolute-center slds-size_11-of-12 ">  -->
+                    <lightning:input onchange="{!c.getSearchedProduct}" name="search" placeholder="🔍 Search Employee..." value="{!v.searchKey}" class="slds-size_1-of-1"/>     
+                    <!--  </div> -->
+                </div>
+            </span>
+        </div>
+        <!--Seach box Markup Ends-->
+        
+        <!-- 3. Products Display table Markup Starts-->
+               <!-- 3. Products Display table Markup Starts-->
+            <ui:scrollerWrapper class="slds-scrollable_y">  
+                <table class="slds-table slds-table_bordered slds-table_cell-buffer slds-border_left slds-border_right" >      
+                    <thead>
+                        <tr style="color:white;font-weight:bold">
+                            <th class="slds-col slds-size_1-of-10 headingClass slds-align_absolute-center">Select</th>
+                            <th class="slds-col slds-size_9-of-10 headingClass">Employee Name</th>
+                            <th class="slds-col slds-size_9-of-10 headingClass">Employee ID</th>
+                            <th class="slds-col slds-size_9-of-10 headingClass">Gender</th>
+                            <th class="slds-col slds-size_9-of-10 headingClass">Contact Type</th>
+                            <th class="slds-col slds-size_9-of-10 headingClass">Department</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <aura:iteration items="{!v.productWrapperList}" var="rec">
+                            <tr>
+                                <th scope="row" class="slds-text-align_right">
+                                    <div class="slds-form-element slds-align_absolute-center">
+                                        <div class="slds-form-element__control slds-align_absolute-center">
+                                            <label class="slds-checkbox slds-align_absolute-center">
+                                                <ui:inputCheckbox name="{!rec.Id}" value = "{!rec.isSelected}" change = "{!c.onCheckBoxClick}" aura:id="{!rec.Id}" class="slds-checkbox slds-align_absolute-center"/>
+                                                <span class="slds-checkbox--faux"/>
+                                                <span class="slds-form-element__label"/>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate slds-cell-wrap textClass" title="Employee Name">
+                                        {!rec.Name}
+                                    </div>
+                                </th>
+                                 <th scope="row">
+                                    <div class="slds-truncate slds-cell-wrap textClass" title="Employee ID">
+                                        {!rec.Employee_Id__c}
+                                    </div>
+                                </th>
+                                
+                                 <th scope="row">
+                                    <div class="slds-truncate slds-cell-wrap textClass" title="Gender">
+                                        {!rec.Gender__c}
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate slds-cell-wrap textClass" title="Primary Contact Type">
+                                        {!rec.Primary_Contact_Type__c}
+                                    </div>
+                                </th>
+                                <th scope="row">
+                                    <div class="slds-truncate slds-cell-wrap textClass" title="Department">
+                                        {!rec.Department__c}
+                                    </div>
+                                </th>
+                            </tr>
+                        </aura:iteration>
+                    </tbody>
+                </table>
+             </ui:scrollerWrapper>  
+                 <!-- </div> -->
+        <!--</div>-->
+        
+        <!--Products Display table Markup Ends-->
+        
+        <!-- 4. Table Pagination Markup Starts-->
+        <div class="slds-col slds-align_absolute-center slds-size_6-of-6 slds-p-top_x-small">
+            <lightning:layoutItem padding="around-small" flexibility="auto">
+                <div class="slds-grid">
+                    <div class="slds-col slds-size_1-of-12">
+                        <span></span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-align_absolute-center">
+                        <span><lightning:button label="Previous" disabled="{! v.pageNumber == 1}" onclick="{!c.previous}"  variant="brand"/></span>
+                    </div>
+                    <div class="slds-col slds-size_6-of-12 slds-align_absolute-center">
+                        <span class="slds-badge slds-badge_lightest"
+                          style="margin-right: 10px;margin-left: 10px;">
+                            <!--<aura:if isTrue="{!v.isLastPage}">-->
+                                Page {! v.pageNumber +' of '+ v.totalPages}
+                                <!--<aura:set attribute="else">
+                                    Page {!v.pageNumber} | Showing {! ((v.pageNumber-1)*v.pageSize)+' to '+((v.pageNumber)*v.pageSize)}
+                                </aura:set>
+                            </aura:if> -->
+                        </span>
+                    </div>
+                    <div class="slds-col slds-size_2-of-12 slds-align_absolute-center">
+                        <span><lightning:button label="Next" disabled="{!v.isLastPage}" onclick="{!c.next}" variant="brand"/></span>
+                    </div>
+                    <div class="slds-col slds-size_1-of-12">
+                        <span></span>
+                    </div>
+                </div>
+            </lightning:layoutItem>
+        </div>
+        <!-- Table Pagination Markup ends-->
+        
+        <!-- 5. Footer Buttons Markup Starts-->
+        <div class="slds-col slds-align_absolute-center slds-size_6-of-6 slds-p-bottom_large">
+            <span>
+                <!--div class="slds-size_1-of-1 ">
+                    <lightning:button label="Cancel" title="Neutral action" onclick="{!c.cancel}"/-->
+                    <span class="slds-p-left_xx-medium">
+                    <lightning:button variant="brand" label="Confirm Selected"
+                                      title="Brand action" 
+                                      onclick="{!c.confirmSelection}" 
+                                      disabled="{!v.isConfigureDisabled}"/>
+                    </span>
+                    <!--span class="slds-p-left_xx-large">
+                    <lightning:button label="Mass Update" 
+                                      iconName="utility:adduser" 
+                                      iconPosition="left"  
+                                      variant="brand" 
+                                      onclick="{!c.massupdate}"
+                                     />
+                    </span-->
+                <!--/div-->
+            </span>
+        </div>
+        <!-- 5. Footer Buttons Markup Ends-->
+        
+    </div>
+    </aura:if>
+    <aura:if isTrue="{!v.isSelectionConfirmed}">
+        <c:CLZ_SelectedContactComponent  persistentMap = "{! v.persistentMap}" selectedProduct = "{! v.allSelectedProducts}" recordId = "{!v.recordId}" isMassUpdate="{!v.isMassUpdate}"/> 
+    </aura:if>
+</aura:component>

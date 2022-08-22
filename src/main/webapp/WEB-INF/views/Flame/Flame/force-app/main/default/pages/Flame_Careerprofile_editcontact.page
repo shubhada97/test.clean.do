@@ -1,0 +1,520 @@
+<apex:page docType="html-5.0" controller="Flame_Careerservicesprofilecontroller"   standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >       
+    <!-- VF componen which hold the common java script and css for all pages action="{!popupaction}" -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    <!-- page css -->
+    
+    <!-- jquery datepicker plugin -->
+    
+    
+    <style>
+        .navbar .navbar-nav > .flm_Assist > a,
+        .navbar .navbar-nav > .flm_Assist > a:focus,
+        .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }       
+    </style>   
+    
+    <script>
+
+        function closeme1()
+        
+        {
+        
+        alert('Please Confirm your changes');
+        
+        window.open('../' + 'Flame_Career_Profilepage');
+        
+        window.parent.close();
+        
+        }
+        
+        </script>   
+   
+    <!--    //Karthik Enable fieldn -->
+        
+        <script>
+        
+        function check(obj)
+        {
+        alert(obj.checked);
+        if(obj.checked == true)
+         document.getElementById("{!$Component.pick}").disabled=false;
+        else
+         document.getElementById("{!$Component.pick}").disabled=true;
+        }
+        </script>
+        
+   <!--     //Karthik Enable field  -->
+   
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+           <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside> 
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar /> 
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <div class="col-lg-3">
+                        <div class="assist-side-menu">                             
+                                                     
+                        </div> 
+                    </div>
+                    <div class="col-lg-12">                     
+                   <!--     <div class="assist-content-area"> -->
+                            <div class="services-content" style="padding-bottom:75px;">
+                                <!-- page load  msg section start -->
+                              <!-- to check the attachment for service page -->
+        
+       
+     <div class="sub-heading" ><h6>Contact Details </h6></div>
+     <apex:outputPanel id="IdTicketDetails">                       
+        <div class="col-lg-6"> 
+            
+                                    <apex:outputPanel rendered="{!IsCreated}">
+                                        <script type="text/javascript" >
+                                        $(document).ready(function() {
+                                            var fileName = 'Thank you, request has been submited.';
+                                            $('#modalText').text(fileName);
+                                            //$('#myModal').modal('show');
+                                            $( "#modalBtn" ).trigger( "click" );
+                                        });     
+                                        </script>
+                                    </apex:outputPanel> 
+         <table class="table information">
+        
+          <apex:repeat value="{!reserList}" var="objContact">
+                               <tbody>
+                            
+                                   
+                               <tr>
+                                    
+                                    <th scope="row">              
+                                    <apex:inputCheckbox value="{!objContact.Selected}" id="input" >
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>   First Name            
+                                    </th>
+                                    
+                                    <td><apex:outputField value="{!objContact.conn.FirstName}" rendered="{!objContact.Selected == False}" />
+                                        <apex:inputField styleClass="slds-input" value="{!objContact.conn.FirstName}" rendered="{!objContact.Selected == True}"/>
+                                   
+                                    </td>
+                                    </tr>     
+                                  
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected1}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Gender</th>
+                                   <td> <apex:inputField styleClass="slds-input" value="{!objContact.conn.Gender__c}" rendered="{!objContact.Selected1 == True}" />
+                                    <apex:outputField value="{!objContact.conn.Gender__c}" rendered="{!objContact.Selected1 == False}" /></td>
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected13}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Email ID</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Email}" rendered="{!objContact.Selected13 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.Email}" rendered="{!objContact.Selected13 == False}" />
+                                    </td>
+                                    </tr>
+                                <!--    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected2}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Student Number</th> 
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.CVUE_Student_Number__c}" rendered="{!objContact.Selected2 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.CVUE_Student_Number__c}" rendered="{!objContact.Selected2 == False}" /></td>
+                                    </tr> -->
+                                    
+                                <!--    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected3}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     Program</th>
+                                    <td><apex:inputField value="{!objContact.conn.Program_Interested_In__c}" rendered="{!objContact.Selected3 == True}" />
+                                    <apex:outputField value="{!objContact.conn.Program_Interested_In__c}" rendered="{!objContact.Selected3 == False}" /></td>
+                                    </tr> -->
+                                    
+                                <!--    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected4}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     Specialization Interest Area</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Program_Interested_In__c}" rendered="{!objContact.Selected4 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Program_Interested_In__c}" rendered="{!objContact.Selected4 == False}" /></td>
+                                    </tr> -->
+                                    
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected5}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Father First Name</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_First_Name__c}" rendered="{!objContact.Selected5 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Father_s_First_Name__c}" rendered="{!objContact.Selected5 == False}" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected6}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Father Last Name</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_Last_Name__c}" rendered="{!objContact.Selected6 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Father_s_Last_Name__c}" rendered="{!objContact.Selected6 == False}" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected7}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     Father Email</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_Email_ID__c}" rendered="{!objContact.Selected7 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Father_s_Email_ID__c}" rendered="{!objContact.Selected7 == False}" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected8}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Occupation</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_Occupation__c}" rendered="{!objContact.Selected8 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Father_s_Occupation__c}" rendered="{!objContact.Selected8 == False}" /></td>
+                                    </tr>
+                                    
+                                     <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected9}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Company</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_Current_Company__c}" rendered="{!objContact.Selected9 == True}" />
+                                    <apex:outputField value="{!objContact.conn.Father_s_Current_Company__c}" rendered="{!objContact.Selected9 == False}" /></td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected0}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Designation</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Father_s_Designation__c}" rendered="{!objContact.Selected0 == True}"/>
+                                    <apex:outputField value="{!objContact.conn.Father_s_Designation__c}" rendered="{!objContact.Selected0 == False}" /></td>
+                                    </tr>
+                                  
+                                  
+                                 </tbody>  
+                                      
+                                  
+         </apex:repeat>
+       
+         </table> 
+         </div>
+         <!----table-2------>
+          <div class="col-lg-6"> 
+           <table class="table information">
+        
+          <apex:repeat value="{!reserList}" var="objContact">
+                               <tbody>
+                             
+                                    <tr>
+                                   
+                                    <th scope="row">
+                                     <apex:inputCheckbox value="{!objContact.Selected11}" id="input">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     Last Name</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.LastName}" rendered="{!objContact.Selected11 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.LastName}" rendered="{!objContact.Selected11 == False}" />
+                                    </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected12}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Mobile Number</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.MobilePhone}" rendered="{!objContact.Selected12 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.MobilePhone}" rendered="{!objContact.Selected12 == False}" />
+                                    </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected14}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Date of Birth</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Date_of_Birth__c}" rendered="{!objContact.Selected14 == true}"/>
+                                  <!--  <apex:outputField value="{!objContact.conn.Date_of_Birth__c}" rendered="{!objContact.Selected14 == False}" /> -->
+                                    <apex:outputText value="{0,date,dd-MM-yyyy}" rendered="{!objContact.Selected14 == False}"> <apex:param value="{!objContact.conn.Date_of_Birth__c}" /> </apex:outputText>
+                                    </td>
+                                    </tr>
+                                   
+                                    
+                                    
+                                    
+                              <!--      <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected15}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     CGPA (1st Yr.)</th>
+                                    <td><apex:inputField value="{!objContact.conn.First_year_CGPA__c}" rendered="{!objContact.Selected15 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.First_year_CGPA__c}" rendered="{!objContact.Selected15 == False}" />
+                                    </td>
+                                    </tr> -->
+                                    
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected16}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Mother First Name</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Mother_s_First_Name__c}" rendered="{!objContact.Selected16 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.Mother_s_First_Name__c}" rendered="{!objContact.Selected16 == False}" />
+                                    </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected17}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Mother Last Name</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Mother_s_Last_Name__c}" rendered="{!objContact.Selected17 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.Mother_s_Last_Name__c}" rendered="{!objContact.Selected17 == False}" />
+                                    </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected18}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                     Mother Email</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Mother_s_Email_ID__c}" rendered="{!objContact.Selected18 == true}"/>
+                                    <apex:outputField value="{!objContact.conn.Mother_s_Email_ID__c}" rendered="{!objContact.Selected18 == False}" />
+                                    </td>
+                                    </tr>
+                                    
+                                    <tr>
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected19}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Occupation</th>
+                                    <td><apex:inputField styleClass="slds-input" value="{!objContact.conn.Mother_s_Occupation__c}" rendered="{!objContact.Selected19 == true}" onchange="showHideEle(this)"/>
+                                    <apex:outputField value="{!objContact.conn.Mother_s_Occupation__c}" rendered="{!objContact.Selected19 == False}" />
+                                    </td>
+                                    </tr>
+                                   
+                                 
+                                     <tr>
+                                    
+                                    <th scope="row">
+                                    <apex:inputCheckbox value="{!objContact.Selected20}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Company</th>
+                                    <td><apex:inputField styleClass="slds-input"  value="{!objContact.conn.Mother_s_Current_Company__c}" rendered="{!objContact.Selected20 ==true}" />
+                                    <apex:outputField value="{!objContact.conn.Mother_s_Current_Company__c}" rendered="{!objContact.Selected20 == False}" />
+                                    </td>
+                                   
+                                    </tr>
+                                   
+                                    <tr >
+                                    <th scope="row" >
+                                    <apex:inputCheckbox value="{!objContact.Selected21}">
+                                    <apex:actionSupport event="onchange" reRender="IdFrm"/>    
+                                    </apex:inputCheckbox>
+                                    Designation</th>
+                                    <td><apex:inputField styleClass="slds-input"  value="{!objContact.conn.Mother_s_Designation__c}" rendered="{!objContact.Selected21 ==true}"/>
+                                    <apex:outputField value="{!objContact.conn.Mother_s_Designation__c}" rendered="{!objContact.Selected21 == False}" />
+                                    </td>
+                                    </tr>
+                                   
+                                   </tbody>  
+         </apex:repeat>
+       
+         </table> 
+       <apex:outputPanel Id="IdTicketOP"  style="float:center;">
+        <apex:outputPanel rendered="{!IsTicketDetials}"> 
+        <apex:commandButton value="Send Request " styleClass="slds-button slds-button_neutral saveBtn"  style="float:right;" action="{!Requesttosend}" onclick="{!if(IsCreated==true,false,true)}"  reRender="IdTicketOP,IdTicketDetails"/> 
+         <apex:commandButton value="Cancel " styleClass="slds-button slds-button_neutral "  style="float:left;margin-left: -540px;"  action="{!canclerequesttosend}" />
+       </apex:outputPanel>
+       
+        </apex:outputPanel> 
+        </div> 
+        
+        
+        
+        
+        
+           <!------------------------------------------------------------> 
+                          
+          </apex:outputPanel>                 
+           
+          
+                          
+                          
+                        <!--   </div>  -->
+                            
+           
+                              </div></div></div></div>
+                              
+             <!-- Right Panel -->            
+          
+          <!----------------------------->
+          
+           <!-- Modal -->            
+            <button type="button" id="modalBtn" class="showUpload" data-toggle="modal" data-target="#myModal" style="display:none;">Open Modal</button>
+            <!-- Right Panel -->
+            <div class="modal fade" id="myModal" role="dialog" style="top:30%;">
+                <div class="modal-dialog">                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fbb601;">                            
+                            <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+                                <svg class="slds-button__icon " aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align:center;color:#23466c;">
+                            <h6 id="modalText" class="slds-text-heading_small"></h6> 
+                            <br/>
+                            <apex:commandButton value="Ok" action="{!popupsubmit}"  title="Close" />                           
+                        </div> 
+                                              
+                    </div>
+                </div>
+            </div>           
+            <apex:actionStatus id="IdStatus1">
+                <apex:facet name="start">
+                    <div class="loadingBG" >
+                        &nbsp;
+                    </div>  
+                    <div class="loadingBGP" >                        
+                        <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                    </div>            
+                </apex:facet>           
+            </apex:actionStatus>               
+                                       
+                              
+                              
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>    
+    
+</apex:page>

@@ -1,0 +1,143 @@
+<apex:page docType="html-5.0" lightningStylesheets="true"  standardStylesheets="false" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+<apex:slds />
+
+    <c:Flame_HeadResource />         
+    <style>
+        
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }       
+    </style>
+          
+    <script type="text/javascript" >
+    $(document).ready(function() {     
+        //applyDatatable();                               
+    });
+    function applyDatatable(){             
+        //var table = $('#caseTicketTbl').dataTable({"pageLength": 10 ,"searching": false,order: [[0, 'desc']]});  
+        //table.order([ 0, 'asc' ]).draw();
+        //$('div.dataTables_length').css("display", "none");
+    }       
+    </script>
+    
+<body>
+<apex:form id="IdFrm" html-autocomplete="off">
+<!-- Left Panel -->
+<aside id="left-panel" class="left-panel">
+<c:Flame_SideMenuBar />
+</aside>
+                       
+<div id="right-panel" class="right-panel">                
+<!-- Header-->
+<c:Flame_HeaderBar />
+<!-- Header--> 
+
+<!--<apex:include pageName="WR_TasksManager"/>-->
+<apex:iframe src="{!$Site.BaseUrl}/apex/WR_TasksManager" height="1000px" scrolling="true" id="theIframe"/>
+
+</div>
+
+</apex:form>
+</body>
+<script type="text/javascript">
+    $(document).ready(function(){
+       $(".flm_process_ele").addClass("active");
+       $(".flm_process_ele").addClass("show");
+       $(".flm_process_ele > .sub-menu").addClass("show");
+       $(".flm_processTODO_ele").addClass("active");
+
+       $(".flm_menu").click(function(){
+            $(".flm_menu").removeClass("show");
+            $(".flm_menu > .sub-menu").removeClass("show");
+            
+       })
+    });
+</script> 
+</apex:page>

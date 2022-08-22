@@ -1,0 +1,10 @@
+<aura:component controller="StudentInOutDashboardController">
+    <aura:attribute name="accounts" type="Account[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:select label="Batch" name="a_opt" aura:id="a_opt" onchange="{! c.onChange }">
+        <option value="all" seletect="true">--All--</option>
+        <aura:iteration items="{!v.accounts}" var="account">
+            <option value="{!account.id}">{!account.Name}</option>
+        </aura:iteration>
+    </lightning:select>
+</aura:component>

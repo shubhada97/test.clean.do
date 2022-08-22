@@ -1,0 +1,50 @@
+<apex:component controller="Ledger_ContactPayment_controller" >
+ <apex:attribute type="String" name="staticconid"  description="Value to pass into the controller" required="true"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script>
+  $( document ).ready(function() 
+  {
+     if(window.location.href.indexOf("PendingPayments") > -1) {
+       $('ul#Payments li#PendingPayments a').css({"color":"#F58634", "background":"rgba(247,167,3,0.4)", "pointer-events":"auto", "opacity":"1"});
+     }else if(window.location.href.indexOf("PaymentHistory") > -1){
+       $('ul#Payments li#PaymentHistory a').css({"color":"#F58634", "background":"rgba(247,167,3,0.4)", "pointer-events":"auto", "opacity":"1"});
+     }
+     else if(window.location.href.indexOf("Index") > -1){
+       $('ul#Payments li#Index a').css({"color":"#F58634", "background":"rgba(247,167,3,0.4)", "pointer-events":"auto", "opacity":"1"});
+       }
+  });
+</script>
+    <style>
+        .disabled{
+            pointer-events:none;
+            opacity:0.6;
+        }
+    </style>
+
+   
+   <div class="tab-nav">
+                   {!contact.Id}
+                    <ul id="Payments">
+                         <li class="home" id="Index">
+                         <apex:commandLink action="{!CustomIndex}" id="theCommandLink"> 
+                                <span class="pull-left"><i class="fa fa-home"></i></span>
+                                 </apex:commandLink>
+                    
+                         </li> 
+                      
+                        <li id="PendingPayments">
+                          <apex:commandLink action="{!CustomSave1}" style="text-decoration:none;" id="theCommandLink1" >
+                                    <span class="pull-left"><i class="icon-payment"></i></span>
+                                <div class="media-body">Pending Payments</div>
+                          </apex:commandLink>
+                        </li>
+                       <li id="PaymentHistory">
+                          <apex:commandLink action="{!CustomSave2}" style="text-decoration:none;" id="theCommandLink2" >
+                                    <span class="pull-left"><i class="icon-programtest"></i></span>
+                                <div class="media-body">Payment History</div>
+                          </apex:commandLink>
+                        </li>
+                    </ul>
+                </div>
+       
+</apex:component>

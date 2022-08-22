@@ -1,0 +1,8 @@
+<apex:page controller="generatePDFIDCardController" renderAs="pdf" cache="false" contentType="text/HTML" docType="html-5.0" showHeader="false" sidebar="false">
+    {!PDFData}
+    dsffd dsf dsf dssdfds 
+    sdfds dsfds ds sdds fsd
+    sd fds dsfdsfd sfds dsdsf
+    e erere ew ewew ew ew  ew
+    we ewre wre wer ewr
+</apex:page>

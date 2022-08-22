@@ -1,0 +1,207 @@
+<apex:page controller="Flame_ResourcesSchedulecontroller"   docType="html-5.0"  standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+ <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    
+    
+    <style>
+   <!-- .navbar .navbar-nav > .flm_Assist > a, .navbar .navbar-nav > .flm_Assist > a:focus, .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+    }  -->              
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        
+    </style>      
+    
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                                         
+                    <div class="col-lg-12"> 
+                        <div class="sub-heading">
+                            <h6>Resources Schedule</h6>
+                        </div>
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:75px;">                                
+                                <!-- Show Dining details start -->
+                             <div>
+                             <div class="filter-options">                    
+                                    <table class="table payment-filter-table">
+                                        <tbody>
+                                            <tr>
+                                            <td scope="col">
+                                            Start Date
+                                            <apex:inputField value="{!bcc.B25__StartLocal__c}" styleclass="slds-input" style="width:50%;" required="true"/>
+                                            </td>
+                                            <td scope="col">
+                                            End Date
+                                            <apex:inputField value="{!bcc.B25__EndLocal__c}"   styleclass="slds-input"  style="width:50%;" required="true"/> 
+                                            </td>
+                                            <tr> 
+                                             <td scope="col">
+                                         
+                                             <apex:commandButton styleClass="slds-button slds-button_neutral" style="float:center;" value="Search" action="{!resources}"  reRender="dataWrapperPanel" lang="End Date" /> 
+                                            </td>
+                                            <td scope="col">
+                                            Select Resource
+                                            <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search" title="Type in a name" class="form-control" style="width:50%;" /> <br/>  
+                                            </td>
+                                            </tr>
+                                           
+                                            </tr>
+                                     </tbody>  
+                                    </table> 
+                                     
+                                     </div>
+                                 
+                            <apex:commandButton value="Last Page" rerender="details" action="{!LastPage}" disabled="{!nxt}" style="float:right; border:none; "/>
+                            <apex:commandButton value="Previous" rerender="details" action="{!previous}" disabled="{!prev}" style="float:right; border:none;"/>
+                            <apex:commandButton value="Next" rerender="details" action="{!next}" disabled="{!nxt}" style="float:right; border:none;"/>
+                            <apex:commandButton value="First Page" rerender="details" action="{!FirstPage}" disabled="{!prev}" style="float:right; border:none;"/>
+                              <div>
+                             <apex:outputPanel >
+                              <apex:outputText rendered="{! IF( reserList != null && reserList.size ==0 , true, false)}">
+                              <center> <h4 style="font-size: 1.0rem;"> No Records Found. </h4></center>
+                              </apex:outputText>
+                              </apex:outputPanel>
+                              </div>
+                             
+                                <apex:outputPanel id="dataWrapperPanel">
+                                 <div class="table-responsive">
+                                        <table class="table table-striped"  id="myTable">
+                                        <thead> 
+                                         <tr>
+                                                    <th scope="col">Resources</th>
+                                                    <th scope="col">Title</th>
+                                                    <th style="min-width:120px;" scope="col">Start Date</th>
+                                                    <th scope="col">End Date</th>
+                                                    
+                                                </tr>
+                                         </thead>
+                                         <tbody>
+                                         <apex:repeat value="{!reserList}" var="a">
+                                          <tr>      
+                                                        <td><apex:outputField value="{!a.B25__Resource__c}" /></td>
+                                                        <td><apex:outputField value="{!a.B25__Title__c}" /></td> 
+                                                        <td><apex:outputField value="{!a.B25__StartLocal__c}" /></td>
+                                                       <td><apex:outputField value="{!a.B25__EndLocal__c}"/></td>
+                                                         
+                                                    </tr> 
+                                         
+                                         </apex:repeat>
+                                         </tbody>
+                                        </table>
+                                </div>
+                           
+                                
+                                </apex:outputPanel>
+                             </div>
+                      
+                       <!--- recorde are not in the table getting  message -->             
+                            <apex:pageBlock id="noRec" rendered="{! IF( reserList != null && reserList.size ==0 , true, false)}" >
+                            <apex:outputPanel >
+                            <h1>No Records Found </h1>
+                            </apex:outputPanel>
+                            </apex:pageBlock>     
+        
+                            <apex:pageBlock id="details" rendered="{!showResult }"> >
+                            
+                            <apex:pageBlockTable value="{!reserList}" var="a">
+                            
+                            <apex:column value="{!a.B25__Resource__c}" headerValue="Resources"/>
+                            <apex:column value="{!a.B25__Title__c}" headerValue="Title"/>  
+                            <apex:column value="{!a.B25__StartLocal__c}" headerValue="Start Date"/>  
+                            <apex:column value="{!a.B25__EndLocal__c}" headerValue="End Date"/>   
+                            
+                            </apex:pageBlockTable>
+                            
+                            <apex:pageblockButtons >
+                            <apex:commandButton value="First Page" rerender="details" action="{!FirstPage}" disabled="{!prev}"/>
+                            <apex:commandButton value="Previous" rerender="details" action="{!previous}" disabled="{!prev}"/>
+                            <apex:commandButton value="Next" rerender="details" action="{!next}" disabled="{!nxt}"/>
+                            <apex:commandButton value="Last Page" rerender="details" action="{!LastPage}" disabled="{!nxt}"/>
+                            </apex:pageblockButtons>
+                            
+                            </apex:pageBlock>
+                            
+                        <!--    </apex:outputPanel>     -->                        
+        
+        <script>
+        function myFunction() {
+        var input, filter, table, tr, td, i;
+        input = document.getElementById("myInput");
+        console.log(input);
+        filter = input.value.toUpperCase();
+        
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+        if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+        
+        tr[i].style.display = "";
+        } else {
+        tr[i].style.display = "none";
+        }
+        }
+        }
+        }
+        </script>        
+                                
+         
+                                
+                                </div>
+                        </div>
+                    </div>               
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->                        
+            <apex:actionStatus id="IdStatus">
+                <apex:facet name="start">
+                    <div class="loadingBG" >
+                        &nbsp;
+                    </div>  
+                    <div class="loadingBGP" >                        
+                        <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                    </div>            
+                </apex:facet>           
+            </apex:actionStatus>
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>       
+
+</apex:page>

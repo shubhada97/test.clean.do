@@ -1,0 +1,74 @@
+<apex:page standardController="Application__c" extensions="ContactEducationDetailsDupController"   sidebar="false" showHeader="false" title="Contact Education Details"
+            contenttype="application/vnd.ms-excel#TestExport_{!TODAY()}.xls" cache="true">
+   <apex:form id="frm" style="padding-left:30px;padding-right:30px">
+    <apex:outputPanel rendered="{!IF(ContactDetails.size > 0,true,false)}" id="op1">
+    <apex:pageBlock id="pb">
+        <apex:pageBlockButtons >
+            <apex:commandButton value="Download" action="/apex/Contact_Education_Download" />
+        </apex:pageBlockButtons>
+        <apex:pageBlockSection title="Contact Education Details" columns="1" collapsible="false">
+            <apex:outputPanel style="height:500px" id="detailsSection">
+            <table border="1" cellspacing="0">
+                <!-- Headers -->
+                <tr>
+                    <th>Contact Name</th>
+                    <apex:repeat value="{!YearClassList}" var="yearClass">
+                        <th>{!yearClass}</th>
+                         </apex:repeat>
+                         <th>Work Details</th>
+                
+                </tr>
+                
+                <!-- Data -->
+                <apex:repeat value="{!ContactDetails}" var="conDetail">
+                    <tr>
+                        <td>
+                        {!conDetail.contact.FirstName+' '+conDetail.contact.LastName}<br/>
+                      Email:{!conDetail.contact.Email}<br/>
+                      MobilePhone: {!conDetail.contact.mobilephone}<br/>
+                      Gender:{!conDetail.contact.Gender__c}<br/>
+                      Religion:{!conDetail.contact.Religion__c}<br/>
+                        </td>
+                        <!-- Start: Eduction details -->
+                        <apex:repeat value="{!conDetail.eduDetails}" var="yearClass">  
+                            <td>
+                                <table>
+                                    <tr><td>Board / University:</td><td>{!conDetail.eduDetails[yearClass].FUA_Board_University__c}</td></tr>
+                                    <tr><td>InstitutionSchool:</td><td>{!conDetail.eduDetails[yearClass].FUA_Institution_School__c}</td></tr>
+                                    <tr><td>% or CGPA Actual:</td><td>{!conDetail.eduDetails[yearClass].FUA_CGPA_Actual__c}</td></tr>
+                                    <tr><td>% or CGPA Out Of:</td><td>{!conDetail.eduDetails[yearClass].FUA_CGPA_Out_Of__c}</td></tr>
+                                    <tr><td>Total Score (Out Of 100):</td><td>{!conDetail.eduDetails[yearClass].Total_Score_Out_Of_100__c}</td></tr>
+                                    <tr><td>State:</td><td>{!conDetail.eduDetails[yearClass].FUA_Education_State__c}</td></tr>
+                                    <tr><td>City:</td><td>{!conDetail.eduDetails[yearClass].FUA_Education_City__c}</td></tr>
+                                </table>
+                            </td>
+                        </apex:repeat>
+                        <!-- End: Education details -->
+                        <td>
+                        <apex:variable var="count" value="{!1}"/>
+                        <!-- Start: Work Details -->
+                        <apex:repeat value="{!conDetail.workDetails}" var="work">  
+                            <u><b>Company {!count}:</b></u>
+                            <table>
+                                <tr><td>Work Details Name:</td><td>{!conDetail.workDetails[work].Name}</td></tr>
+                                <tr><td>Company:</td><td>{!conDetail.workDetails[work].FUA_Company__c}</td></tr>
+                                <tr><td>Designation:</td><td>{!conDetail.workDetails[work].FUA_Designation__c}</td></tr>  
+                            </table>  
+                            <apex:variable value="{!count + 1}" var="count"/>  <!--increment-->
+                        </apex:repeat>
+                         <!-- End: Work Details -->
+                        </td>   
+                    </tr>
+                </apex:repeat>
+            </table>
+            </apex:outputPanel>        
+        </apex:pageBlockSection>
+    </apex:pageBlock>
+    </apex:outputPanel>
+    <apex:outputPanel rendered="{!IF(ContactDetails.size > 0,false,true)}" id="op2">
+        <apex:pageBlock id="pb1">
+        No results found to display
+        </apex:pageBlock>
+    </apex:outputPanel>
+    </apex:form>
+</apex:page>

@@ -1,0 +1,54 @@
+<apex:component controller="Flame_AssistAC" >
+<apex:slds />
+ <c:Flame_HeadResource />
+    <!-- attribute section -->
+    <apex:attribute name="objCase" description="Book Requisition" type="Case" />
+    <apex:attribute name=" userContact" description="Book Requisition" type="Contact" />
+     <apex:attribute name="itemList" description="Requisition Services" type="Item__c[]" />
+    <apex:attribute name="IsAttachment" description="add attachment to service" type="Boolean" />
+    
+    
+    <!-- to check the attachment for service page -->
+    <apex:inputCheckbox styleClass="IsAttachCls hideComponent" value="{!IsAttachment}" style="display:none;"/>
+    
+    <div>
+     
+         <table border="0" style="margin-bottom:50px;" Class="slds-table slds-table--bordered slds-table--striped" cellspacing="0" cellpadding="0">
+                            <tbody>
+                                <tr>  
+                                    <td style="text-align: left; font-weight:bold;">Name:</td> 
+                                    <td style="text-align: left;"> {! userContact.Name}</td>
+                                    <td style="text-align: left; font-weight:bold;">Request Date:</td> 
+                                    <td style="text-align: left;"><apex:outputText value="{0,date,dd/MM/yyyy}">
+                                        <apex:param value="{!today()}" />
+                                        </apex:outputText> </td>
+                                </tr>
+                                    <td style="text-align: left; font-weight:bold;">Faculty:</td> 
+                                    <td style="text-align: left;"> {! userContact.Faculty__c}</td>
+                                    <td style="text-align: left; font-weight:bold;">Type:</td> 
+                                    <td style="text-align: left;"> <apex:inputField value="{!objCase.BR_Type__c}" required="true" styleclass="slds-input" /></td>
+                            <tr>
+                                    <td style="text-align: left; font-weight:bold;">Contact Number:</td> 
+                                    <td style="text-align: left;"> {! userContact.MobilePhone}</td>
+                                    <td style="text-align: left; font-weight:bold;">Course:</td> 
+                                    <td style="text-align: left;"> <apex:inputField html-placeholder="Enter Course Name" value="{!objCase.BR_Course__c}" required="true" styleclass="slds-input"/></td>
+                            </tr>
+                                    <td style="text-align: left; font-weight:bold;">Email ID:</td> 
+                                    <td style="text-align: left;">{! userContact.Email}</td>
+                                    <td style="text-align: left; font-weight:bold;">Number of Students:</td> 
+                                    <td style="text-align: left;"> <apex:inputField html-placeholder="No of students" value="{!objCase.BR_Number_of_Students__c}" required="true" styleclass="slds-input" /></td>
+                            </tbody>
+                            </table>
+                            
+   </div>
+   
+    
+  <style>
+  
+  
+  
+  
+  
+  
+  </style>
+</apex:component>

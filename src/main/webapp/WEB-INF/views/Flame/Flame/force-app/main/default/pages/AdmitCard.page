@@ -1,0 +1,328 @@
+<apex:page renderAs="pdf" doctype="HTML-5.0" sidebar="false" cache="false" 
+standardStylesheets="false" showHeader="false" controller="Flame_Community" 
+action="{!AdmitCardController}"  title="Admit Card" >
+
+    <div class="admit-card" style="display:block; width:100%;"> 
+    
+           <table style="font-family: Cambria,Georgia, serif; font-size:14px; width:100%; border:1px solid #666; padding:10px; border-collapse:collapse border-spacing: none;" cellspacing="0" cellpadding="0">
+        <tr>
+            <td>
+                <table style="border-collapse: collapsed;" width="100%">
+                    <tr>
+                        <td  align="left" width="20%" style="padding:10px;"><apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}" width="75" height="30" /> </td>
+                        <td width="60%"  style="padding:10px; text-align:center;">
+                       
+                            <h3 style="font-family:Cambria,Georgia, serif; font-size:16px; font-weight:600; margin-bottom:5px;text-transform:capitalize;">FLAME University</h3>
+                            <p style="font-family: Cambria,Georgia, serif; font-size:14px;font-weight:400;margin-bottom:5px; margin-top:0px;">Lavale, Off. Pune-Bangalore Highway, Pune - 412115.</p>
+                            <p style="font-family: Cambria,Georgia, serif;font-size:14px;margin-bottom:5px; margin-top:0px;">www.flame.edu.in</p>
+                        </td>
+                        <td align="right" width="20%"  style=" padding:10px; text-align:right;"> <apex:image id="preImage" value="{!app.FUA_Applicant_Image_URL__c}" width="100px" /></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+        <tr>
+            <td style="font-weight:600; text-align:center; text-decoration:none; font-size:14px; padding-top:15px;" colspan="3"><span style="border-bottom:1px solid #000;"> ADMIT CARD -  <apex:outputtext value="{!app.Program__r.name}" /> </span></td>
+        </tr>
+
+        <tr>
+            <td style="padding-top:30px;padding-left:8px;padding-right:8px;">
+                <table cellpadding="0" style="font-size:14px;" width="100%">
+                    <tr>
+                        <td style="vertical-align:top; width:350px" align="left">
+                            <table cellspacing="0" cellpadding="0" style="font-size:14px;">
+                                <tr>
+                                    <!--<td align="left" valign="top" width="110" style="padding-top:10px;padding-bottom:10px;font-family: Cambria,Georgia, serif; font-weight:600;">  </td>-->
+                                    <td align="left" style="padding-top:10px; padding-bottom:10px;  font-family: Cambria,Georgia, serif; text-align:left;">
+                                      <b>Applicant Name :</b>&nbsp;<apex:outputtext value="{!app.Contact__r.Name}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                   <!-- <td  align="left" valign="top" width="110" style="padding-top:10px;  padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> Admission Cycle : </td>-->
+                                    <td  align="left" style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif; text-align:left;"><b>Admission Cycle :</b>&nbsp; <apex:outputtext value="{!app.GD_and_PI_Round__c}"/></td>
+                                </tr>
+                                <tr>
+                                    <!--<td  align="left" valign="top" width="75" style="padding-top:10px; margin-right:-10px; padding-bottom:10px; font-family: Cambria,Georgia, serif; font-weight:600;"></td>-->
+                                     <td align="left" style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif; text-align:left;"><b>Application No :</b>&nbsp; <apex:outputtext value="{!app.Application_Reference_ID__c}" /></td>
+                                </tr>
+                                <tr>
+                                    <!--<td align="left" valign="top" width="90" style="padding-top:10px; padding-bottom:10px;font-weight:600; font-family: Cambria,Georgia, serif;"> Reporting Date :</td>-->
+                                    <td align="left" style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif; text-align:left;">
+                                       <b>Reporting Date :</b>&nbsp;<apex:repeat value="{!App.Admit_Cards__r}" var="c">
+                                            <apex:outputtext value="{0,date,dd'-'MMM'-'yyyy}">
+                                                <apex:param value="{!c.Reporting_Date__c}" />
+                                            </apex:outputtext></apex:repeat></td>
+                                </tr>
+                                <tr>
+                                    <!--<td align="left" valign="top" width="90" style="padding-top:10px; padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> Reporting Time :</td>-->
+                                    <td align="left" style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif; text-align:left;">
+                                        <b>Reporting Time :</b>&nbsp;<apex:repeat value="{!app.Admit_Cards__r}" var="c">
+                                            <apex:outputfield value="{!c.Reporting_Time__c}" />
+                                        </apex:repeat></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> &nbsp;</td>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif;">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> &nbsp;</td>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif;">
+                                        &nbsp;</td>
+                                </tr>
+                               
+                                
+                                <tr>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> &nbsp;</td>
+                                    <td style="padding-top:10px; padding-bottom:10px; font-family: Cambria,Georgia, serif;">
+                                        &nbsp;
+                                     </td>
+                                </tr>
+                                
+                            </table>
+                        </td>
+                        <td style="vertical-align:top width:350px;">
+                            <table cellspacing="0" cellpadding="0" style="font-size:14px; font-family: Cambria,Georgia, serif; " >
+                                <tr>
+                                   
+                                       
+                                 <!-- <td align="left" valign="top" width="50" style="padding-top:10px;padding-bottom:10px;font-family: Cambria,Georgia, serif; font-weight:600;"> Centre : </td>-->
+                                    <td align="left" style="padding-top:10px; padding-bottom:10px;  font-family: Cambria,Georgia, serif; text-align:left;">
+                                      <b>Centre:</b>&nbsp; <apex:outputtext value="{!app.GD_and_PI_Center__c}"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="padding-top:10px;font-family: Cambria,Georgia, serif; font-weight:600;"> Address &nbsp;: </td>
+                                </tr>
+                                <tr>
+                                    <td  align="left" colspan="2" style="font-family: Cambria,Georgia, serif;">
+                                        <apex:repeat value="{!App.Admit_Cards__r}" var="c">
+                                                                    <p style="display:block; margin:0;"><apex:outputText value="{!c.Test_Address_Line_1__c}"/></p>
+                                                                    <p style="display:block; margin:0;"><apex:outputtext value="{!c.Test_Address_Line_2__c}"/></p>
+                                                                    <p style="display:block; margin:0; word-wrap: break-word;"><apex:outputtext value="{!c.Test_Address_Line_3__c}"/></p>
+                                        </apex:repeat>
+                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>
+                                </tr>
+                                <tr>
+                                    <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                      
+                </table>
+                <table>
+                 <tr>
+                                    <td  style="padding-top:10px; padding-bottom:10px; font-weight:600; font-family: Cambria,Georgia, serif;"> Signature Of Applicant:</td>
+                                    <td align="left" style="padding-top:30px; padding-bottom:10px; vertical-align:top; font-family: Cambria,Georgia, serif;">
+                                  <!-- 20/11/2017 hide     &mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; -->
+                                    </td>
+                                </tr>
+                <!--  <tr>
+                        <td colspan="2" style="font-family: Cambria,Georgia, serif; padding-top:10px;padding-top:10px; padding-bottom:10px;">
+                                        &nbsp;</td>             
+                  </tr> -->
+                
+                </table>
+            </td>
+        </tr>
+        <tr>
+      <td colspan="2" style="padding:15px; border-top:1px dashed #000; text-align:center; font-size:11px; font-style:italic; color:#999;">
+      <p style="color:black;font-size: 150%;"><b>We look forward to welcoming you in person at the centre!</b></p>
+              (Please produce this card at the Centre. Students are requested to reach the Centre 15 minutes before starting of the admission process.
+               Students shall not be allowed to enter the Centre after 20 minutes of commencement of the process.)
+                                        </td>
+    </tr>
+    </table>
+   
+     </div>
+     <br/>
+     <br/>
+     <br/>
+    <table cellpadding="0" style="width:100%;font-size:14px; font-family: Cambria,Georgia, serif; margin-top:30px;">
+     <tr>
+         <td>
+             <apex:image url="{!URLFOR($Resource.flameZip, 'img/cut.png')}"/>
+         </td>
+         <td>
+             --------------------------------------------------------------------------------------------------------------------------------------------------- 
+         </td>
+    </tr>
+   </table>
+                             
+<!-- DASHBOARD END -->      
+
+     
+                            
+
+                               <table width="100%" style="page-break-before: always;font-family: Cambria,Georgia, serif;font-size:16px; padding:15px;">
+                                <tbody width="100%">
+                                    <tr width="100%">
+                                        <td colspan="1">
+                                            <tr>
+                                                <td style="width:15%; padding:8px;"><apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}" width="100"/> </td>
+                                                <td style="width:75%; padding:8px; text-align:center;">
+                                                    <h3 style="font-family: Cambria,Georgia, serif; font-size:16px; font-weight:400; margin-bottom:0px;">FLAME UNIVERSITY</h3>
+                                                    <p style="font-family: Cambria,Georgia, serif; font-size:14px; margin-bottom:0px; margin-top:0px;">Lavale, Off. Pune-Bangalore Highway, Pune - 412115.</p>
+                                                    <p style="font-family: Cambria,Georgia, serif; font-size:14px; margin-bottom:0px; margin-top:0px;">www.flame.edu.in</p>
+                                                </td>
+                                                <td style="width:10%; padding:8px; text-align:center;"></td>
+                                                
+                                            </tr>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                        <h3 style="font-family: Cambria,Georgia, serif; text-align:center;font-size:18px; font-weight: 700; text-decoration:underline;">GENERAL INSTRUCTIONS FOR FLAME ENTRANCE APTITUDE TEST, ESSAY, AND PERSONAL INTERVIEW 
+                                            </h3>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2" style="padding:0px;">
+                                            <div style="padding:0px 0px; border-top:1px dashed #999; border-bottom:1px dashed #999;">
+                                                <p style="margin-left:10px; margin-bottom:0; margin-top:5px;"><strong>NOTE:</strong></p>
+                                                <ol style="font-family: Cambria,Georgia, serif; padding: 5px 0 5px 20px;text-indent: -2em; margin-top:0px; list-style-position:inside; font-size:14px; font-style:italic; font-weight:600;">
+                                                    <li> Online FLAME Entrance Aptitude Test (FEAT) is applicable for undergraduate applicants and is OPTIONAL for postgraduate applicants (MBA/MBA (Communications Management) Programs).</li>
+                                                    <li> UG applicants who have opted for SAT/ACT in their application form will need to appear <u>ONLY</u> for Essay and Personal Interview (PI).</li>
+                                                    <li> PG applicants will need to appear for Essay and Personal Interview (PI).</li>            
+                                                    <li> PG (FEAT) is <u>OPTIONAL</u> for postgraduate applicants (MBA/MBA (Communications Management) Programs).</li>
+                                                    <li> During the Personal Interview for PG applicants, we will also conduct a 60-second video recording of your views on, 'Why you want to join FLAME University?'</li>
+                                               </ol>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td colspan="2" style="padding:10px;" class="auto-style2">
+                                            <div>
+                                                <h3 style="font-family: Cambria,Georgia, serif; margin-bottom: 20px; margin-top: 30px; font-size: 18px;"><strong>A. FLAME Entrance Aptitude Test (FEAT)</strong></h3>
+                                                <ul style="font-family: Cambria,Georgia, serif; padding:0px; margin-top:10px; list-style-type: inherit; font-size:16px;">
+                                                    <li style="line-height:20px;">On reporting at the centre, our officials will guide you regarding the admission process.</li>
+                                                    <li style="line-height:20px;">Total duration of the Online FEAT shall be 120 minutes.</li>
+                                                    <li style="line-height:20px;">No break is allowed during the test.</li> 
+                                                    <li>FEAT consists of multiple - choice type questions (MCQ).
+                                                        <ul style="font-family: Cambria,Georgia, serif;font-size: 16px;margin:0;padding-left: 50px; list-style:none; list-style-image: url({!URLFOR($Resource.flameZip,'img/')}arrowbullets.png); padding:0px 0px 0px 20px;text-indent: -1.5em; margin-top:0px; list-style-position:inside;">
+                                                            <li style="line-height:20px; vertical-align:top;"> Each question will have four/six answers - choices of which only one is correct or the best.You are required to choose the most appropriate option.</li>
+
+                                                            <li style="line-height:20px; vertical-align:top;"> Mark only one answer for each question. Multiple responses to one question will be treated as ‘no answer’ and will not be evaluated.</li>
+
+                                                            <li style="line-height:20px; vertical-align:top;"> There is no negative marking. </li>
+                                                            
+                                                        </ul>
+           
+                                                    </li>
+                                                        
+                                                    
+                                                    <li>FEAT is divided into four sections  as follows:
+                                                        <ul style="font-family: Cambria,Georgia, serif;font-size: 16px;padding-left: 50px; list-style-type: none;padding:0px 0px 0px 10px;text-indent: -1em; margin-top:0px; list-style-position:inside;"> 
+                                                            <li>
+                                                                <strong>Section 1:</strong> Verbal ability - Total 40 questions of 50 marks.                                                            
+                                                            </li>
+                                                            <li><strong>Section 2:</strong> Reasoning (Analytical and Logical): 20 questions of 40 marks. </li>
+                                                            <li><strong>Section 3:</strong> Quantitative ability: 20 questions of 30 marks. </li>
+                                                            <li><strong>Section 4:</strong> General knowledge: 20 questions of 20 marks.</li>
+                                                        </ul>
+                                                    </li>
+                                                    <li>You can attempt any question / section in any sequence.</li>
+
+                                                    <li>Questions paper shall be in ‘English’ only.</li>
+
+                                                    <li>Any rough work should be done only on plain paper. Plain paper will be provided to you at the center.</li>
+
+                                                    <li>Do not carry any of your belongings except pencils / pens etc. in examination hall. </li>
+
+                                                    <li>Calculators, cellular  phones, smart watches and  any  other  electronic  devices  are  not permitted inside the examination hall. </li>
+
+                                                    <li style="padding-bottom:0;">Any of the following will result in the dismissal of an examinee from the centre:</li>
+                                                         <ul style="padding-left: 50px; font-family: Cambria,Georgia, serif;font-size: 16px; list-style:none; list-style-image: url({!URLFOR($Resource.flameZip,'img/')}arrowbullets.png); padding:0px 0px 0px 20px;text-indent: -1.4em; margin-top:0px; list-style-position:inside;">
+                                                            <li>  Attempting to take the test on behalf of someone else.</li>
+                                                            <li>  Any attempt of cheating or using unfair means during examination.</li>
+                                                            <li>  Use of calculators, smart watches, slide rules, cell phones, concealed microphones, wireless devices or any other material that may aid in answering questions.</li>
+                                                            <li>  Any act of indiscipline that may create disturbance to others or smooth conduct of examination.</li>
+                                                            <li>  Talking to other test taker/s, and/or helping other examinees in their test completion.</li>
+                                                            <li>  Any other act/omission that may amount to cheating in examination or interrupts the examination activity</li>
+                                                         </ul>  
+                                                     </ul>  
+                                                 </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td  colspan="2">
+                                    <h3 style="margin-bottom: 5px; margin-top: 0px; font-size: 18px;"><strong>B. Essay:</strong></h3>
+                                    <ul style="padding:0px; font-family: Cambria,Georgia, serif;font-size: 16px; margin-top:10px;list-style-type: inherit;padding:0px 0px 0px 20px;text-indent: -1em;list-style-position:inside;">
+                                    
+                                    <li>Topic of the essay will be given at the centre.</li>
+                                    <li>Students are expected to write on line essay of 200-250 words on the given topic.</li>
+                                    <li>20 minutes will be given to complete the essay.</li>
+                                    <li>Students can spend 5 minutes to think on the given topic and the remaining to complete the essay. </li>
+                                    </ul>
+                                    </td>
+                                    </tr>
+
+                                                                     
+
+                                    <tr style="page-break-inside: avoid;">
+                                        <td colspan="2">
+                                            <h3 style="margin-bottom: 5px; font-size: 18px;"><strong>C. Personal Interview(PI):</strong></h3>
+                                            <ul style="padding:0px; font-size:16px; margin-top:10px; margin-top: 10px; list-style-position:inside; list-style-type: inherit;padding:0px 0px 0px 20px;text-indent: -1em; list-style-position:inside;">
+                                                <li>Every candidate will be interviewed separately by two/three interviewers.</li>
+
+                                                <li>Each interview shall normally be of 10-15 minutes duration.</li>
+
+                                                <li>The PI is aimed  at  evaluating  the  candidate's  motivation level and ability to benefit from the intended program of study, as well as his/her fit in the FLAME University community. </li>
+
+                                                <li>The PI process  offers  us  an  opportunity  to  know  more  about  an applicant that we might not have learnt from his/her application.</li>
+
+                                                <li>The PI may  also  provide an  opportunity to  an  applicant  to  address  any unanswered query.</li>
+
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td colspan="2" style="padding-top:0;">
+                                            <h3 style="margin-bottom: 5px; margin-top: 0px; font-size: 18px;"><strong>D. Other Important Information:</strong></h3>
+                                            <ul style="padding:0px; margin-top:10px; list-style-position:inside; list-style-type: inherit;padding:0px 0px 0px 20px;text-indent: -1em;list-style-position:inside;">
+                                                
+<li>FEAT, Essay and PI will be conducted on the same day at the same venue. </li>
+
+<li>During the PI for PG applicants, we will also conduct a 60-second video recording about your views on, 'Why you want to join FLAME University?' </li>
+
+<li>All  candidates  are  required  to upload their transcripts, certificates  and other supporting documents (if any) on the application portal.</li>
+
+<li>Entry to the Centre/Examination Hall will be allowed only on the production of Admit Card.</li>
+
+<li>Your candidature for admission to FLAME University is  provisional and is subject to the fulfilment of prescribed minimum eligibility requirements.</li>
+
+<li>Appearing/qualifying the Test/Essay/PI or fulfilment of minimum eligibility requirements does not automatically result in  admission to FLAME University.</li>
+<li>Decision of FLAME University admission committee shall be final and binding on all.</li>
+
+                                            </ul>
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                
+
+</apex:page>

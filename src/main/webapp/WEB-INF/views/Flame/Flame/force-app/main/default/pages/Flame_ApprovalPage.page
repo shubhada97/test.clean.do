@@ -1,0 +1,783 @@
+<apex:page docType="html-5.0" lightningStylesheets="true" controller="Flame_ApprovalPageClass" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India">
+    <!-- VF componen which hold the common java script and css for all pages-->
+    
+    <apex:includeLightning /> 
+    <apex:slds />
+    <c:Flame_HeadResource />  
+    
+    <!-- page css -->
+    <!-- jquery datepicker plugin -->
+    
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        
+        <style>
+            @media screen and (max-width: 800px){
+            .dropdownPG {
+            display:block !important;
+            max-width:70%;
+            }
+            .deskaction{
+            display:none !important;
+            }
+            .deskDiv{
+            display:none !important;
+            }
+            .mobDiv{
+            display:block !important;
+            }
+            .icon-bar {
+            display:none !important;
+            }
+            .border-radius{
+            display:none !important;
+            }
+            .deskcompletediv{
+            display:none !important;
+            }
+            .mobcompletediv{
+            display:block !important;
+            }
+            .msgIcon{
+            width: 110% !important;
+            background-repeat: no-repeat;
+            }
+            .message{
+            margin: 0px 0px !important;
+            }
+            .custPopup{
+            width:80% !important ;
+            top:75%;
+            }
+            }
+            
+            table {
+            border-collapse: collapse;
+            border: 1px solid black;
+            }
+            th {
+            background-color: #fbb601 !important;
+            color: white;
+            }
+            .datatables {
+            padding: 4px !important;
+            border: 1px solid black;
+            }
+            fieldset legend {
+            color: white !important;
+            }
+            
+            * {
+            box-sizing: border-box;
+            }
+            .column {
+            float: left;
+            width: 50%;
+            padding: 10px;
+            }
+            
+            .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+            .lookupInput{
+            
+            }
+            .border-radius{
+            border-radius:50px
+            }
+            
+            .margin-bottom{
+            margin-bottom:20px;
+            }
+            .margin-top{
+            margin-top:15px;
+            }
+            
+            .bPageBlock .requiredInput .requiredBlock{background-color: #F6FBF6;}
+            .requiredInput::before { display: block; content: "*"; font-size: 1.0em;
+            font-weight: bold;color: #c00; margin-left: -4px; margin-top: -2px; }   
+            
+            body {margin:0;}
+            
+            .icon-bar {
+            display:block;
+            margin-left: 3%;
+            padding-top: 10px;
+            background-color: #fffefc;
+            overflow: auto;
+            padding-left:15px;
+            }
+            
+            .icon-bar a {
+            float: left;
+            text-align: center;
+            padding: 12px 0;
+            transition: all 0.3s ease;
+            color: white;
+            font-size: 14px;
+            }
+            
+            .icon-bar a:hover {
+            background-color: #fbb601 !important;
+            
+            }
+            
+            .active {
+            background-color: #fbb601 !important;
+            }
+            
+            .inactive {
+            background-color: #f3cf71 !important;
+            }
+            .slds-scope td {
+            text-align: center;
+            }
+            
+            .dropdownPG {
+            display:none;
+            }
+            .dropdownPG:hover .dropdown-content {
+            display: block;
+            }
+            .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            padding: 12px 16px;
+            z-index: 2;
+            width: 70%;
+            }
+            .dropdown-content:hover{
+            background-color: #f3cf71 !important
+            }
+            .deskDiv{
+            display:block;
+            }
+            .mobDiv{
+            display:none;
+            }
+            .column {
+            float: left;
+            padding: 10px;
+            border=1px;
+            }
+            .row:after {
+            content: "";
+            display: table;
+            clear: both;
+            }
+            .mobcompletediv{
+            margin-top:-20px;
+            display:none;
+            }
+            .deskcompletediv{
+            display:block;
+            }
+            .popupBackground{
+            background:rgba(0, 0, 0, 0.5);       
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 97;
+            }
+            .custPopup{
+            background-color: white;
+            border-radius:5px;
+            box-shadow:0 0 8px #000;
+            z-index: 99;
+            position: absolute;
+            transform:translate(-50%, -50%);
+            top:50%;
+            left:50%;
+            width:30% ;
+            }
+            .no-border-table, .no-border-table *{
+            border:2px solid #fff !important;
+            }
+            .no-border-table{
+            margin-bottom:30px;
+            }
+            
+            .after-table{
+            border:1px solid #ddd;
+            border-radius:5px;
+            padding:15px;
+            }
+            
+            .after-table .heading{
+            float:left;
+            }
+            .popup-table{
+            table-layout: fixed !important;
+            }
+            .after-table input.border{
+            line-height:normal !important;
+            min-height:initial !important;
+            text-align: center;
+            padding: 5px 0;
+            }
+            
+            .after-table .slds-scope textarea{
+            color: black !important;
+            line-height: normal !important;
+            min-height:100px !important;
+            }
+            
+            .loader {
+            border: 5px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 5px solid #3498db;
+            width: 20px;
+            height: 20px;
+            -webkit-animation: spin .9s linear infinite; /* Safari */
+            animation: spin .9s linear infinite;
+            }
+            @-webkit-keyframes spin {
+            0% { -webkit-transform: rotate(0deg); }
+            100% { -webkit-transform: rotate(360deg); }
+            }
+            
+            @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+            }
+            tr:hover {background-color:#e5e5e5;}
+            .loadingBG{
+            position: fixed;
+            top: 0; 
+            left: 0;
+            right: 0; 
+            bottom: 0; 
+            opacity: 0.5; 
+            z-index: 1000; 
+            background-color:#084d89;
+            }
+            .loadingBGP{
+            position: fixed; 
+            left: 0; top: 0; 
+            bottom: 0; 
+            right: 0; 
+            z-index: 1001; 
+            margin: 15% 50%;        
+            } 
+            
+            .popup
+            {
+            
+            z-index: 999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:250px;
+            }
+            
+            .popupBg
+            {
+            background-color:black;
+            opacity: .5;
+            filter: alpha(opacity = 70);
+            
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 997;
+            position: fixed;
+            }
+            .modal-content {
+            position: relative;
+            background-color: #fefefe;
+            margin: auto;
+            padding: 0;
+            border: 0px solid #888;
+            width: 80%;
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+            -webkit-animation-name: animatetop;
+            -webkit-animation-duration: 0.4s;
+            animation-name: animatetop;
+            animation-duration: 0.4s
+            }
+            .modal-header {
+            padding: 9px 16px;
+            background-color: #fbb601;
+            color: #fbb601;
+            }
+            /* The Close Button */
+            .close {
+            
+            float: right;
+            font-size: 10px;
+            font-weight: none;
+            color: #fbb601;
+            
+            }
+            
+            .close:hover,
+            .close:focus {
+            color: #000;
+            text-decoration: none;
+            
+            }
+            .modal-body {
+            padding: 2px 16px;
+            text-align: center;
+            margin-top: 25px;
+            margin-bottom: 25px;
+            }
+            <!-- page message standared css -->
+            .msgIcon {
+            display: none!important
+            }
+            .customMessage * {
+            color: #fff!important
+            
+            }
+            .customMessage {
+            margin: 5px 0!important;
+            max-width: 1280px;
+            opacity: 1!important;
+            width: 100%;
+            font-size: 12px;
+            border: 0px;
+            padding-left: 10px;
+            }
+            .message {
+            opacity: .6
+            
+            } 
+        </style>
+    </head> 
+    <body>
+        <apex:form id="form">
+            <div id="lightning" />
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />	
+                <!-- Header-->                                
+                <!--Main container -->
+                
+                <div class="icon-bar">
+                    <!--<a class="inactive" href="/FlameLMS_StartPage">Home</a> -->
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_EmpInfo">My Info</a> 
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/FlameLeaveApplication">Apply Leave</a> 
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_Regularization">Regularization/Punches</a> 
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_AttendenceInfo">My Calendar</a>
+                    <a class="inactive" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_TrackLeaves">My Leaves</a>
+                    <a class="active" style="width:{!IF(approvalLinkBool,'16%','19%')};" href="/Flame_ApprovalPage">Approvals</a>
+                </div>
+                <apex:actionStatus id="IdStatus">
+                    <apex:facet name="start">
+                        <div class="loadingBG" >
+                            &nbsp;
+                        </div>  
+                        <div class="loadingBGP" >                        
+                            <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                        </div>            
+                    </apex:facet>           
+                </apex:actionStatus>
+                <apex:outputPanel id="tstpop">
+                    <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!successBool}"/>
+                    <apex:outputPanel styleClass="popup" layout="block" rendered="{!successBool}">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <div Class="close">
+                                    <apex:commandButton value="X" action="{!Cancel}" rendered="{!NOT(errorBool)}" status="IdStatus" reRender="" style="background-color: #fbb601;border:none;" />
+                                    <apex:commandButton value="X" action="{!toogle}" rendered="{!(errorBool)}" status="IdStatus" reRender="form" style="background-color: #fbb601;border:none;" />
+                                </div>
+                                
+                            </div>
+                            <div class="modal-body">
+                                <apex:pageMessages id="showmsg" ></apex:pageMessages>
+                                <h4> </h4>
+                            </div>
+                            
+                        </div>
+                    </apex:outputPanel>
+                </apex:outputPanel>
+                <center>
+                    <div class="dropdownPG">
+                        
+                        <span style="padding:1px;">Approvals &nbsp;<i class="fa fa-caret-down"></i></span>
+                        <div class="dropdown-content">
+                            <a href="/Flame_EmpInfo">My Info</a><br/>
+                            <a href="/FlameLeaveApplication">Apply Leave</a><br/>
+                            <a href="/Flame_Regularization">Regularization/Punches</a><br/>
+                            <a href="/Flame_AttendenceInfo">My Calendar</a><br/>
+                            <a href="/Flame_TrackLeaves">My Leaves</a>
+                        </div>
+                        
+                    </div>
+                </center>
+                
+                <center style="padding-top: 20px;">
+                    <apex:actionFunction name="changeview" status="IdStatus" reRender="showleave,showregularize,form" action="{!changeview}"/>
+                    <apex:selectList value="{!changeView}" onchange="changev();" style="width:auto;" styleClass="slds-input" multiselect="false" size="1">
+                        <apex:selectOption itemValue="Leave" itemLabel="Leaves"/>
+                        <apex:selectOption itemValue="Punch" itemLabel="Regularizations"/>
+                    </apex:selectList><br/>
+                    
+                    <apex:commandButton value="Mass Approve/Reject" action="{!MassAction}" status="IdStatus" reRender="MassApprovalPopup" styleClass="btn slds-button slds-button_neutral" style="margin-top: 10px;" />
+                    
+                    <apex:outputPanel id="MassApprovalPopup">
+                        <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayMassPopup}"/>
+                        <apex:outputPanel id="masspop" styleClass="custPopup" layout="block" rendered="{!displayMassPopup}">
+                          
+                            <div id="main-div" style="padding: 12px;">
+                                <div class="after-table">
+                                    
+                                    <div class="row">
+                                        <div class="col-md-12 margin-top">
+                                            <div class="heading" style="margin-left: 12px;"><b>Comments for Approval or Rejection.</b></div>
+                                        </div>
+                                        <div class="col-md-12 margin-top">
+                                            <div class="heading" style="margin-left: 12px;"><b>Comment</b></div><div><apex:inputTextarea style="width: 93%;" value="{!ManagerComments}" required="true" styleClass="slds-input"/></div>
+                                        </div>
+                                    </div>
+                                    <apex:commandButton value="Approve" action="{!MassApprove}" status="IdStatus" reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                    <apex:commandButton value="Reject" action="{!MassReject}" status="IdStatus" reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                    <apex:commandButton value="Cancel" action="{!Cancel}" status="IdStatus" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral" immediate="true" html-formnovalidate="formnovalidate"/>
+                                </div>
+                            </div>      
+                        </apex:outputPanel>
+                        
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{!showLeave}" style="padding-top: 10px;" id="showleave">
+                        <apex:outputPanel id="completediv">
+                            
+                            <apex:outputPanel styleClass="deskcompletediv">
+                               
+                                <div style="padding:5px;overflow-x:auto;">
+                                    
+                                    <table style="width:100%;padding-top:5px;">
+                                        <tr>
+                                            <th style="border: 1px solid black;text-align:center;width:1%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">Sr. No.</th>
+                                            <th style="border: 1px solid black;text-align:center;width:10%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">Employee Name</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">Employee Id</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">From Date</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">To Date</th>
+                                            <th style="border: 1px solid black;text-align:center;width:4%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">Total Days</th>
+                                            <th style="border: 1px solid black;text-align:center;width:10%;padding-right: 10px;padding-left: 10px;padding-bottom: 10px;padding-top: 10px;">Leave Type</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;padding-bottom: 10px;padding-top: 10px;">Submitted On</th>
+                                            <th style="border: 1px solid black;text-align:center;width:15%;padding-right: 12px;padding-left: 12px;padding-bottom: 10px;padding-top: 10px;">Reason</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 12px;padding-left: 12px;padding-bottom: 10px;padding-top: 10px;">Status</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 12px;padding-left: 12px;padding-bottom: 10px;padding-top: 10px;">Action</th>
+                                            
+                                        </tr>
+                                        <apex:variable value="{!1}" var="count" />
+                                        <apex:repeat value="{!leaveTrackList}" var="tl" >                        
+                                            <tr style="border: 1px solid black" align="center"> 
+                                                <td style="border: 1px solid black;text-align:center;width:1%;"><apex:outputText value="{!count}"/></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Emp_Name__c}" style="color: black !important;cursor: text !important;" /></td> 
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Employee_Id__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center;width:8%;">
+                                                    <apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.From_Date__c}"></apex:param></apex:outputText>
+                                                </td>
+                                                <td style="border: 1px solid black;text-align:center;width:8%;">
+                                                    <apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.To_Date__c}"></apex:param></apex:outputText>
+                                                </td>
+                                                <td style="border: 1px solid black;text-align:center;width:4%;" ><apex:outputText value="{!tl.Total_Days__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center;width:10%;" ><apex:outputText styleClass="desk" value="{!tl.Leave_Type__c}"/></td>
+                                                <td style="border: 1px solid black;text-align:center;width:8%;">
+                                                    <apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.CreatedDate}"></apex:param></apex:outputText>
+                                                </td>
+                                                <td style="border: 1px solid black;text-align:center; width:15%;"><apex:outputField value="{!tl.Reason__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Status__c}" /></td>
+                                                <td style="border: 1px ; text-align:center; width:8%;padding:5px;">
+                                                    <apex:commandButton action="{!showPopup}" status="IdStatus" onclick="gotop();" reRender="form,completediv,actionpopup,tstpopup" value="Approve/Reject" disabled="{!if( tl.Status__c == 'Cancelled' || tl.Status__c == 'Rejected' || tl.Status__c == 'Roll-Back' || tl.Status__c == '',true,false)}" styleClass="slds-button slds-button_neutral">
+                                                        <apex:param value="{!count}" assignTo="{!indNo}" name="index"/>
+                                                    </apex:commandButton>
+                                                </td>
+                                                <apex:variable value="{!count +1}" var="count" />
+                                            </tr>
+                                        </apex:repeat>
+                                    </table>
+                                </div>
+                                
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel styleClass="mobcompletediv" layout="block" style="padding: 5%;text-align: left;">
+                               
+                                <div class="mobcompletediv" style="width:97%;margin-left:2%;margin-top:10px;">
+                                    <apex:variable value="{!1}" var="count1" />
+                                    <apex:repeat value="{!leaveTrackList}" var="tl" >
+                                        
+                                        <div class="row" style="border-radius: 20px;font-size: 12px;margin-top: 20px;margin-left: 0px;margin-right: 0px;border: 1px solid #dfdfdf;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);">
+                                            <div class="column left">
+                                                <span>Sr. No. : </span><apex:outputText value="{!count1}"/><br />
+                                                <span>Employee Name : </span><apex:outputField value="{!tl.Emp_Name__c}"/><br/>
+                                                <span>Employee Id : </span><apex:outputField value="{!tl.Employee_Id__c}"/><br/>
+                                                <span>Leave Type : </span><apex:outputText value="{!tl.Leave_Type__c}"/><br/>
+                                                <span>Reason : </span><apex:outputField value="{!tl.Reason__c}"/>
+                                            </div>
+                                            <div class="column right">
+                                                <span>Submitted on : </span><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.CreatedDate}"></apex:param></apex:outputText><br/>
+                                                <span>From Date : </span><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.From_Date__c}"></apex:param></apex:outputText><br/>
+                                                <span>To Date : </span><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.To_Date__c}"></apex:param></apex:outputText><br/>
+                                                <span>Total Days : </span><apex:outputText value="{!tl.Total_Days__c}"/><br/>
+                                                <span>Status : </span><apex:outputField value="{!tl.Status__c}"/><br/>
+                                                <div style="margin-top: 5px;float: left;">Action : </div>
+                                                <apex:commandButton action="{!showPopup}" immediate="true" status="IdStatus" onclick="gotop();" style="float: right;width: 70%;" reRender="form,completediv,actionpopup,tstpopup" value="Approve/Reject" disabled="{!if( tl.Status__c == 'Cancelled' || tl.Status__c == 'Rejected' || tl.Status__c == 'Roll-Back' || tl.Status__c == '',true,false)}" styleClass="slds-button slds-button_neutral">
+                                                    <apex:param value="{!count1}" assignTo="{!indNo}" name="index"/>
+                                                </apex:commandButton>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <apex:variable value="{!count1 +1}" var="count1" />
+                                        
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                            
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="tstpopup">
+                            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+                            <apex:outputPanel id="a" styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                               
+                                <div id="main-div" style="padding: 12px;">
+                                    <apex:pageMessages ></apex:pageMessages>
+                                    <div class="after-table">
+                                        <table class="no-border-table">
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Employee Id</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionledger.Employee_Id__c}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Employee Name</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionledger.Emp_Name__c}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Leave Type</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionledger.Leave_Type__c}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">From Date</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!actionledger.From_Date__c}"></apex:param></apex:outputText></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">To Date</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!actionledger.To_Date__c}"></apex:param></apex:outputText></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Total Days</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionledger.Total_Days__c}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Submitted On</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!actionledger.CreatedDate}"></apex:param></apex:outputText></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Reason</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionledger.Reason__c}" /></td>
+                                            </tr>
+                                        </table>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12 margin-top">
+                                                <div class="heading" style="margin-left: 12px;"><b>Comments</b></div><div><apex:inputTextarea style="width: 93%;" value="{!ManagerComments}" required="true" styleClass="slds-input"/></div>
+                                            </div>
+                                        </div>
+                                        <apex:commandButton value="Approve" action="{!ApproveRecord}" status="IdStatus"  reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                        <apex:commandButton value="Reject" action="{!RejectRecord}" status="IdStatus"  reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                        <apex:commandButton value="Cancel" action="{!Cancel}" status="IdStatus" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral" immediate="true" html-formnovalidate="formnovalidate"/>
+                                    </div>
+                                </div>      
+                            </apex:outputPanel>
+                        </apex:outputPanel>
+                    </apex:outputPanel>
+                    
+                    <apex:outputPanel rendered="{! NOT(showLeave)}" style="padding-top: 10px;" id="showregularize">
+                        <apex:outputPanel id="completeregdiv">
+                            
+                            <apex:outputPanel styleClass="deskcompletediv">
+                            
+                                <div style="padding:5px;overflow-x:auto;">
+                                    
+                                    <table style="width:100%;">
+                                        <tr>
+                                            <th style="border: 1px solid black;text-align:center;width:1%;padding-right: 4px;padding-left: 4px;" rowspan="2">Sr. No.</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" rowspan="2">Employee Name</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" rowspan="2">Employee Id</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" rowspan="2">Date</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" colspan="2">System</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" colspan="2">Expected</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" rowspan="2">Submitted On</th>
+                                            <th style="border: 1px solid black;text-align:center;width:15%;padding-right: 12px;padding-left: 12px;" rowspan="2">Reason</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 12px;padding-left: 12px;" rowspan="2">Action</th>
+                                            
+                                        </tr>
+                                        <tr>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" >In Time</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" >Out Time</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" >In Time</th>
+                                            <th style="border: 1px solid black;text-align:center;width:8%;padding-right: 4px;padding-left: 4px;" >Out Time</th>
+                                        </tr>
+                                        <apex:variable value="{!1}" var="countreg" />
+                                        <apex:repeat value="{!reguTrackList}" var="tl" >                        
+                                            <tr style="border: 1px solid black" align="center"> 
+                                                <td style="border: 1px solid black;text-align:center;width:1%;"><apex:outputText value="{!countreg}"/></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Contact_Name__r.Name}" /></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Employee_Code__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center;width:8%;">
+                                                    <apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.Date__c}"></apex:param></apex:outputText>
+                                                </td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.In_Time__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Out_Time__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Expected_In_Time__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center; width:8%;"><apex:outputField value="{!tl.Expected_Out_Time__c}" /></td>
+                                                <td style="border: 1px solid black;text-align:center;width:8%;">
+                                                    <apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.Lastmodifieddate}"></apex:param></apex:outputText>
+                                                </td>
+                                                <td style="border: 1px solid black;text-align:center; width:15%;"><apex:outputField value="{!tl.Comments__c}" /></td>
+                                                <td style="border: 1px ; text-align:center; width:8%;padding:5px;">
+                                                    <apex:commandButton action="{!showPopup}" status="IdStatus" onclick="gotop();" reRender="form,completeregdiv,actionpopup,tstpopupreg" value="Approve/Reject" disabled="{!if( tl.Status__c == 'Cancelled' || tl.Status__c == 'Rejected' || tl.Status__c == 'Roll-Back' || tl.Status__c == '',true,false)}" styleClass="slds-button slds-button_neutral">
+                                                        <apex:param value="{!countreg}" assignTo="{!indNo}" name="index"/>
+                                                    </apex:commandButton>
+                                                </td>
+                                                <apex:variable value="{!countreg +1}" var="countreg" />
+                                            </tr>
+                                        </apex:repeat>
+                                    </table>
+                                </div>
+                                
+                            </apex:outputPanel>
+                            
+                            <apex:outputPanel styleClass="mobcompletediv" layout="block" style="padding: 5%;text-align: left;">
+                                
+                                <div class="mobcompletediv" style="width:97%;margin-left:2%;">
+                                    <apex:variable value="{!1}" var="count1reg" />
+                                    <apex:repeat value="{!reguTrackList}" var="tl" >
+                                        
+                                        <div class="row" style="border-radius: 20px;font-size: 12px;margin-top: 40px;margin-left: 0px;margin-right: 0px;border: 1px solid #dfdfdf;box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2), 0 2px 5px 0 rgba(0, 0, 0, 0.19);">
+                                            <div class="column left">
+                                                <span>Sr. No. : </span><apex:outputText value="{!count1reg}"/><br />
+                                                <span>Employee Name : </span><apex:outputField value="{!tl.Contact_Name__r.Name}"/><br/>
+                                                <span>Employee Id : </span><apex:outputField value="{!tl.Employee_Code__c}"/>
+                                                <div>
+                                                    <div style="text-align:center;background-color:#eceeef;border-radius: 20px;">System</div>                                      
+                                                    <span>In Time : </span><apex:outputField value="{!tl.In_Time__c}" /><br/>
+                                                    <span>Out Time : </span><apex:outputField value="{!tl.Out_Time__c}" />
+                                                </div>
+                                            </div>
+                                            <div class="column right">
+                                                <span>Submitted on : </span><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.Lastmodifieddate}"></apex:param></apex:outputText><br/>
+                                                <span>Date : </span><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!tl.Date__c}"></apex:param></apex:outputText><br/>
+                                                <span>Reason : </span><apex:outputField value="{!tl.Comments__c}" /><br/>
+                                                <div>
+                                                    <div style="text-align:center;background-color:#eceeef;border-radius: 20px;">Expected</div>
+                                                    <span>In Time : </span><apex:outputField value="{!tl.Expected_In_Time__c}" /><br/>
+                                                    <span>Out Time : </span><apex:outputField value="{!tl.Expected_Out_Time__c}" />
+                                                </div>
+                                                
+                                                <div style="margin-top: 5px;float: left;">Action : </div>
+                                                <apex:commandButton action="{!showPopup}" immediate="true" status="IdStatus" onclick="gotop();" style="float: right;width: 70%;" reRender="form,completeregdiv,actionpopup,tstpopupreg" value="Approve/Reject" disabled="{!if( tl.Status__c == 'Cancelled' || tl.Status__c == 'Rejected' || tl.Status__c == 'Roll-Back' || tl.Status__c == '',true,false)}" styleClass="slds-button slds-button_neutral">
+                                                    <apex:param value="{!count1reg}" assignTo="{!indNo}" name="index"/>
+                                                </apex:commandButton>
+                                            </div>
+                                        </div>
+                                        
+                                        
+                                        <apex:variable value="{!count1reg +1}" var="count1reg" />
+                                        
+                                    </apex:repeat>
+                                </div>
+                            </apex:outputPanel>
+                            
+                        </apex:outputPanel>
+                        
+                        <apex:outputPanel id="tstpopupreg">
+                            <apex:outputPanel styleClass="popupBackground" layout="block" rendered="{!displayPopUp}"/>
+                            <apex:outputPanel id="c" styleClass="custPopup" layout="block" rendered="{!displayPopUp}">
+                               
+                                <div id="main-div" style="padding: 12px;">
+                                    <apex:pageMessages ></apex:pageMessages>
+                                    <div class="after-table">
+                                        <table class="no-border-table">
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Employee Id</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionEmppunch.Employee_Code__c}"/></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Date</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!actionEmppunch.Date__c}"></apex:param></apex:outputText></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">In Time</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputField value="{!actionEmppunch.In_Time__c}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Out Time</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputField value="{!actionEmppunch.Out_Time__c}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Expected In Time</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputField value="{!actionEmppunch.Expected_In_Time__c}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Expected Out Time</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputField value="{!actionEmppunch.Expected_Out_Time__c}" /></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Submitted On</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{0,date,dd-MM-yy}"><apex:param value="{!actionEmppunch.Lastmodifieddate}"></apex:param></apex:outputText></td>
+                                            </tr>
+                                            <tr>
+                                                <th style="background-color: white !important;color: black;">Reason</th>
+                                                <td style="text-align:left;padding:5px 10px !important;"><apex:outputText value="{!actionEmppunch.Comments__c}" /></td>
+                                            </tr>
+                                        </table>
+                                        
+                                        <div class="row">
+                                            <div class="col-md-12 margin-top">
+                                                <div class="heading" style="margin-left: 12px;"><b>Comments</b></div><div><apex:inputTextarea style="width: 93%;" value="{!ManagerComments}" required="true" styleClass="slds-input"/></div>
+                                            </div>
+                                        </div>
+                                        <apex:commandButton value="Approve" action="{!ApproveRecord}" status="IdStatus" reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                        <apex:commandButton value="Reject" action="{!RejectRecord}" status="IdStatus" reRender="form" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral"/>
+                                        <apex:commandButton value="Cancel" action="{!Cancel}" status="IdStatus" style="margin:15px 10px 0 !important" styleClass="slds-button slds-button_neutral" immediate="true" html-formnovalidate="formnovalidate"/>
+                                    </div>
+                                </div>       
+                            </apex:outputPanel>
+                            
+                        </apex:outputPanel>
+                        
+                    </apex:outputPanel>
+                </center>
+                
+                <!--Main container -->
+            </div><!-- /#right-panel -->   
+            <!-- Right Panel -->            
+            <!-- Modal -->
+        </apex:form>
+        
+        <c:Flame_FooterResource />
+    </body> 
+    <script>
+    function gotop(){
+        document.querySelector('body').scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    function changev(){
+        changeview();
+    }
+    </script>
+    
+</apex:page>

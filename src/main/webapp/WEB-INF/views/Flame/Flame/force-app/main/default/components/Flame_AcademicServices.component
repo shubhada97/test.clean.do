@@ -1,0 +1,65 @@
+<!------------------------
+Author: Deepak Chouhan
+Page Name: Flame_AcademicServices
+Created Date:  23/8/2018
+Description: to show the Academic service input info.
+------------------------->
+<apex:component >
+    <!-- attribute section -->
+    <apex:attribute name="objCase" description="Academic Service Form" type="Case" />
+    <apex:attribute name="IsAttachment" description="add attachment to service" type="Boolean" />
+    
+    <!--<div style="margin-bottom: 15px;background: #084d89;color: #fff;text-transform:capitalize;padding: 0.5em;">
+        <h6>Academic Service Request</h6>
+    </div>-->
+    
+    <!-- to check the attachment for service page -->
+    <apex:inputCheckbox styleClass="IsAttachCls hideComponent" value="{!IsAttachment}" style="display:none;"/>    
+    
+    <!-- form input fields-->
+    <div class="slds-form-element" style="display:none;">
+        <!--<label class="slds-form-element__label" for="form-element-11">Assistance Type</label>-->
+        <div class="slds-form-element__control">            
+            <apex:inputField styleClass="slds-input" value="{!objCase.HLP_Assist_Type__c}" required="true" style="display:none;"/>
+        </div>
+    </div>      
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="form-element-01">Service Type</label>
+        <div class="slds-form-element__control">            
+            <apex:inputField id="form-element-01" styleClass="slds-input HLPAssistCategoryCls" onchange="showHideAcademicDateFields(this);" value="{!objCase.HLP_Category__c}" required="true"/>
+        </div>
+    </div>  
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="form-element-02">Sub Category</label>
+        <div class="slds-form-element__control">            
+            <apex:inputField id="form-element-02" styleClass="slds-input " onchange="academicSubCategoryType(this);" value="{!objCase.HLP_Sub_Category__c}" required="true"/>
+        </div>
+    </div>    
+    <div class="hideDateFields">        
+        <div class="slds-form-element showHideDateFields">
+            <label class="slds-form-element__label " >Attendance Exemption From Date</label>
+            <div class="slds-form-element__control fromDateRequired">                
+                <apex:inputField styleClass="slds-input showHideDateFields" value="{!objCase.Attendance_Exemption_From_Date__c}" />
+            </div>
+        </div>      
+        <div class="slds-form-element">
+            <label class="slds-form-element__label " >Attendance Exemption To Date</label>
+            <div class="slds-form-element__control toDateRequired">                
+                <apex:inputField styleClass="slds-input showHideDateFields" value="{!objCase.Attendance_Exemption_To_Date__c}"/>
+            </div>
+        </div>
+    </div>    
+   
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="form-element-03">Subject</label>
+        <div class="slds-form-element__control">            
+            <apex:inputField id="form-element-03" styleClass="slds-input" value="{!objCase.Subject}" required="true"/>
+        </div>
+    </div>    
+    <div class="slds-form-element">
+        <label class="slds-form-element__label" for="form-element-04">Description</label>
+        <div class="slds-form-element__control">            
+            <apex:inputField id="form-element-04" styleClass="slds-input" value="{!objCase.Description}"/>
+        </div>
+    </div>      
+</apex:component>

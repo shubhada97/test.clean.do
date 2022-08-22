@@ -1,0 +1,416 @@
+<apex:page id="pg" docType="html-5.0" controller="CreateFlameEventController" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >       
+    <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    <!-- page css -->
+    
+    
+    <script type='text/javascript'>
+    var maxStringSize = 6000000;
+    var attachmentList;
+    var j;
+    
+    function uploadFiles()
+    {
+        input = document.getElementById('fileinput');
+        attachmentList = input.files;
+        
+        if ( attachmentList.length <= 0 ) {
+            //  alert('Please insert upload Minutes..!');
+            var DateerrObj5 = document.getElementById("{!$Component.pg:FormMain:EventdateerrMsg}");
+            console.log(DateerrObj5);
+            input.focus();
+            input.scrollIntoView();
+            DateerrObj5.innerHTML = "Please insert upload Minutes."
+             return false;
+            //  process.exit();
+        }
+        
+        
+        if(j == undefined) 
+            j = 0;   
+        var file;
+        if(j < attachmentList.length)
+        {
+            file = attachmentList[j];
+            
+            var name = file.name;
+            var fileCount = j+1;
+            
+            var reader = new FileReader();  
+            
+            
+            reader.onload = function(e) {  
+                var readerresult = reader.result;
+                
+                var attachmentbodybase64 = reader.result.split('base64,')[1];
+                
+                console.log(attachmentbodybase64.length);
+                
+                if(attachmentbodybase64.length > maxStringSize){
+                    alert("File size is too large to handle");
+                }
+                else
+                {
+                    j++;
+                    saveFileAF(attachmentbodybase64, name, fileCount);
+                }
+            }
+            reader.readAsDataURL(file);
+        }
+        else
+        {
+            
+            window.location ='/apex/MyMeetingMinutes';
+        }
+        
+    }
+    
+    
+    //Function used to Validate date and time should be future.
+    function ValidateDate()
+    {
+        
+        var findDate = document.getElementById("datetime");
+        
+        var valueOfDate = findDate.value;
+      
+       
+        var datearray = valueOfDate.split("/");
+
+var newdate = datearray[1] + '/' + datearray[0] + '/' + datearray[2];
+     
+        var slectedDate = new Date(newdate);
+       
+       
+        var year1 = slectedDate.getFullYear();             // YYYY
+        
+        var month1 = ("0" + (slectedDate.getMonth() + 1)).slice(-2);	// MM
+       
+        var day1 = ("0" + slectedDate.getDate()).slice(-2);			// DD
+     
+        
+        var SelectedInputDate = (year1 +""+ month1 +""+ day1); // Results in "YYYY-MM-DD" for today's date 
+        
+        var todaysDate = new Date(); // Gets today's date
+       
+        // Max date attribute is in "YYYY-MM-DD".  Need to format today's date accordingly
+        
+        var year = todaysDate.getFullYear(); 						// YYYY
+        var month = ("0" + (todaysDate.getMonth() + 1)).slice(-2);	// MM
+        var day = ("0" + todaysDate.getDate()).slice(-2);			// DD
+        
+        var maxDate = (year +""+ month +""+ day); // Results in "YYYY-MM-DD" for today's date 
+        
+        let data= new Date(newdate)
+        let hrs = data.getHours()
+        let mins = data.getMinutes()
+        if(hrs<=9)
+            hrs = '0' + hrs
+            if(mins<10)
+                mins = '0' + mins
+                const postTime= hrs +''+ mins
+               
+                
+                
+                var hrsC = todaysDate.getHours();
+        var minC = todaysDate.getMinutes();
+        if(hrsC<=9)
+            hrsC = '0' + hrsC
+            if(minC<10)
+                minC = '0' + minC          
+                
+                var currentTime = hrsC +''+ minC
+                
+                
+                if((SelectedInputDate === maxDate) && (postTime > currentTime)){
+                    
+                    alert('Meeting Date/Time should not be future.');  
+                    findDate.value ='';
+                    
+                }
+        else if(SelectedInputDate > maxDate){
+            alert('Meeting Date/Time should not be future.');  
+            findDate.value ='';
+        }
+            else{
+            }
+    }
+    
+    
+    
+    </script>
+    
+    <style>
+        table {
+        font-family: arial, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+        }
+        
+        td, th {
+        border: 1px solid #dddddd;   
+        text-align: left;
+        padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+        background-color: #dddddd;
+        }       
+        
+        .dateFormat{
+        display:none;
+        }
+        
+    </style> 
+    
+    <head>
+        
+        <apex:stylesheet value="https://cdn.syncfusion.com/19.1.0.54/js/web/bootstrap-theme/ej.web.all.min.css"/>
+        <script src="http://cdn.syncfusion.com/js/assets/external/jquery-1.10.2.min.js"></script>
+        <script src="http://cdn.syncfusion.com/19.1.0.54/js/web/ej.web.all.min.js"> </script>
+        
+        <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js" ></script>
+        <script>
+            $(function () {
+                // declaration
+                $('#datetime').ejDateTimePicker({
+                    width: '300px',
+                    dateTimeFormat: "dd/MM/yyyy hh:mm tt" ,
+                    htmlAttributes : {required:"required"},
+                    interval: 5
+                    
+                });
+                
+                
+            });
+        function PassDateToController(){
+            
+            
+              console.log("Inside");
+           
+            
+              var heading = document.getElementById("pg:FormMain:heading");
+              if (heading.value == null || heading.value == '') {
+                  alert('Please input Meeting Title.');
+                  process.exit();
+                  }
+            
+             var meeting = document.getElementById("pg:FormMain:meeting");
+              if (meeting.value == null || meeting.value == '') {
+                  alert('Please input Meeting Type');
+                  process.exit();
+                  }
+          
+            //This function is used to pass the value of date time in the apex using apexfunction.
+            var startDte = document.getElementById("datetime");
+            var startDate = startDte.value; //28/04/2021 02:30 AM  
+           
+            
+            //Below code block is used to taking date and time in the form of dd/mm/yyyy hh:mm tt
+            if (startDate){
+                
+               
+                
+                // alert(startDate);
+                SaveDataAF(startDate);
+            }
+            else
+            {
+                // alert('Please input Meeting Date/Time..!');
+            var DateerrObj = document.getElementById("{!$Component.pg:FormMain:Startdatee}");
+            console.log(DateerrObj);
+            startDt.focus();
+            startDt.scrollIntoView();
+            DateerrObj.innerHTML = "Please insert Meeting Date/Time."
+             return false;
+            }
+            
+        }
+        </script>
+    </head>
+    <body >
+        
+        
+        <apex:form id="FormMain" >
+            
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <div class="col-lg-3">
+                        <div class="assist-side-menu">                             
+                            <!-- Assist type dropdown menu -->
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="col-lg-12">                     
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:5px;">
+                                <!-- page load  msg section start -->
+                                
+                                <!-- page load  msg section End -->
+                                <!-- Service request form start -->
+                                <apex:outputPanel id="IdServiceRequest" >
+                                    
+                                    <apex:pageMessages id="showmsg" > </apex:pageMessages>
+                                    <div id="progress_bar_container" style="display:none; padding:10px;">  
+                                        <span id="percentText"></span>  
+                                        <div class="slds-progress-bar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="25" role="progressbar">  
+                                            <span class="slds-progress-bar__value progress" style=" width: 0%;">  
+                                                <span class="slds-assistive-text">Progress: 25%</span>  
+                                            </span>  
+                                        </div>  
+                                    </div>
+                                    <div class="table-responsive" id="dv">
+                                        <table id="contacttable" class="table table-striped table-bordered table-sm table-list" cellspacing="0" width="100%">
+                                            <tr>
+                                                <th>Meeting Title:</th>
+                                                <th>Type of Meeting:</th>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td> <apex:inputField value="{!objFE.Heading__c}" styleClass="slds-input" id="heading" required="true"/>
+                                                    
+                                                        <div id="errorInputfieldId1" style="color:red;display:none;">Complete this field!</div>
+                                                   
+                                                </td>
+                                                <td> <apex:inputField value="{!objFE.Meeting_type__c}" styleClass="slds-input"  id="meeting" required="true"/>
+                                                    <div>
+                                                        <apex:outputLabel styleClass="redFont" style="color:red" id="heetingOutp"></apex:outputLabel>
+                                                    </div>
+                                                </td>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <th>Department:</th>
+                                                <th>Upload Minutes:</th>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td> <apex:outputText > {!lstofCon[0].Department__c}</apex:outputText> </td>
+                                                
+                                                
+                                                <td>
+                                                    
+                                                    <input type= "file" Id= "fileinput" accept="application/pdf"  multiple="multiple" required="true" />
+                                                    <div>
+                                                        <apex:outputLabel styleClass="redFont" style="color:red" id="EventdateerrMsg"></apex:outputLabel>
+                                                    </div>
+                                                    
+                                                </td>
+                                                
+                                                
+                                                <!--  </apex:repeat>-->
+                                                
+                                                
+                                            </tr>
+                                            
+                                            
+                                            <tr>
+                                                <th>Notes: </th>
+                                                <th>Meeting Date/Time: </th>
+                                                
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <apex:inputField value="{!objFE.Content__c}" styleClass="slds-input"/>  </td> 
+                                                <td>
+                                                    <!--  <apex:inputField  styleClass="slds-input"  value="{!objFE.StartDateTime__c}"  required="true"> 
+
+</apex:inputField>-->
+                                                    
+                                                    
+                                                    <input type="text" onblur="ValidateDate();" id="datetime" />
+                                                    <div>
+                                                        <apex:outputLabel styleClass="redFont" style="color:red" id="Startdatee"></apex:outputLabel>
+                                                    </div>
+                                                    
+                                                    
+                                                    
+                                                    
+                                                    
+                                                </td>
+                                                
+                                                
+                                            </tr>       
+                                            
+                                            <tr>
+                                                <th>Choose if uploaded minutes are related to Body/Committee/Centre </th>
+                                                <th>Your current Bodies/Committees/Centres:</th>
+                                                
+                                            </tr>
+                                            
+                                            <tr>
+                                                
+                                                <th></th>
+                                                <td>
+                                                    <apex:selectList size="1" value="{!selectedRole}" styleClass="slds-input"  id="roleId">
+                                                        <apex:selectoptions value="{!options}" />  
+                                                    </apex:selectList>
+                                                </td>
+                                                
+                                            </tr>
+                                            
+                                        </table>    
+                                    </div>
+                                    
+                                    <apex:outputPanel >
+                                        <!--  </div> -->
+                                        
+                                        <div id="IdPageBtn" class="slds-align_absolute-center hideComponent" style="margin-bottom: 40px; padding-top: 25px;">
+                                            <apex:commandButton styleClass="slds-button slds-button_neutral"  style="float:right;" id="uploadBtn" onclick="PassDateToController(); return false;" value="Save" reRender="showmsg" />
+                                            <!--<input type="button" id="uploadBtn" name="Address" value="Upload" class="slds-button slds-button--brand"/>-->
+                                            
+                                            
+                                            <apex:actionFunction name="saveFileAF" 
+                                                                 action="{!saveFile}" oncomplete="SaveDataAF()" rerender="form"  status="uploading">
+                                                <apex:param name="base64File" value="" assignTo="{!base64}"/>
+                                                <apex:param name="fileName" value="" assignTo="{!fileName}"/>
+                                                <apex:param name="fileCount" value="" assignTo="{!fileCount}"/>
+                                                <apex:param name="parentId" value="{!parentId}"/>
+                                                
+                                            </apex:actionFunction>
+                                            <apex:actionFunction name="SaveDataAF" oncomplete="uploadFiles()" 
+                                                                 action="{!SaveData}" rerender="form"  status="uploading">
+                                                <apex:param name="startDate" value="" assignTo="{!startDate}"/>
+                                            </apex:actionFunction>
+                                            
+                                            <apex:actionStatus id="uploading" >
+                                                <apex:facet name="start" >
+                                                    <img src="/img/loading.gif" />                    
+                                                </apex:facet>
+                                            </apex:actionStatus> 
+                                        </div>                                                   
+                                        
+                                        
+                                        
+                                    </apex:outputPanel>
+                                    
+                                </apex:outputPanel>
+                                <!-- Service request form End -->                                
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->            
+            <!-- Right Panel -->            
+            
+        </apex:form>   
+        
+        
+        <c:Flame_FooterResource />
+    </body>    
+    
+    
+</apex:page>

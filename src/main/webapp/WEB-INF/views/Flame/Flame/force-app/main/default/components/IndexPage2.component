@@ -1,0 +1,23 @@
+<apex:component >
+                <c:TabsPanel2 />
+                <div class="tab-container">
+                    <div class="tab-content active home-content" id="tab2">
+                    <h4 class="sub-ttl">Welcome !</h4>
+                        <p>Dear<strong> {!$User.FirstName} {!$User.LastName},</strong></p>
+                        Thank you for submitting your application. Now that you have completed your FLAME University application, you can use our application portal for various other tasks.
+                        <br/><br/>
+                        You can find a list of these tasks on the left hand side of the HOME tab, or you can use the links in the list below to navigate through the tasks.
+                        <ul style="list-style-type:disc;margin-left:2%">
+                            <li>Download your <font style="color:#F58634">Application Form</font> in PDF format.</li>
+                            <li>Download your <font style="color:#F58634">Admit Card</font> in PDF format. We will also notify you via Email and SMS when your Admit Card is ready to be downloaded.</li>
+                            <li><font style="color:#F58634">Upload Documents</font> You can upload all documents supporting your application (mark sheets, transcripts, certificates, etc.) by using this section. This will avoid any delay in evaluating your application.</li>
+                            <li>Check <font style="color:#F58634">Application Status</font> - You will also receive notifications regarding your admission status via Email and SMS. Note: Please check your registered email regularly for updates. Due to certain settings on email clients, automated emails sometimes get filtered into the "bulk/spam/junk" folder. To avoid this, we recommend you add <a style="text-decoration: none;color:#F58634" target="_top" href="mailto:admission@flame.edu.in">admission@flame.edu.in</a> to your contact list. This will prevent FLAME Admissions Committee emails from being overlooked.</li>
+                        </ul>
+                        <br/>
+                        In Case, if you need any assistance, contact us toll-free on or contact us at <a href="callto://1800-209-4567">1800-209-4567</a> or email us on <a style="text-decoration: none;color:#F58634" href="mailto:admission@flame.edu.in">admission@flame.edu.in</a>
+                        <br/><br/>
+                        Sincerely,<br/>
+                        <b>FLAME University Admissions Committee</b>
+                </div>
+            </div>
+</apex:component>

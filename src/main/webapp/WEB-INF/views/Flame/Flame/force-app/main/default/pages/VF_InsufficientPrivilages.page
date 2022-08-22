@@ -1,0 +1,7 @@
+<apex:page docType="html-5.0" standardStylesheets="true" lightningStylesheets="true" >
+    <apex:form >
+      <div>
+          <h1> Insufficent Privilages</h1>
+        </div>  
+    </apex:form>
+</apex:page>

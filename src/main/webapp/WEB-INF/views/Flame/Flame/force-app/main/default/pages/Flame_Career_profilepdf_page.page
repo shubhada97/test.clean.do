@@ -1,0 +1,232 @@
+<apex:page controller="Flame_Careerservicesprofilecontroller" renderAs="pdf"  sidebar="false" showHeader="false" standardStylesheets="false" applyHtmlTag=" false"  title="Download Resume" docType="html-5.0">
+  <html>   
+ 
+    <apex:form >
+  
+    <table  border="0"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:sans-serif; width:100%; margin-top:10px; border:0px solid #525252;">
+    <apex:repeat value="{!reserList}" var="objContact">
+    
+    <tr>
+    <td >
+    <p style="font-family: 'Salesforce Sans',Arial,sans-serif; font-size:13px;font-weight:200;margin-bottom:5px; margin-top:0px;"><b>{!objContact.conn.FirstName} {!objContact.conn.LastName}</b></p>
+    <p style="font-family: 'Salesforce Sans',Arial,sans-serif;font-size:13px;margin-bottom:5px; margin-top:0px;"><b>{!objContact.conn.Program_Interested_In__c}</b></p>
+    <p style="font-family: 'Salesforce Sans',Arial,sans-serif;font-size:13px;margin-bottom:5px; margin-top:0px;"><b> Specialization Interest Area</b></p> 
+    <p style ="display: {!IF(ISBLANK(objContact.conn.Major__c), 'none', 'table-row')};font-family: 'Salesforce Sans',Arial,sans-serif;font-size:13px;margin-bottom:5px; margin-top:0px; ">Major :  {!objContact.conn.Major__c}  </p> <p style ="display: {!IF(ISBLANK(objContact.conn.Minor__c), 'none', 'table-row')};font-family: 'Salesforce Sans',Arial,sans-serif;font-size:13px;margin-bottom:5px; margin-top:0px; "> Minor : {!objContact.conn.Minor__c} <br/>
+    </p>
+    <p style="font-family: Cambria,Georgia, serif;font-size:14px;margin-bottom:5px; margin-top:0px;"><b>LinkedIn Profile URL : </b> {!Wrkdetls.LinkedIn_Profile_link__c}  <br/>
+    </p>
+    </td>
+    <td  align="right" width="45%"  style="padding:10px;text-align:right;">
+    
+    <header>
+     
+    <apex:image url="{!profileurl}" width="70" height="70"/>
+    
+    
+   </header>
+    </td>
+    
+    
+    </tr>
+    
+    </apex:repeat>
+    </table>
+    <hr/>
+     <table  cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif; width:100%; margin-top:10px; border-left: 1px solid #525252; border-top: 1px solid #525252; border-right: 0px solid #525252;">
+            <tr>
+                <th style="background: #696969;color: #fff;font-size: 13px;font-weight: 600;margin-top: 0;padding: 8px; text-align:center;  width:100%;" colspan="2">ACADEMIC RECORDS   </th>
+            </tr>
+            
+    </table>
+    <table  border="0"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif;font-size:13px;font-weight:200; width:100%; margin-top:10px; border:0px solid #525252;">
+    <apex:repeat value="{!educationList}" var="Education">
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <apex:outputfield value="{!Education.edu.Institution_School__c}" />,
+     <apex:outputfield value="{!Education.edu.Education_State__c} " />,
+     <apex:outputfield value="{!Education.edu.Education_Country__c} " /><br/>
+     <apex:outputField value="{!Education.edu.Year_Class__c}" /> | &nbsp;
+     <apex:outputfield value="{!Education.edu.Degree_Certificate__c}" />,
+     <apex:outputfield value="{!Education.edu.Board_University__c} " /> &nbsp;
+     <apex:outputField value="{!Education.edu.Major_Subjects__c}"  />
+    </td>
+    <td style="padding:10px;text-align:right;">
+     <apex:outputfield value="{!Education.edu.Year_of_Completion__c} " /><br/>
+     | Aggregate/CGPA:<apex:outputfield value="{!Education.edu.Percent_CGPA__c} "/> / <apex:outputfield value="{!Education.edu.Percent_CGPA_Out_of__c}" />
+     
+    </td>
+                                    
+    </tr>
+    </apex:repeat>
+    </table>
+    <table  cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif; width:100%; margin-top:10px; border-left: 1px solid #525252; border-top: 1px solid #525252; border-right: 0px solid #525252;">
+            <tr>
+                <th style="background:#696969;color: #fff;font-size: 13px;font-weight: 600;margin-top: 0;padding: 8px; text-align:center;  width:100%;" colspan="2">INTERNSHIP AND PROJECTS   </th>
+            </tr>
+            
+    </table>
+    <table  border="0"  border-color="#525252" border-collapse="collapse" cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif;font-size:13px;font-weight:400; width:100%; margin-top:10px; border:0px solid #525252;">
+    <apex:outputPanel rendered="{!if(showContent == true, false,true)}">
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td> 
+    <span style="font-weight:bold;">Organization :  </span><apex:outputField value="{!Wrkdetls.Company1__c}"   />
+    </td>  
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+    <label><b>Duration : </b></label>
+    <apex:outputField value="{!Wrkdetls.C1From__c}"  />&nbsp;
+    - &nbsp;<apex:outputField value="{!Wrkdetls.C1To__c}"  /> 
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Project Title : </b></label>
+     <apex:outputField value="{!Wrkdetls.C1ProjectTitle__c}"  />
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Brief on the project : </b> </label>
+     <apex:outputField value="{!Wrkdetls.C1projectDescription__c}"   />
+    </td>
+    </tr>
+    </apex:outputPanel> 
+   <br></br>
+     <apex:outputPanel rendered="{!if(showContent1 == true, false,true)}">
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td> 
+    <label ><b>Organization : </b> </label><apex:outputField value="{!Wrkdetls.Company2__c}"   />
+    </td>  
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+    <label><b>Duration : </b></label>
+    <apex:outputField value="{!Wrkdetls.C2From__c}"  />&nbsp;
+    - &nbsp;<apex:outputField value="{!Wrkdetls.C2To__c}"  /> 
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Project Title : </b></label>
+     <apex:outputField value="{!Wrkdetls.C2ProjectTitle__c}"  />
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Brief on the project :</b> </label>
+     <apex:outputField value="{!Wrkdetls.C2ProjectDescription__c}"   />
+    </td>
+    </tr>
+    </apex:outputPanel> 
+    <br></br>
+     <apex:outputPanel rendered="{!if(showContent2 == true, false,true)}">
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td> 
+    <label ><b>Organization :</b> </label><apex:outputField value="{!Wrkdetls.Company3__c}"   />
+    </td>  
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+    <label><b>Duration :</b></label>
+    <apex:outputField value="{!Wrkdetls.C3From__c}"  />&nbsp;
+    - &nbsp;<apex:outputField value="{!Wrkdetls.C3To__c}"  />
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Project Title : </b></label>
+     <apex:outputField value="{!Wrkdetls.C3ProjectTitle__c}"  />
+    </td>
+    </tr>
+    
+    <tr style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <td>
+     <label><b>Brief on the project :</b> </label>
+     <apex:outputField value="{!Wrkdetls.C3projectDescription__c}"   />
+    </td>
+    </tr>
+    </apex:outputPanel> 
+    </table>
+    
+     <table  cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif; width:100%; margin-top:10px; border-left: 1px solid #525252; border-top: 1px solid #525252; border-right: 0px solid #525252;">
+            <tr>
+                <th style="background:#696969;color: #fff;font-size: 13px;font-weight: 600;margin-top: 0;padding: 8px; text-align:center;  width:100%;" colspan="2">ACHIEVEMENTS   </th>
+            </tr>
+            
+    </table>
+    <table style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+     <tr>
+    <td> 
+    <apex:outputField value="{!Wrkdetls.Achievement__c}"   />
+    </td>  
+    </tr>
+    
+    </table>
+    
+    
+    <table  cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif; width:100%; margin-top:10px; border-left: 1px solid #525252; border-top: 1px solid #525252; border-right: 0px solid #525252;">
+            <tr>
+                <th style="background:#696969;color: #fff;font-size: 11px;font-weight: 600;margin-top: 0;padding: 8px; text-align:center;  width:100%;" colspan="2">CO-CURRICULAR AND EXTRA CURRICULAR INTEREST(S)   </th>
+            </tr>
+            
+    </table>
+    <table style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+     <tr>
+    <td> 
+    <apex:outputField value="{!Wrkdetls.Extra_Curricular__c}"   />
+    </td>  
+    </tr>
+    
+    </table>
+     <table  cellpadding="0" cellspacing="0" style="page-break-inside:avoid;font-family:'Salesforce Sans',Arial,sans-serif; width:100%; margin-top:10px; border-left: 1px solid #525252; border-top: 1px solid #525252; border-right: 0px solid #525252;">
+            <tr>
+                <th style="background:#696969;color: #fff;font-size: 13px;font-weight: 600;margin-top: 0;padding: 8px; text-align:center;  width:100%;" colspan="2">PERSONAL DETAILS   </th>
+            </tr>
+            
+    </table>
+    <table style="font-family:'Salesforce Sans',Arial,sans-serif;font-size: 13px;font-weight: 400;">
+    <tr>
+    <td>
+    <label><b>Date of Birth :</b>  </label>
+     <apex:repeat value="{!reserList}" var="objContact"> 
+    <apex:outputText value="{0,date,dd/MM/yy}">
+    <apex:param value="{!objContact.conn.Date_of_Birth__c}" />
+    </apex:outputText>
+     </apex:repeat>
+    </td>
+    </tr>
+    <tr>
+    <td>
+    <label><b>Languages Known : </b></label>
+    <apex:outputField styleClass="slds-input " value="{!Wrkdetls.Languages_Known__c}"  />
+    </td>
+    </tr>
+    <tr>
+    <td>
+   
+    <label><b>Permanent Address :</b> </label>
+     <apex:repeat value="{!reserList}" var="objContact">
+   <apex:outputField styleClass="slds-input " value="{!objContact.conn.Permanent_Address_Line_1__c}"  />&nbsp;
+    <apex:outputField styleClass="slds-input " value="{!objContact.conn.Permanent_Address_Line_2__c}"  />&nbsp;
+    <apex:outputField styleClass="slds-input " value="{!objContact.conn.Permanent_Postal_Code__c}"  /> 
+    </apex:repeat>
+    </td>
+    
+    </tr>
+    
+    </table>
+    
+    
+    </apex:form> 
+   </html>
+</apex:page>

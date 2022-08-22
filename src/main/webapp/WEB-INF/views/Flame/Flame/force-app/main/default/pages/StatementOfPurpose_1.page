@@ -1,0 +1,155 @@
+<apex:page controller="FUA_StatementOfPurpose_Controller"  sidebar="false" standardStylesheets="false"  doctype="HTML-5.0" showHeader="false" title="Statement Of Purpose"> 
+<html lang="en">
+<head>
+<c:ResourceFiles />
+
+</head>
+<body>
+<!-- HEADER START -->
+<div class="header">
+    <div class="container">
+        <div class="brand"><a href="javascript:void(0)">           
+            <apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+        </div>
+       <c:FU_TopNavigation_1 /> 
+    </div>
+</div>
+<!-- HEADER END -->
+
+<!-- DASHBOARD START -->
+
+
+<div class="main-dashboard">
+    <div class="container">
+        <div class="dashboard-inner">
+        <apex:form >
+            <c:TabsPanel2_1 /> 
+             </apex:form>
+            
+            <div class="tab-container">                
+                <div class="tab-content active" id="tab2">
+                    <apex:form >
+                    <apex:outputPanel >
+                                                
+                   <h4 class="sub-ttl"> Statement of Purpose  <span class="errorMsg">*</span></h4>
+                    <P>  Write in detail about the following in separate paragraphs in the space given below: </p>
+                    
+                    <p>  a) Why do you want to join FLAME University? </p>
+                    
+                    <p>  b) What are your career goals that you are aspiring for? </p>
+                    
+                    <p>  c) Innovation and Research are driving factors of success. Describe a situation where you have demonstrated any of these qualities and what was the outcome?</P>
+                                     
+                    <br/>
+                        <div class="ct-form">
+                            <div class="form-group row">
+                                <div class="col-sm-12" id="msgBox">
+                                    <apex:inputTextArea rows="10" id="SOPId" value="{!apps.Statement_of_Purpose__c}" styleClass="form-control" tabIndex="1" onkeyup="loadCounter"/>
+                                </div>
+                                <div class="col-sm-12 text-right" >
+                                 <p>Number of words:<span id="remWords">0</span></p>
+                                 <span class="sopMsg errorMsg"></span>
+                                </div>
+                               
+                            </div>
+                        </div>
+                       <BR/>
+                    </apex:outputPanel>
+                   
+                                        
+                        
+                        <apex:outputpanel id="aftersubmittext" rendered="{!apps.FUA_SOP_Submitted__c == TRUE}">
+                            <div class="ct-form" >
+                                <strong><p>Statement of Purpose has been submitted, you can now click NEXT button to receive your application form PDF</p></strong>
+                            </div>
+                        </apex:outputpanel><BR/>
+                        
+                       
+                        
+                        <div class="form-buttons"> 
+                        <apex:commandButton value="SUBMIT SOP" styleClass="btn next-btn pull-right" action="{!SaveData}" onclick="if(statementValid()==false){return false;};"  rendered="{!apps.FUA_SOP_Submitted__c == FALSE}" tabIndex="2"/>
+                        <apex:commandButton value="Next" styleClass="btn next-btn pull-right" action="{!Next}" rendered="{!apps.FUA_SOP_Submitted__c == TRUE}" tabIndex="3"/>
+                        <apex:commandButton value="Save & exit" action="{!SaveExit}" styleClass="btn save-btn" oncomplete="return false;" tabIndex="4"/> 
+                        
+                           
+                        </div>
+                       
+                        <!-- Change made by <<Akhilesh>> at Techila <<>> on <<19-09-2016>>. <<To add action Function Which will save the data and after Complete Logout>> -->
+      
+                         <apex:actionFunction action="{!saveAll}" immediate="false" name="saveandexit" id="logoutSave" oncomplete="redirectBack();" />
+                         <c:ChangePasswordComponent /> 
+                     </apex:form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- DASHBOARD END -->
+
+<!-- FOOTER START -->
+
+<c:FooterComponent_1 />
+<apex:outputPanel id="JSPanel">
+    <script>
+         function redirectBack() { 
+            window.location.href = "{!$Site.Prefix}/secur/logout.jsp";
+         }
+    </script>
+</apex:outputPanel>    
+
+<script> 
+var ay = $('#msgBox textarea').val().trim();
+if(ay !==""){
+    if({!apps.FUA_SOP_Submitted__c == TRUE})
+    {
+        $('#remWords').text(loadCounter(ay));
+        if(loadCounter(ay) > 0){
+            $('#msgBox textarea').prop('disabled',true);
+            
+        }
+        
+    }
+    else
+    {
+        $('#remWords').text(loadCounter(ay));
+        //$('#msgBox textarea').prop('disabled',true);
+    }
+}
+function counter() {
+    var value = $(this).val().trim();
+    loadCounter(value);
+   
+};
+function loadCounter(a){
+    if (a.length == 0) {
+        $('#remWords').text(0);
+        return;
+ 
+    }
+    var regex = /\s+/gi;
+    var wordCount = a.trim().replace(regex, ' ').split(' ').length;
+    $('#remWords').html(wordCount);
+    return wordCount;
+  
+}
+ 
+function statementValid(){
+    var at= $('#msgBox textarea').val().trim();
+    if(at == ""){
+       $('.sopMsg').text('Statement of purpose is required.'); 
+      // Change made by <<Akhilesh>> at Techila <<>> on <<12-09-2016>>. <<To add Focus for DD Number>> 
+      
+        return false;
+    }else{
+       $('.sopMsg').text('');
+    }
+    return true;
+}
+$(document).on('keyup','#msgBox textarea',counter);
+</script>
+</body>
+</html>
+</apex:page>

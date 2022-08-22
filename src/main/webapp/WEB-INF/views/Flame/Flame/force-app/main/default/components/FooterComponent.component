@@ -1,0 +1,19 @@
+<apex:component >
+    <style>
+        .modal-backdrop{
+            z-index:9999 !important;
+        }
+        .footer p{
+           color:#fff;
+        }
+    </style>
+     <div class="footer">
+            <div class="container">
+                <c:EnquiryForm />
+              <!--  <c:Change_PasswordComponent /> -->
+                <p>© FLAME University 2018.
+                    <span></span> All Rights Reserved.
+                </p>
+            </div>
+        </div>
+</apex:component>

@@ -1,0 +1,135 @@
+<!------------------------------------------------------------------------------------------------
+* Author: Techila Global Services Pvt Ltd. (Deepak Chouhan)
+* VF Page Name: Flame_ReadMore
+* Created Date: August 02 2018
+* Description: detail page of customer community event,news etc.
+-------------------------------------------------------------------------------------------------->
+<apex:page controller="Flame_ReadMoreAC" docType="html-5.0" standardStylesheets="true" showHeader="false" lightningStylesheets="true" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+    <apex:slds />
+    <c:Flame_HeadResource /> 
+    <style>
+        .navbar .navbar-nav > .flm_Home > a,
+        .navbar .navbar-nav > .flm_Home > a:focus,
+        .navbar .navbar-nav > .flm_Home > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important; 
+        padding-left: 10px;
+        }
+        .readImgCls img{
+        width: auto !important;
+        height: auto !important;
+        margin-bottom: 15px;
+        }
+        .readImgCls .sfdc_richtext {
+            text-align:center;
+        }
+        .contentCls .sfdc_richtext {
+                padding-left: 20px;
+                padding-right: 20px;
+        }
+.heading h2  {
+font-size: 22px;
+    line-height: 34px;
+    padding: 10px;
+}       
+        @media (max-width: 767px) {
+        .heading h2 {
+        font-size: 16px;
+        line-height: 26px;
+        }
+        }
+    </style
+    >
+    <body>
+        <apex:form id="IdFrm">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                
+                <!-- <div class="breadcrumbs">
+                    <div class="col-sm-12">
+                        <div class="page-header float-left">
+                            <div class="page-title">
+                                <h1>Home</h1>
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <apex:repeat value="{!objSObject}" var="item">
+                        
+                            <div class="col-lg-12">
+                                <div class="assist-content-area">
+                                    <div class="services-content">                                                                  
+                                       <apex:repeat value="{!fieldName}" var="fname"> 
+                                             <apex:outputPanel layout="block" style="text-align: center;" rendered="{!if(fname=='Heading__c',true,false)}">
+                                                <div class="heading" style="margin-bottom: 15px;background: #084d89;color: #fff;text-transform:capitalize;">
+                                                <!--    <h2><apex:outputField value="{!item[fname]}"/></h2> -->
+                                                 <h2><apex:outputField value="{!Recordediting.Heading__c}"/></h2> 
+                                                </div>
+                                            </apex:outputPanel>
+                                            <apex:outputPanel styleClass="readImgCls" rendered="{!if(fname=='Image__c',true,false)}" >                                                                
+                                                <apex:outputField value="{!Recordediting.Image__c}" />                                                
+                                            </apex:outputPanel>
+                                           <apex:outputPanel rendered="{!Recordediting.RecordType.name ='Event'}" > 
+                                          <div style="margin-left:20px;"> 
+                                            
+                                            
+                                              <apex:outputPanel layout="block" rendered="{!if(fname=='StartDateTime__c',true,false)}" style="color:##5f5d5d;"> 
+                                                <div class="contentCls">
+                                                    <label  style="color:##5f5d5d;" >Event Date &#38; Time :</label>
+                                                    <apex:outputField styleClass="contentCls" value="{!Recordediting.StartDateTime__c}" />
+                                                </div>
+                                            </apex:outputPanel>  
+                                            
+                                            <apex:outputPanel layout="block" rendered="{!if(fname=='Venue__c',true,false)}" style="color:##5f5d5d;">
+                                                <div class="contentCls">
+                                                 <label  style="color:##5f5d5d;" >Venue :</label>
+                                                    <apex:outputField styleClass="contentCls" value="{!Recordediting.Venue__c}"/>
+                                                </div>
+                                            </apex:outputPanel>  
+                                            
+                                            <apex:outputPanel layout="block" rendered="{!if(fname=='Event_Organiser_Name__c',true,false)}" style="color:##5f5d5d;">
+                                                <div class="contentCls">
+                                                 <label  style="color:##5f5d5d;" >Event organizers name :</label>
+                                                    <apex:outputField styleClass="contentCls" value="{!Recordediting.Event_Organiser_Name__c}"/>
+                                                </div>
+                                            </apex:outputPanel>  
+                                            
+                                            <apex:outputPanel layout="block" rendered="{!if(fname=='Event_Organiser_Email_Id__c',true,false)}" style="color:##5f5d5d;">
+                                                <div class="contentCls">
+                                                 <label  style="color:##5f5d5d;" >Event organizers Email ID  :</label>
+                                                    <apex:outputField styleClass="contentCls" value="{!Recordediting.Event_Organiser_Email_Id__c}"/>
+                                                </div>
+                                            </apex:outputPanel>
+                                         
+                                            </div> 
+                                             </apex:outputPanel>
+                                            <apex:outputPanel layout="block"  style="color:##5f5d5d;" rendered="{!if(fname=='Content__c',true,false)}">
+                                                <div class="contentCls">
+                                                    <apex:outputField styleClass="contentCls" value="{!Recordediting.Content__c}"/>
+                                                </div>
+                                            </apex:outputPanel>   
+                                            
+                                          
+                                        </apex:repeat>                                      
+                                    </div>                          
+                                </div>                          
+                            </div>                          
+                        
+                    </apex:repeat>
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->            
+            <!-- Right Panel -->
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>
+</apex:page>

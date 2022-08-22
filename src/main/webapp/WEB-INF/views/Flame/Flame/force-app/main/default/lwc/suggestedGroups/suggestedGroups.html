@@ -1,0 +1,21 @@
+<template>
+    <lightning-card>
+        <header class="site-header">
+            <div class="site-identity">
+                <a href="#">Suggested Groups</a>
+            </div>
+        </header>
+        <template for:each={groupList} for:item="group">
+            
+    
+            <p key={group.Id}  >
+                {group.Name}
+                <br/>
+               
+                <a href="#" > &#128101; {group.MemberCount}</a>
+            <button >Join</button>
+            </p>
+        
+        </template>
+    </lightning-card>
+</template>

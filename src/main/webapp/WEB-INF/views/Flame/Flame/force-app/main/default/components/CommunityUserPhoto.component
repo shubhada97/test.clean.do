@@ -1,0 +1,214 @@
+<apex:component controller="Flame_Community" allowDML="true"> <!--Flame_Community-->
+    
+    <apex:attribute type="String" name="Appid"  description="Value to pass into the controller" required="true"/> 
+    
+    
+    <apex:includeScript value="{!$Resource.assets}/plugins/photoCrop/photoCrop.js"/>
+    
+    <apex:includeScript value="{!$Resource.assets}/plugins/jcrop/js/jquery.Jcrop.min.js"/>
+    
+    
+    <link href="{!$Resource.assets}/css/style.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{!$Resource.assets}/plugins/jcrop/css/jquery.Jcrop.min.css" type="text/css"/>
+    <link href="{!$Resource.assets}/plugins/line-icons/line-icons.css" rel="stylesheet" />
+    <link href="{!$Resource.assets}/plugins/sky-forms/version-2.0.1/css/custom-sky-forms.css" rel="stylesheet" />
+    <link href="{!$Resource.assets}/css/pages/profile.css" rel="stylesheet" />
+    <link href="{!$Resource.assets}/css/app/app.styles.css" rel="stylesheet" />
+    <link href="{!$Resource.assets}/css/theme-colors/Green.theme.css" rel="stylesheet" />
+    
+ 
+    
+    <style>
+    .CommunityUserPhoto .user-photo .user-photo-link{
+        background:#F58634;
+    }
+    .sky-form .button {
+      background: #efefef none repeat scroll 0 0;
+      border-left: 1px solid #bbb;
+      color: #000;
+    }
+    .sky-form .input{
+        margin-top:15px;
+    }
+    .sky-form {
+        border: medium none;
+    }
+    .img.img-bordered{
+        padding:0px;
+    }
+    .CommunityUserPhoto .user-photo .user-photo-link{
+        bottom:1px !important;
+    }
+    </style> 
+    <script>
+        var pt1;
+        function photoPathId1Change (elm){
+            console.log(elm);
+            pt1 = new photoUpload({
+                imgId:'[id$=croppingImageId]',
+                previewImgId:'#previewImg',
+                uploadToChatterWidth:100,
+                previewSize:800
+            });
+            jQuery('[id$=pathText]').val(elm);
+            console.log("testing");
+            if(pt1.uploadFile(elm)==="File is too big") {
+                console.log("this file is too big");
+                stepUpload = 2;
+                stepping(stepUpload);
+            }
+            else {
+                stepUpload = 3;
+                stepping(stepUpload);
+            }
+        }
+        // start modal
+        function cancelBtnPhoto(){
+            stepUpload = 0;    
+            stepping(stepUpload);
+        }
+        function showModal() {
+            
+            stepUpload = 1;
+            
+            stepping(stepUpload);
+           
+        }
+        var showHideEl = function(elShow, elHide){
+            if(elHide!=null)
+            elHide.forEach(function(item, i, arr) {
+                jQuery(item).hide();
+            });
+            if(elShow!=null)
+            elShow.forEach(function(item, i, arr) {
+                jQuery(item).show();
+        });    
+        }
+        var stepping = function(nextStep ){
+             jQuery('#photoPathId1').val('');
+            //alert('vcr--inside stepping--'+nextStep);
+            switch(nextStep){
+                case 0:
+                    jQuery('#cropper-2-modal').modal('hide');
+                    jQuery('#previewImg').attr('src','#');
+                    jQuery('[id$=croppingImageId]').attr('src','#');
+                    showHideEl(['#step1Id'],['#saveBtnId','#step2Id','#errorMsgId']);
+                break;
+                case 1:
+                    //alert('vcr--venu  case 1 method called'+jQuery('#cropper-2-modal').modal);
+                    jQuery('#cropper-2-modal').modal('show');
+                   // alert('vcr--venu  case 1 method called--2'+ jQuery('#cropper-2-modal').modal('show'));
+                break;
+                case 2:
+                    showHideEl(['#step1Id','#errorMsgId'],['#saveBtnId','#step2Id']);
+                    // showHideEl(['#errorMsgId'],null);
+                break;
+                case 3:
+                // show hide el
+                    showHideEl(['#saveBtnId','#step2Id'],['#step1Id','#errorMsgId']);
+                break;
+            }
+        }
+        // save photo
+        function saveBtn() {
+            disableBtn('saveBtnId');
+            stepUpload = 4;
+            jQuery('[id$=outputImageResizedBlobId]').attr('value', pt1.getImageToUpload ); 
+            jQuery('[id$=cropXId]').val(pt1.getCroppedX());
+            jQuery('[id$=cropYId]').val(pt1.getCroppedY());
+            jQuery('[id$=cropSizeId]').val(pt1.getCroppedSize());   
+            jQuery('[id$=photoContentTypeId]').attr('value', pt1.getImageTypeToUpload());
+            UploadPhotoAtt();
+            
+        }
+        function disableBtn(inid,inm) {
+            $('#'+inid).attr('disabled','disabled').css('opacity','0.75');
+            if (inm==undefined) {
+                $('#'+inid).css('min-width',$('#'+inid).css('width'))
+            }
+            $('#'+inid+' span').hide();
+            $('#'+inid+' i').show();
+        }
+        function enableBtn(inid) {
+            $('#'+inid).removeAttr('disabled').css('opacity','1');;
+            $('#'+inid+' i').hide();
+            $('#'+inid+' span').show();
+        }
+    </script>
+  
+    <apex:outputPanel id="modalpanel" >
+     <div class="CommunityUserPhoto">
+        <div class="user-photo margin-bottom-10">
+           <apex:image value="{!photourl}"   style="border-top-height:0px;border-bottom-height:0px;"/><!--styleclass="img-responsive img-bordered imgsizeStyle"-->
+            <apex:outputPanel rendered="true">    
+                <a href=""  class="user-photo-link" >
+                    <div class="user-photo-inner" onClick="showModal()" style="border-top-height:0px;border-bottom-height: 0px;">
+                      {!actionPhotoLabel}  
+                    </div>
+                </a>
+            </apex:outputPanel>
+             
+             
+        </div>   
+        <!-- modal window -->
+        
+        <div class="modal fade" id="cropper-2-modal" aria-live="assertive" role="dialog" tabindex="-1" aria-labelledby="stfol" aria-hidden="true">
+            
+            <div id="stfomd" class="modal-dialog">
+                <div class="modal-content">
+                
+                        <div class="modal-header">
+                            <button aria-hidden="true" data-dismiss="modal" class="close" type="button">&times;</button>
+                           <h4 class="modal-title">Upload Photo</h4> 
+                        </div>
+                        
+                        <div class="modal-body">
+                            <apex:messages ></apex:messages>
+                            <div id="errorMsgId" class="alert alert-danger fade in" style="display:none;">You have exceeded the file size of 5mb or used incorrect file type.</div>
+                            <apex:outputPanel id="modalPanelId">
+                                <div id="step1Id" class="row sky-form" style="border:none">
+                                    <label class="info">You can upload a JPG, GIF, or PNG file. Maximum file size is 5 MB.</label>
+                                    <label for="file" class="input input-file">
+                                        <div class="button">
+                                            <input id="photoPathId1" onchange="photoPathId1Change(this);" type="file" accept="image/*"/>
+                                           Browse
+                                        </div>
+                                        <input id="photoPathId1Text" type="text" readonly=""/>
+                                    </label>
+                                    <apex:inputText id="cropXId" value="{!cropX}" style="display:none" />
+                                    <apex:inputText id="cropYId" value="{!cropY}" style="display:none"/>
+                                    <apex:inputText id="cropSizeId" value="{!cropSize}" style="display:none"/>
+                                    <apex:inputText id="outputImageResizedBlobId" value="{!blobImageData}" style="display:none" />
+                                    <apex:inputText id="photoContentTypeId" value="{!photoContentType}" style="display:none" />
+                                </div>
+                                <div id="step2Id" class="row sky-form" style="display:none;">
+                                    <div id="cropper-2">
+                                        <div>
+                                            <apex:image styleClass="img-responsive img-bordered imgUpldStyle" id="croppingImageId" value="#" alt="Photo" />
+                                        </div>
+                                    </div>
+                                    
+                                        <br/>
+                                    
+                                    
+                                    <h5>To make adjustments to your thumbnail image, drag and resize the dotted lines in group photo above.</h5>
+                                    <br/>
+                                    <h6>We will use variations of this thumbnail image around the application.</h6>
+                                </div>
+                            </apex:outputPanel>
+                        </div>
+                        <div class="modal-footer">
+                            
+                            <button id="saveBtnId" type="button" class="btn next-btn" onClick="saveBtn();return false;" style="display:none;">
+                                <i class="fa fa-spinner fa-pulse" style="display:none;"></i>
+                                <span>Save</span>                              
+                            </button>
+                            <button type="button" class="btn save-btn margin-right-10 pull-right" onClick="cancelBtnPhoto();return false;">Cancel</button>
+                        </div>
+                       <apex:actionFunction action="{!UploadPhotoAtt}" name="UploadPhotoAtt" /> <!-- oncomplete="window.location.href= window.location.href;"-->
+                </div>
+            </div>
+        </div>
+    </div>
+    </apex:outputPanel>
+</apex:component>

@@ -1,0 +1,67 @@
+<apex:page sidebar="false" showHeader="false"  showChat="false" standardStylesheets="false" doctype="HTML-5.0" title="Admission Status"
+controller="Flame_Community" action="{!ApplicationSControllertatus}" >
+    <head>
+    <c:ResourceFiles />
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.js"></script>
+    <![endif]-->
+    </head>
+    
+    <body>
+    <!-- HEADER START -->
+    <div class="header">
+        <div class="container">
+            <div class="brand"><a href="javascript:void(0)"><img src="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a></div>
+            <c:FU_TopNavigation ConName="{!FlameCont.Name}" /> 
+        </div>
+    </div>
+    <!-- HEADER END -->
+    <!-- DASHBOARD START -->
+    <div class="main-dashboard">
+        <div class="container">
+            <div class="dashboard-inner">
+             <apex:form >
+          <c:TabsPanel2 staticconid="{!ContactId}" />
+           </apex:form> 
+                <div class="tab-container">
+                    <div class="tab-content" id="tab2">
+                        <!-- <p>Program applied for:<strong> {!userApp.Program__r.Name}</strong><br/></p> -->
+                     <!--   <p>Program applied for:<strong> {!prog.Name}</strong><br/></p> --->
+                        <p>Dear<strong> &nbsp;{!FlameCont.Name},</strong><br/><br/>
+                        
+                        <apex:outputText value="{!applicationText}" escape="false"/>
+                        </p>
+                    </div>
+                </div>
+                 <apex:form >
+                  <apex:commandLink styleClass="btn save-btn pull-right" action="{!Accepetoffer}" value="Proceed to Accept Offer"  rendered="{!switchindex=true}" >
+                 <apex:param name="accepet" value="{!ContactId}" assignTo="{!ContactId}"/>
+                  </apex:commandLink>
+                   </apex:form> 
+            </div>
+        </div>
+    </div>
+    <apex:form >
+    
+       
+        <apex:actionFunction action="{!saveAllData}" immediate="false" name="saveandexit" id="logoutSave" oncomplete="redirectBack();" />
+       </apex:form>    
+    <!-- DASHBOARD END -->
+    <c:ChangePasswordComponent />
+    <!-- FOOTER START -->
+    <c:FooterComponent />
+    <apex:outputPanel id="JSPanel">
+    <script>
+         function redirectBack() {             
+            window.location.href = "{!$Site.Prefix}/secur/logout.jsp";
+         }
+    </script>
+</apex:outputPanel>
+  <!-- <script>
+        $(document).ready(function(){
+            $('#ProgramId').html('{!program.Name}');
+        });
+    </script> -->
+    </body>
+</apex:page>

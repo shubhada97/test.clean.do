@@ -1,0 +1,168 @@
+<apex:page controller="Flame_Community" action="{!PhotographUpload}" sidebar="false" showHeader="false" standardStylesheets="false" doctype="HTML-5.0" title="Photograph Upload">
+ <apex:form onsubmit="return validatePhoto();">
+<html lang="en">
+<head>
+<style>
+.uploaded-img{
+float:right;
+}
+.Upload-requirements li{
+    font-weight: 600;
+    line-height:2em;
+    list-style-type:disc;
+    }
+    .Upload-requirements{
+    padding:2em;
+}
+.upload-section{
+   
+}
+
+@media screen and (max-width: 992px){
+.uploaded-img{
+float:none !important;
+margin:0 auto;
+}
+.sub-ttl{
+text-align:center;
+}
+}
+</style>
+<c:ResourceFiles />
+
+<!--[if lt IE 9]>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.js"></script>
+<![endif]
+ <style type="text/css">
+       .img{width:100px !important;} 
+       .bPageBlock .detailList tr td, .bPageBlock .detailList tr th, .hoverDetail .bPageBlock .detailList tr td, .hoverDetail .bPageBlock .detailList tr th { border-bottom: none !important;}
+       .OptPanel{width:50%;float:left;padding-top:20px;borde:none !important; }   
+       .Optpanel1{float:right;padding-right:100px;}   
+       .bPageBlock, .individualPalette .bPageBlock
+       {
+            border: none !important;
+           background:none !important;
+       }
+   
+    </style> -->
+</head>
+<body>
+<!-- HEADER START -->
+  <div class="header">
+    <div class="container">
+        <div class="brand"><a href="javascript:void(0)">           
+            <apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+        </div>
+        <c:FU_TopNavigation ConName="{!FlameCont.Name}" ConId="{!con.Id}"/> 
+    </div>
+</div>
+<!-- HEADER END -->
+
+<!-- DASHBOARD START -->
+ <div class="main-dashboard">
+    <div class="container">
+        
+        <div class="dashboard-inner">
+        
+          <c:TabsPanel2 staticconid="{!ContactId}" /> 
+           
+   
+            <div class="tab-container">
+             
+             <!--
+              <c:UserPhotoComponent Appid="{!Appid}"/> 
+               <font color="red"><b>   <apex:pageMessages escape="false" /> </b></font>
+               ConName="{!FlameCont.Name}" 
+               -->
+         <div class="tab-content active" id="tab2">
+                       <div class="">
+                       
+                         <h4 class="sub-ttl"> Upload Photo<i class="errorMsg">*</i></h4>
+                      <div class="row upload-section">
+                        <div class="col-xs-12 col-md-5 col-md-push-7" style="padding-top:2em;padding-bottom:1em;">
+                             <div class="uploaded-img" style="border-radius:5px;" >
+                          <c:UserPhotoComponent Appid="{!Appid}"/> 
+                          
+                          </div>
+                          
+                        </div>
+                        <div class="col-xs-12 col-md-7 col-md-pull-5">
+                          <ul class="Upload-requirements">
+                          <li>Please upload recent passport size photograph</li> 
+                          <li>Allowed file types are jpg, jpeg, and png</li>
+                          <li>Image size should not exceed 5 MB</li>
+                         </ul>
+                        </div>
+
+                      </div>
+                        <div class="row">
+                            <div class="col-md-8 col-xs-12"> 
+                          
+                         </div>
+                         <div class="col-md-4 col-xs-12"> 
+                         
+                          
+                          
+                          
+                          
+                        
+                         
+            
+                            <div class="upload-btn" id="photoFiled">
+                               <!-- <apex:inputFile value="{!file}" onchange="abc(this)" accept="image/*"/>-->
+                               <!-- <span class="ct-file-btn btn save-btn"><i class="fa fa-image"></i> Upload Image</span> -->                              
+                                                      
+                        </div>
+                        </div>
+                         </div>
+                         
+                             <span class="phMsg errorMsg"></span>
+                             </div>
+                        <div class="form-buttons">
+                            <apex:commandButton id="myNextId" styleClass="btn save-btn" action="{!saveImage}"  onclick="if(photoValid()==false){return false;}" value="Next"/>
+                        </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- DASHBOARD END -->
+<c:ChangePasswordComponent />
+<!-- FOOTER START -->
+<c:FooterComponent />
+<!-- FOOTER END -->
+
+<script>
+function abc(input){
+    //input.files[0].size < 15000000
+    //this.value.match(/\.(.+)$/)[1] 
+    console.log('asdf',input);
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $("[id$='preImage']").attr('src', e.target.result);
+        }
+       reader.readAsDataURL(input.files[0]);
+        $('.phMsg').text('');
+        // reader.readAsBinaryString(input.files[0]);
+    }  
+}
+function photoValid(){
+   // var pa = $('#photoPathId1Text').val();
+   var pa =$('.CommunityUserPhoto img').prop('src');
+    //if(pa == "https://sandbox-flame.cs59.force.com/application/profilephoto/005/T"){
+    if(pa.indexOf('file=')==-1){
+        $('.phMsg').text('Please upload image.');
+        return false;
+    }else{
+        $('.phMsg').text('');
+    }
+    return true;
+}
+</script>
+</body>
+</html>
+</apex:form>
+</apex:page>

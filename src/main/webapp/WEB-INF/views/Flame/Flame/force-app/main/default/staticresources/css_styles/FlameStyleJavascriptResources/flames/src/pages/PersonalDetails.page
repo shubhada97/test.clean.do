@@ -1,0 +1,119 @@
+<apex:page standardController="Contact" extensions="PersonalDetailsController" sidebar="false" showHeader="false">
+    <apex:form >
+    
+        <apex:outputPanel title="" id="error">
+            <apex:pageMessages id="errorMsg" ></apex:pageMessages>
+        </apex:outputPanel>
+        <apex:pageBlock title="Personal Details" id="cpBlock" >
+            <apex:pageBlockSection columns="2" title="Personal Details (Please write your name as it appears on the 10th/12th mark sheet)" collapsible="false">
+                <apex:inputField value="{!Contact.Salutation}"/>
+                <apex:pageBlockSectionItem HelpText="{!$ObjectType.Contact.fields.MobilePhone.inlineHelpText}">
+                    <apex:outputLabel value="Mobile No "/>
+                    <apex:inputText label="" value="{!Contact.MobilePhone}" /> 
+                </apex:pageBlockSectionItem>
+                <apex:inputField value="{!Contact.FirstName}"/>
+                <apex:inputField value="{!Contact.Email}"/>
+                <apex:inputField value="{!Contact.Middle_Name__c}"/>
+                <apex:inputField value="{!Contact.Alternate_Email_ID__c}"/>
+                <apex:inputField value="{!Contact.LastName}"/>
+                <apex:inputField value="{!Contact.Birthdate}"/>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Gender"/>
+                    <apex:selectRadio value="{!genderValue}" layout="pageDirection" id="gndr"> 
+                        <apex:selectOptions value="{!Gender}"/>
+                    </apex:selectRadio>
+                </apex:pageBlockSectionItem>
+                <apex:pageBlockSectionItem >
+                    <apex:outputLabel value="Are you an Indian? "/>
+                    <apex:selectRadio value="{!ntnlValue}" layout="pageDirection" id="intnlty" rendered="true"> 
+                        <apex:selectOptions value="{!Nationality}"/>
+                           <apex:actionSupport event="onchange" reRender="cpBlock" status="validationStatus"/>
+                    </apex:selectRadio>
+                </apex:pageBlockSectionItem>
+            </apex:pageBlockSection>
+            <apex:pageBlockSection collapsible="false" columns="2">
+                <apex:inputField value="{!Contact.Passport_No__c    }" rendered="{!show}"/>
+                <apex:inputField value="{!Contact.Passport_Issued_By__c}" rendered="{!show}"/>
+                <apex:inputField value="{!Contact.Visa_Status__c}" rendered="{!show}"/>
+                <apex:inputField value="{!Contact.Passport_Expiry_Date__c}" rendered="{!show}"/>
+                <apex:inputField value="{!Contact.Marital_Status__c}"/>
+                <apex:inputField value="{!Contact.Place_of_Birth__c}"/>
+                <apex:inputField value="{!Contact.Residence_Phone_Code__c}"/>
+                <apex:inputText value="{!Contact.Residence_Phone_No__c}" label=""/>
+                <apex:inputField value="{!Contact.Total_Family_Income__c}"/>
+                <apex:inputField value="{!Contact.Mother_Tongue__c}"/>
+                <apex:inputField value="{!Contact.Religion__c}"/>
+            </apex:pageBlockSection>
+            <apex:outputPanel >
+                <apex:pageBlockSection columns="1" collapsible="false" title="Permanent and Mailing Address">
+                    <label> Permanent Address </label>
+                    <apex:inputText value="{!addressLineOne}" label="Address Line 1" style="width: 720px;"/>
+                    <apex:inputText value="{!addressLineTwo}" label="Address Line 2" style="width: 720px;"/>
+                </apex:pageBlockSection>
+                    <apex:pageBlockSection columns="2" collapsible="false">
+                    <apex:inputField value="{!Contact.OtherCountryCode}"/>
+                    <apex:inputField value="{!Contact.OtherCity}"/>
+                    <apex:inputField value="{!Contact.OtherStateCode}"/>
+                    <apex:inputField value="{!Contact.OtherPostalCode }"/>
+                    <label>Mailing Address</label>
+                    <apex:pageBlockSectionItem >
+                        <apex:selectRadio value="{!addValue}" layout="pageDirection" id="sameAdd" rendered="true"> 
+                            <apex:selectOptions value="{!SameAddress}"/>
+                            <apex:actionSupport event="onchange" reRender="cpBlock" status="validationStatus"/>
+                        </apex:selectRadio>
+                    </apex:pageBlockSectionItem>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection collapsible="false" columns="1" rendered="{!showAdd}">
+                    <apex:inputText value="{!malAddLineOne}" label="Address Line 1" style="width: 720px;"/>
+                    <apex:inputText value="{!malAddLineTwo}" label="Address Line 2" style="width: 720px;"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="2" collapsible="false" rendered="{!showAdd}">
+                    <apex:inputField value="{!Contact.MailingCountryCode}"/>
+                    <apex:inputField value="{!Contact.MailingCity}"/>
+                    <apex:inputField value="{!Contact.MailingStateCode}"/>
+                    <apex:inputField value="{!Contact.OtherPostalCode }"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection columns="1" collapsible="false" title="Parent Details">
+                    <apex:outputLabel value="Father / Guardian"/>
+                    <apex:inputText value="{!Contact.Father_s_First_Name__c}" label="First Name "/>
+                    <apex:inputText value="{!Contact.Father_s_Last_Name__c}" label="Last Name "/>
+                    <apex:pageBlockSectionItem >
+                        <apex:selectRadio value="{!fatOccupationVal}" layout="pageDirection" id="fatocc" rendered="true"> 
+                            <apex:selectOptions value="{!FatherOccupation}"/>
+                            <apex:actionSupport event="onchange" reRender="cpBlock" status="validationStatus"/>
+                        </apex:selectRadio>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputText value="{!Contact.Father_s_Email_ID__c}" label="Email ID"/>
+                    <apex:inputField value="{!Contact.Father_s_Mobile_No_Code__c}" label="Mobile No"/>
+                    <apex:inputText value="{!Contact.Father_s_Mobile_No__c}" label=""/>
+                    <apex:inputText value="{!Contact.Father_s_Current_Company__c}" label="Current Company "/>
+                    <apex:inputText value="{!Contact.Father_s_Last_Company__c}" label="Last Company"/>
+                    <apex:inputText value="{!Contact.Father_s_Designation__c}" label="Designation"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection collapsible="false" columns="1">
+                    <apex:outputLabel value="Mother / Guardian"/>
+                    <apex:inputText value="{!Contact.Mother_s_First_Name__c}" label="First Name "/>
+                    <apex:inputText value="{!Contact.Mother_s_Last_Name__c}" label="Last Name "/>
+                    <apex:pageBlockSectionItem >
+                        <apex:selectRadio value="{!matOccupationVal}" layout="pageDirection" id="matocc" rendered="true"> 
+                            <apex:selectOptions value="{!MotherOccupation}"/>
+                            <apex:actionSupport event="onchange" reRender="cpBlock" status="validationStatus"/>
+                        </apex:selectRadio>
+                    </apex:pageBlockSectionItem>
+                    <apex:inputText value="{!Contact.Mother_s_Email_ID__c}" label="Email ID"/>
+                    <apex:inputField value="{!Contact.Mother_s_Mobile_No_Code__c}" label="Mobile No"/>
+                    <apex:inputText value="{!Contact.Mother_s_Mobile_No__c}" label=""/>
+                    <apex:inputText value="{!Contact.Mother_s_Current_Company__c}" label="Current Company "/>
+                    <apex:inputText value="{!Contact.Mother_s_Last_Company__c}" label="Last Company"/>
+                    <apex:inputText value="{!Contact.Mother_s_Designation__c}" label="Designation"/>
+                </apex:pageBlockSection>
+                <apex:pageBlockSection collapsible="false" columns="2" title="Where did you hear about FLAME University?">
+                    <apex:inputField value="{!Contact.Source__c}"/>
+                    <apex:inputText value="{!Contact.Other__c}" label=""/>
+                </apex:pageBlockSection>
+            </apex:outputPanel>
+        </apex:pageBlock>
+            
+        <apex:commandButton value="NEXT" action="{!saveData}" style="margin-left: 1500px;"/>
+    </apex:form>
+</apex:page>

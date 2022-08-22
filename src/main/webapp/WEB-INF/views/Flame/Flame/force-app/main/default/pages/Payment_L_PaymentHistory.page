@@ -1,0 +1,140 @@
+<apex:page controller="Ledger_ContactPayment_controller" action="{!PaymentHistory}" sidebar="false" showheader="false" standardStylesheets="false" cache="false" docType="HTML-5.0" id="thepage"   >
+ <apex:param name="staticconid" value="{!contactId}" /> 
+  <Html>
+  
+    <head>
+    <c:ResourceFile />
+    </head>
+    <style type="text/css">
+.top 
+{
+    border-top:thin solid;
+    border-color:black;
+}
+.bottom 
+{
+    border-bottom:thin solid;
+    border-color:black;
+}
+
+.left
+{
+    border-left:thin solid;
+    border-color:black;
+}
+.right 
+{
+    border-right:thin solid;
+    border-color:black;
+}
+td
+{
+padding: 0px 0px 0px 0px;
+}
+th
+{
+padding: 0px 0px 0px 0px;
+}
+
+.companyName { font: bold 30px; color: red; }  
+        table {width:100%; border-spacing:0; border-collapse:collapse; border-width: 1px; border-color:#084D89;border-style:solid;} 
+        .header-table-data { border-width: 1px; border-color:Black;border-style:solid;background-color:#FFFFFF;
+                             color:Black; font-size:14px; font-family:Verdana;
+                             text-align:center;}
+        .header-table-heading {border-width: 1px; border-color:Black;border-style:solid;background-color:#084D89; 
+        font-weight:normal;color: #f5f5f5; font-size:13px; font-family:Verdana,Geneva,sans-serif;
+        text-align:center;}
+        .header-data { border-width: 0px; border-color:Black;border-style:solid;background-color:#FFFFFF;
+                       color:Black; font-size:14px; font-family:Verdana;text-align:left; padding-right: 10px;}
+
+        .header-heading {border-width: 0px; border-color:Black;border-style:solid; 
+                         font-weight:bold;color:Black; font-size:14px; font-family:Verdana;
+                         text-align:left;}
+                         
+</style>
+    <body>
+
+    <!-- HEADER START -->
+    <div class="header">
+    <div class="container">
+    <div class="brand"><a href="javascript:void(0)">           
+    <apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+    </div>
+       <c:TopNavigationBar /> 
+    </div>
+    </div>
+  
+    <!-- HEADER END -->
+
+    <!-- DASHBOARD START -->
+    <div class="main-dashboard">
+    <div class="container">
+    <div class="dashboard-inner">
+   
+    <apex:form >
+    <c:PaymentTabs staticconid="{!ContactId}"/>
+    </apex:form> 
+    
+    <!-- {!ContactId} --> 
+    <apex:form id="rerenderForm">
+    <apex:outputText id="PaymentError" value="{!paymentError}" style="Color:black;"/> 
+    </apex:form>
+    <br/>
+    
+   <div class="tab-container">
+  
+    <b> {!Con.name} &nbsp;</b> Payment History 
+    <div class="form-group">
+    </div>
+    </div> 
+   <apex:form >
+   
+  
+
+  <table cellspacing='5' cellpadding="0" border='1px' width='100%'>  
+   <thead>   
+  <tr width="100%" border="0">  
+<!--  <td class="header-table-heading" bgcolor="#084D89"><b>Payment Number</b></td> -->
+ <td class="header-table-heading" bgcolor="#084D89"><b>Payment Date</b></td>
+  <td class="header-table-heading" bgcolor="#084D89"><b>Paid By</b></td>
+  <td class="header-table-heading" bgcolor="#084D89"><b>Amount</b></td>
+<!--  <td class="header-table-heading" bgcolor="#084D89" padding="0px"><b> Email Reciept</b></td> -->
+ <!-- <td class="header-table-heading" bgcolor="#084D89"><b>Fee Type</b></td> -->
+  </tr>  
+  </thead>
+  
+  <tbody>
+  <apex:repeat value="{!wrapperPaymentList}" var="pp"> 
+  <tr>
+  <td class="header-table-data"><apex:outputField value="{!pp.paymentHistory.Payment_Date__c}" />  </td>  
+  <td class="header-table-data">{!pp.paymentHistory.Paid_By__c}</td>  
+  <td class="header-table-data">{!pp.paymentHistory.FUA_Amount__c}</td>
+<!--  <td align='center' padding="0px">
+  <apex:commandButton immediate="true" onclick="downloadPaymentReceipt('{!pp.paymentHistory.Ledger__c}'); return false;" action="{!Downloadpayment}" value="Email" />
+  
+  
+ </td>  -->
+ <!-- <td class="header-table-data">{!pp.paymentHistory.Fee_Type__c}</td> -->
+  </tr>  
+  </apex:repeat>
+  <script>
+      function downloadPaymentReceipt(ids){
+          downloadPayment(ids);
+      }
+  </script>
+  <apex:outputPanel id="frm"></apex:outputPanel>
+  <apex:actionFunction name="downloadPayment" action="{!Downloadpayment}" reRender="frm,rerenderForm">
+      <apex:param id="ledgerIdToSendEmail" name="ledgerIdToSendEmail" value="" assignTo="{!ledgerIdToSendEmail}"/>
+  </apex:actionFunction>  
+  </tbody>
+    
+  </table> 
+  </apex:form>  
+  </div>
+  </div>
+  </div>
+  </body>
+  </Html> 
+  
+ 
+</apex:page>

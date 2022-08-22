@@ -1,0 +1,180 @@
+<apex:component controller="ProgressBarCtrl_1">
+    <style>
+        .disabled{
+            pointer-events:none;
+            opacity:0.6;
+        }
+    </style>
+    <script>
+    //&& completedStages.search("Preview Form") != -1 && 
+    //completedStages.search("Program & Test") != -1 && completedStages.search("Personal Details") != -1 && completedStages.search("Education & Work") != -1 
+       $(document).ready(function(){
+           console.log('{!$CurrentPage.Name}'); 
+                var completedStages = '{!applicationCompStages}';
+                 //'{!$CurrentPage.Name}' != 'ProgramForm' && 
+                if(completedStages.search("Program & Test") == -1 && '{!$CurrentPage.Name}' != 'Index' && '{!$CurrentPage.Name}' != 'ProgramForm_1'){
+                    window.location = 'https://flame.force.com/application/Index';
+                }
+                else if(completedStages.search("ThankyouDone") != -1 && '{!$CurrentPage.Name}' != 'Index'){
+                    console.log('In Thankyou');
+                  //  window.location = 'https://flame.force.com/application/Index';
+                }
+                else if(completedStages.search("Applied") == -1 &&'{!$CurrentPage.Name}' == 'ThankyouPage_1'){
+                    window.location = 'https://flame.force.com/application/Index';
+                }
+                else if(completedStages.search("Applied") != -1){
+                    var completedStagesSplit = completedStages.split(';');
+                    console.log('2 -> ' + completedStagesSplit[completedStagesSplit.length - 1]);
+                    if(completedStagesSplit[completedStagesSplit.length - 1] == 'Program & Test' && '{!$CurrentPage.Name}' != 'ProgramForm_1' && '{!$CurrentPage.Name}' != 'Index'){
+                          window.location = 'https://flame.force.com/application/ProgramForm_1';  
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length - 1] == 'Personal Details' && '{!$CurrentPage.Name}' != 'PersonalDetails_1' && '{!$CurrentPage.Name}' != 'Index'){
+                          window.location = 'https://flame.force.com/application/PersonalDetails_1';    
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Education & Work' && '{!$CurrentPage.Name}' != 'EducationAndWork_1' && '{!$CurrentPage.Name}' != 'Index'){
+                          window.location = 'https://flame.force.com/application/EducationAndWork_1';    
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Preview Form' && '{!$CurrentPage.Name}' != 'ReviewAndApply_1' && '{!$CurrentPage.Name}' != 'Index'){
+                           window.location = 'https://flame.force.com/application/ReviewAndApply_1';   
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Payment' && '{!$CurrentPage.Name}' != 'PaymentGateway_1' && '{!$CurrentPage.Name}' != 'Index'){
+                            window.location = 'https://flame.force.com/application/ThankyouPage_1';  
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Thankyou' && '{!$CurrentPage.Name}' != 'ThankyouPage_1' && '{!$CurrentPage.Name}' != 'Index'){
+                        window.location = 'https://flame.force.com/application/ThankyouPage_1';  
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Applied' && completedStages.search("Payment") != -1 && '{!$CurrentPage.Name}' != 'ThankyouPage_1' && '{!$CurrentPage.Name}' != 'Index'){
+                        window.location = 'https://flame.force.com/application/ThankyouPage_1';  
+                    }
+                    else if(completedStagesSplit[completedStagesSplit.length -1] == 'Applied' && completedStages.search("Payment") == -1 && '{!$CurrentPage.Name}' != 'PaymentGateway_1' && '{!$CurrentPage.Name}' != 'Index'){
+                        window.location = 'https://flame.force.com/application/PaymentGateway_1';  
+                    }
+                } 
+                
+                
+                if(completedStages.search("Education & Work") != -1 && '{!$CurrentPage.Name}' != 'EducationAndWork_1'){
+                    $('#EducationAndWork').addClass('complete-status'); 
+                    $('#EducationAndWork').removeClass('disabled');
+                }
+                else if(completedStages.search("Program & Test") == -1){
+                    $('#EducationAndWork').addClass('disabled');
+                }
+                if(completedStages.search("Personal Details") != -1 && '{!$CurrentPage.Name}' != 'PersonalDetails_1'){
+                    $('#PersonalDetails').addClass('complete-status'); 
+                    $('#PersonalDetails').removeClass('disabled');
+                }
+                else if(completedStages.search("Program & Test") == -1){
+                    $('#PersonalDetails a').addClass('disabled');
+                }
+                if(completedStages.search("Program & Test") != -1 && '{!$CurrentPage.Name}' != 'ProgramForm_1'){
+                    $('#ProgramForm').addClass('complete-status'); 
+                    $('#ProgramForm').removeClass('disabled');
+                }
+                if(completedStages.search("Preview Form") != -1 && '{!$CurrentPage.Name}' != 'ReviewAndApply_1'){
+                    $('#ReviewAndApply').addClass('complete-status');
+                    $('#ReviewAndApply').removeClass('disabled');
+                }
+                else if(completedStages.search("Program & Test") == -1){
+                    $('#ReviewAndApply').addClass('disabled');
+                }
+                if(completedStages.search("Payment") != -1 && '{!$CurrentPage.Name}' != 'PaymentGateway_1'){
+                    $('#PaymentGateway').addClass('complete-status'); 
+                }
+                else if(completedStages.search("Program & Test") != -1 && completedStages.search("Education & Work") != -1 && completedStages.search("Personal Details") != -1 && completedStages.search("Preview Form") != -1){
+                    $('#PaymentGateway').removeClass('disabled');
+                }
+                else{
+                    $('#PaymentGateway').addClass('disabled');
+                }
+                if(completedStages.search("Thankyou") != -1 && '{!$CurrentPage.Name}' != 'ThankyouPage_1'){
+                    $('#ThankyouPage').addClass('complete-status');
+                    $('#ThankyouPage').removeClass('disabled');
+                }
+                else if(completedStages.search("Program & Test") != -1 && completedStages.search("Education & Work") != -1 && completedStages.search("Personal Details") != -1 && completedStages.search("Preview Form") != -1 && completedStages.search("Payment") != -1){
+                    $('#ThankyouPage').removeClass('disabled');
+                }
+                else{
+                    $('#ThankyouPage').addClass('disabled');
+                }
+                
+                if(completedStages.search("Payment") != -1){
+                   $('#PaymentGateway').addClass('disabled');  
+                }
+                
+                if(completedStages.search("Applied") != -1){
+                    $('#ProgramForm').addClass('disabled');
+                    $('#ReviewAndApply').addClass('disabled');
+                    $('#PersonalDetails a').addClass('disabled');
+                    $('#EducationAndWork').addClass('disabled');
+                }
+               
+                if('{!$CurrentPage.Name}' == 'Index'){
+                    $('#Index').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ProgramForm_1'){
+                    $('#ProgramForm').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'PersonalDetails_1'){
+                    $('#PersonalDetails').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'EducationAndWork_1'){
+                   $('#EducationAndWork').addClass('active'); 
+                }else if('{!$CurrentPage.Name}' == 'ReviewAndApply_1'){
+                    $('#ReviewAndApply').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'PaymentGateway_1'){
+                    $('#PaymentGateway').addClass('active');
+                }else if('{!$CurrentPage.Name}' == 'ThankyouPage_1'){
+                    $('#ThankyouPage').addClass('active');
+                }
+                else{
+                    //do nothing
+                }
+       });
+    </script> 
+    <div class="tab-nav">
+                    <ul>
+                        <li class="home" id="Index">
+                            <a href="/application/Index"  data-target="#tab1">
+                                <span class="pull-left">
+                                    <i class="fa fa-home"></i>
+                                </span>
+                            </a>    
+                        </li>
+                         <!-- complete-status -->
+                        <li id="ProgramForm">
+                            <a href="/application/ProgramForm_1">
+                                <span class="pull-left"><i class="icon-programtest"></i></span>
+                                <div class="media-body">Program &#38; test</div>
+                            </a>
+                        </li>
+                        <li id="PersonalDetails"> <!-- class="active"  -->
+                            <a href="/application/PersonalDetails_1">
+                                <span class="pull-left"><i class="icon-personaldetails"></i></span>
+                                <div class="media-body">Personal Details</div>
+                            </a>
+                        </li>
+                        <li id="EducationAndWork">
+                            <a href="/application/EducationAndWork_1">
+                                <span class="pull-left"><i class="icon-educationwork"></i></span>
+                                <div class="media-body">Education &#38; Work Details</div>
+                            </a>
+                        </li>
+                        <li id="ReviewAndApply">
+                            <a href="/application/ReviewAndApply_1">
+                                <span class="pull-left"><i class="icon-preview"></i></span>
+                                <div class="media-body">Review &#38; Apply</div>
+                            </a>
+                        </li>
+                        <li id="PaymentGateway">
+                            <a href="/application/PaymentGateway_1">
+                                <span class="pull-left"><i class="icon-payment"></i></span>
+                                <div class="media-body">Application Fees</div>
+                            </a>
+                        </li>
+                        <li id="ThankyouPage">
+                            <a href="/application/ThankyouPage_1">
+                                <span class="pull-left"><i class="fa fa-thumbs-o-up"></i></span>
+                                <div class="media-body">Thank You</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+</apex:component>

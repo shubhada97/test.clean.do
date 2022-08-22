@@ -1,0 +1,353 @@
+<!------------------------------------------------------------------------------------------------
+* Author: Cloudalyze Services LLP. (Saheel Deshpande)
+* VF Page Name: Flame_Chatter
+* Created Date: 18/11/2019
+* Description: Chatter Page for Users
+-------------------------------------------------------------------------------------------------->
+<apex:page controller="UserController" showHeader="false" lightningStylesheets="true">
+    <html>
+        <apex:slds />
+        <head>
+            <!--<META http-equiv="refresh" content="300"/>-->
+        </head>
+    </html>
+    <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:includeLightning /> 
+    <apex:slds />
+    <c:Flame_HeadResource />  
+    <style>
+        .navbar .navbar-nav > .flm_Assist > a,
+        .navbar .navbar-nav > .flm_Assist > a:focus,
+        .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }
+        legend .feeditemtext.cxfeeditemtext{
+        line-height:normal;
+        font-size: 18px;
+        }
+        .feedpage .feedmain{
+        width:auto;
+        }
+        .no-margin{
+        margin:0;
+        }
+        .margin-bottom{
+        margin-bottom:20px;
+        }
+        .margin-top{
+        margin-top:15px;
+        }
+        .border{
+        border:1px solid #ddd;
+        }
+        .border-radius{
+        border-radius:5px
+        }
+        .background{
+        background: #f5f5f5;
+        }
+        .publishercontainer, .feedcontainer {
+        max-width: none;
+        }
+        .chatter-upload-avatar {
+        border-radius: 50px;
+        overflow: hidden;
+        border:transparent !important
+        }
+        .chatter-avatar {
+        border-radius: 50px;
+        overflow: hidden;
+        background: #ffffff;
+        border:1px solid #fbfbfb !important
+        }
+        .chatter-externalIndicator.chatter-avatar{
+        background:#8199af;
+        }
+        
+        .User-Hover:hover{
+        background-color:#8199af;
+        }
+        .zen .publisherTypeOverflow.zen-open .zen-trigger{
+        border:none;
+        height:auto;
+        }
+        .zen .publisherTypeOverflow .zen-options{
+        border-top: 1px solid #dadada;
+        top:-7px
+        }
+        .publishercontainer a.publisherattach{
+        height:auto;
+        }
+        .zen .publisherTypeOverflow.zen-open .zen-options .publisherFeedItemTypeChoice {
+        padding-top: 4px;
+        padding-bottom: 4px
+        }
+        .feedpage .feedrightbar {
+        width: 157px;
+        padding: 15px 5px;
+        margin-right: 0;
+        height: auto;
+        }
+        .profileSection {
+        margin-bottom: 0;
+        }
+       
+    </style>
+    <!-- page css -->
+    <!-- jquery datepicker plugin -->
+    <body>
+        <div id="lightning" />
+        
+        <!-- Left Panel -->
+        <aside id="left-panel" class="left-panel">
+            <c:Flame_SideMenuBar />
+        </aside>
+        <!-- Left Panel -->            
+        <!-- Right Panel -->            
+        <div id="right-panel" class="right-panel">                
+            <!-- Header-->
+            <c:Flame_HeaderBar />
+            <!-- Header-->                                
+            <!--Main container --> 
+            <apex:pageMessages id="showmsg"></apex:pageMessages>
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="sub-heading">
+                            <!-- <h6>Users</h6>  -->
+                        </div>
+                    </div>
+                    <div class="col-md-6 margin-top">
+                        <apex:form >
+                            <apex:commandButton styleClass="slds-button slds-button_outline-brand" action="{!Previous}" style="float:right;font-size:15px;" value="Home"/>
+                        </apex:form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="col-md-12 margin-bottom">
+                    <apex:form >
+                        <apex:actionRegion >
+                            <div class="slds-dropdown-trigger slds-dropdown-trigger_click slds-is-open">
+                                <apex:inputText id="user" value="{!uName}" onkeyup="searchPeople(this.value);" style="margin-right:15px;border:1px solid #ddd;padding:6px 12px;border-radius:5px;box-shadow:none;width:210px" html-placeholder="Search People"/>
+                                <apex:commandButton id="searchBTN" styleClass="orangebutton" title="Search" action="{!doSearch}" value="Search" onclick="callcontroller(); return false;"/>
+                                <div>
+                                    <apex:outputPanel id="searchResultList" style=" border:#dfdfdf solid 1px;border-radius:5px; font-size:12px;padding:5px; margin:0px; position:absolute; background:white; height:auto;z-index:3;width: 210px;">
+                                        <apex:variable value="{!0}" var="count"/>
+                                        <apex:repeat value="{!userSearchList}" var="u">
+                                            <div Class="User-Hover">
+                                                <apex:image value="{!u.SmallPhotoUrl}" style="border-radius: 50%;" width="18px" height="18" alt="User profile image"/>
+                                                <apex:outputLabel value="{!u.Name}" onclick="divProdFunction(this.innerText,{!count});" style="padding-left: 6px;cursor:pointer;" />
+                                                <apex:variable value="{!count + 1}" var="count"/>
+                                            </div>
+                                        </apex:repeat>
+                                    </apex:outputPanel>
+                                </div> 
+                            </div>
+                        </apex:actionRegion>
+                    </apex:form>
+                </div>
+                <div class="col-md-9" id="chatter-container">
+                    <div class="col-md-12 border-radius">
+                        <div class="assist-side-menu no-margin border"> 
+                            <apex:outputPanel id="feed" rendered="{!IF(feedinfoId!=null,true,false)}" styleClass="user-info">
+                                <!--<chatter:follow entityId="{!uName}"/>-->
+                                <apex:image styleClass="round-image" url="{!feedinfoPhoto}"/> <b>{!feedinfoName}</b> <i class="fa fa-caret-right margin-left" aria-hidden="true"></i>
+                                <chatter:feedWithFollowers entityId="{!feedinfoId}" rendered="{!isFollowing}"/>
+                                <chatter:follow entityId="{!feedinfoId}" rendered="{!NOT(isFollowing)}"/>
+                            </apex:outputPanel>
+                            <apex:actionStatus id="loadStatus" startText="Loading..." />
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3 border-radius background right-list" style="padding:15px;">
+                    <apex:form >
+                        <apex:actionFunction name="refreshFeed" action="{!followchange}" oncomplete="refr()"/>
+                        <apex:actionFunction name="setUserName" action="{!doSearch}" oncomplete="refr()">
+                            <apex:param name="usName" assignTo="{!uName}" value=""/>
+                            <apex:param name="usCount" assignTo="{!userListCount}" value=""/>
+                        </apex:actionFunction>
+                        <apex:actionFunction action="{!goToGroup}"  name="goToGroup" reRender="showmsg">
+                            <apex:param name="grpsname" assignTo="{!groupName}" value="raw" />
+                        </apex:actionFunction>
+                        <apex:actionFunction name="searchActionFunc" action="{!searchUsers}" reRender="searchResultList" >
+                            <apex:param name="usName" assignTo="{!uName}" value=""/>
+                        </apex:actionFunction>
+                        <div>	
+                            <table class="grouplist">
+                                <tbody>
+                                    <H1 style="font-size:large">
+                                        Groups
+                                    </H1><br/>
+                                    <div>
+                                        <apex:repeat id="groupList" value="{!CollborationGroups}" var="grpname" rendered="{!isFollowing}">
+                                            <tr>
+                                                <td scope="row">
+                                                    <apex:actionRegion >
+                                                        <apex:outputLabel styleClass="GroupOutputLabel" id="grname" value="{!grpname.CollaborationGroup.Name}" onclick="goGroups(this);"/>
+                                                    </apex:actionRegion>
+                                                </td>
+                                            </tr>
+                                        </apex:repeat>
+                                    </div>
+                                </tbody>
+                            </table>
+                        </div>
+                    </apex:form>
+                </div>
+            </div> 
+            <!--Main container -->
+        </div><!-- /#right-panel -->            
+        <!-- Right Panel -->            
+        <!-- Modal -->
+        <c:Flame_FooterResource />
+    </body>
+    <script>
+    var count = 0;
+    
+    $(".zen-mediaBody").click(function(){
+        refreshFeed();
+    });
+    $(".chatter-followIcon").click(function(){
+       
+        refreshFeed();
+    });
+    
+    window.onload=function(){
+        console.log('load');
+        document.querySelector('[id$="searchResultList"]').hidden=true;
+    }
+    
+    function searchPeople(name){
+        console.log('hello');
+        var sc = name.trim();
+        if(sc != '' && sc.length > 2){
+            searchActionFunc(name);
+        }
+        else{
+            document.querySelector('[id$="searchResultList"]').hidden=true;
+        }
+    }
+    
+    function divProdFunction(name,cnt) {
+        count = cnt;
+        document.querySelector('[id$="user"]').value=name;
+        document.querySelector('[id$="searchResultList"]').hidden=true;
+        
+    }
+    function callcontroller(){
+        var ss = document.querySelector('[id$="user"]').value;
+        console.log(count);
+        setUserName(ss.trim(),count);
+    }
+    
+    document.addEventListener("click", function(){
+        var filesizeCl = document.getElementsByClassName('fileSize');
+        if(filesizeCl.length>0){
+            document.getElementsByClassName('fileSize')[0].innerText = 'Maximum file size is 5 MB';
+        }    
+    });
+    
+    function refr(){
+        window.location.reload();
+    }
+    function goGroups(ids){
+        var str = ids.id;
+        var gname = document.getElementById(str).innerHTML;
+        var nam = gname.trim();
+        goToGroup(nam);
+        return false;
+    }
+    </script>
+</apex:page>

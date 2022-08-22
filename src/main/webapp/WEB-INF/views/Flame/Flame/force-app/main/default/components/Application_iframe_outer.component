@@ -1,0 +1,863 @@
+<apex:component controller="Flame_Community"> 
+<!--Sneha begin-->
+<apex:attribute type="String" name="staticconid" assignTo="{!StaticContactId}" description="Value to pass into the controller" />
+<apex:attribute type="String" name="staticconid" assignTo="{!ContactId}" description="Value to pass into the controller" />
+<!--Sneha end-->
+    <apex:stylesheet value="{!$Resource.BootstrapNamespaced}"/>
+    <style>
+        .tableView {
+        display:none;
+        }
+        .mobileView{
+        display:block;
+        }
+        
+        @media screen and (max-width:767px){
+         .bootstrap .card .card-detail-label {
+                font-weight: 700;
+                font-size: 12px;
+                display: block;
+                vertical-align: top;
+                text-align: left;
+                margin-bottom: 0;
+                float: left;
+                max-width: 50%;
+            }
+            .bootstrap .card .card-detail-value {
+                display: block;
+                vertical-align: top;
+                text-align: right;
+                float: none;
+                overflow: hidden;
+                padding-left: 10px;
+                /* white-space: nowrap; */
+                word-wrap: break-word;
+            }
+        }
+        
+        @media screen and (min-width: 520px) {
+        .tableView {
+        display:block;
+        }
+        .mobileView{
+        display:none;
+        }
+        }
+    </style>
+   <!--- ***********{!applicationList1} --->
+    <div class="ifame-outer">
+        <div class="review-application">
+            <div class="sec-box applicantImg">
+                <a href="javascript:void(0)"><apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>      
+                <!-- <div class="pull-right"><apex:image value="{!UserID.smallPhotoUrl}"/></div>-->
+            </div>
+            
+            <div class="sec-box applicationId">
+                <h4 class="appl-ttl">Application ID</h4>
+                <div><p> <apex:outputfield value="{!applicationList.Application_Reference_ID__c}"/></p></div>
+            </div>
+            
+            <div class="sec-box appliedProgram">
+                <h4 class="appl-ttl">The Program you applied for</h4>
+                <p><apex:outputtext value="{!applicationList.Program__r.name}"/></p>
+            </div>
+            <apex:outputPanel rendered="{!applicationList.Program__r.name != 'Undergraduate (B.A.,BBA,B.Sc.)'}">
+                <div class="sec-box eduDtls">
+                    <h4 class="appl-ttl">Competitive Exam Details  </h4>
+                    <div class="tableView">
+                        <div class="edu-table">
+                            <div class="table-responsive ct-table"> 
+                                <table class="table table-bordered"> 
+                                    <thead> 
+                                        <tr> 
+                                            <th>Competitive Exam</th> 
+                                            <th>Registration No</th> 
+                                            <th>Score</th> 
+                                            <th>Percentile</th> 
+                                            <th>Result Awaited</th>
+                                        </tr> 
+                                    </thead> 
+                                    <tbody> 
+                                        <apex:repeat value="{!compExamDetails}" var="comp">    
+                                            <tr> 
+                                                <td> 
+                                                    <apex:outputtext value="{!comp.Competitive_Exams__c}" />
+                                                </td>
+                                                <td>                     
+                                                    <apex:outputtext value="{!comp.Registration_No__c}" />
+                                                </td> 
+                                                <td>
+                                                    <apex:outputtext value="{!comp.Score__c}" />
+                                                </td>
+                                                <td>
+                                                    <apex:outputtext value="{!comp.FUA_Percentile__c} "/>
+                                                </td> 
+                                                <td>
+                                                    <apex:outputfield value="{!comp.Result_Awaited__c} "/>
+                                                </td> 
+                                            </tr>
+                                        </apex:repeat>
+                                    </tbody> 
+                                </table> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mobileView">
+                        <div class="bootstrap">
+                            <apex:repeat value="{!compExamDetails}" var="comp">
+                                <div class="card">
+                                    <div class="card-heading">
+                                        {!comp.Competitive_Exams__c}
+                                    </div>
+                                    <ul class="card-detail card-detail-labels">
+                                        <li>
+                                            <label class="card-detail-label">Registration No</label>
+                                            <span class="card-detail-value">{!comp.Registration_No__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Score</label>
+                                            <span class="card-detail-value">{!comp.Score__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Percentile</label>
+                                            <span class="card-detail-value">{!comp.FUA_Percentile__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Result Awaited</label>
+                                            <span class="card-detail-value">{!comp.Result_Awaited__c}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </apex:repeat>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            
+            <apex:outputPanel rendered="{!applicationList.Program__r.name == 'Undergraduate (B.A.,BBA,B.Sc.)'}">
+                <div class="sec-box eduDtls">
+                    <h4 class="appl-ttl">Competitive Exam Details  </h4>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <apex:outputLabel >FEAT</apex:outputLabel> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             
+                            <apex:outputfield value="{!applicationList.FLAME_Entrance_Aptitude_Test_FEAT__c}"/> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <apex:outputLabel >SAT</apex:outputLabel> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;        
+                            <apex:outputfield value="{!applicationList.SAT_Score__c }"/>
+                        </div>
+                    </div><BR/>
+                    
+                    <apex:outputPanel rendered="{!applicationList.SAT_Score__c  == TRUE}">
+                        <div class="tableView">
+                            <div class="edu-table">
+                                <div class="table-responsive ct-table"> 
+                                    <table class="table table-bordered"> 
+                                        <thead> 
+                                            <tr> 
+                                                <th>SAT Exam Date (mm/yyyy)</th> 
+                                                <th>Evidence-Based Reading and Writing/Critical Reading</th> 
+                                                <th>Math</th> 
+                                                <th>Writing</th>
+                                                <th>Result Awaited</th>
+                                            </tr> 
+                                        </thead> 
+                                        <tbody> 
+                                            <apex:repeat value="{!CED}" var="comp">    
+                                                <tr> 
+                                                    <td>                     
+                                                        <apex:outputtext value="{!comp.SAT_Exam_Date_mm_yyyy__c}" />
+                                                    </td> 
+                                                    <td>
+                                                        <apex:outputtext value="{!comp.Critical_Reading__c}" />
+                                                    </td>
+                                                    <td>
+                                                        <apex:outputtext value="{!comp.Math__c} "/>
+                                                    </td> 
+                                                    <td>
+                                                        <apex:outputtext value="{!comp.Writing__c} "/>
+                                                    </td> 
+                                                    <td>
+                                                       <apex:outputfield value="{!comp.Result_Awaited__c}" />
+                                                  </td>
+                                                </tr>
+                                            </apex:repeat>
+                                        </tbody> 
+                                    </table> 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mobileView">
+                            <div class="bootstrap">
+                                <apex:repeat value="{!CED}" var="comp">
+                                    <div class="card">
+                                        <ul class="card-detail card-detail-labels">
+                                            <li>
+                                                <label class="card-detail-label">SAT Exam Date (mm/yyyy)</label>
+                                                <span class="card-detail-value">{!comp.SAT_Exam_Date_mm_yyyy__c}</span>
+                                            </li>
+                                            <li>
+                                                <label class="card-detail-label">Critical Reading</label>
+                                                <span class="card-detail-value">{!comp.Critical_Reading__c}</span>
+                                            </li>
+                                            <li>
+                                                <label class="card-detail-label">Math</label>
+                                                <span class="card-detail-value">{!comp.Math__c}</span>
+                                            </li>
+                                            <li>
+                                                <label class="card-detail-label">Writing</label>
+                                                <span class="card-detail-value">{!comp.Writing__c}</span>
+                                            </li>
+                                            <li>
+                                            <label class="card-detail-label">Result Awaited</label>
+                                           <span class="card-detail-value"> <apex:outputfield value="{!comp.Result_Awaited__c}" /> </span>
+                                        </li>
+                                        </ul>
+                                    </div>
+                                </apex:repeat>
+                            </div>
+                        </div>
+                    </apex:outputPanel>
+                </div>
+            </apex:outputPanel>
+            <div class="sec-box centersEntrance">
+                <h4 class="appl-ttl">Centers for entrance test and/or GD/PI </h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Admission Cycle</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!applicationList.GD_and_PI_Round__c}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Center</strong></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!applicationList.GD_and_PI_Center__c}"/></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sec-box personalDetails">
+                <h4 class="appl-ttl">Applicant&#39;s Personal Details  </h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Name</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!contactList.name}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Gender</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputField value="{!contactList.Gender__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Marital Status</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Marital_Status__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Residence Phone No.</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Residence_Phone_Code__c}"/> - <apex:outputtext value="{!contactList.FUA_Residence_Phone_No__c}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Mobile</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Mobile_Phone_Code__c}"/> - <apex:outputtext value="{!contactList.FUA_Mobile__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>E-mail Address</strong></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Email}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Alternate E-mail Address</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!contactList.Alternate_Email_ID__c}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Date of Birth </strong></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputText value="{!birthdateValue}"/>  </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Are you an Indian citizen?</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Are_you_an_Indian__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Total Family Income</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Total_Family_Income__c}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Mother Tongue</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mother_Tongue__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Religion</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Religion__c}"/></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sec-box permanentAdd">
+                <h4 class="appl-ttl">Permanent Address</h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Address Line 1 </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Permanent_Address_Line_1__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Address Line 2 </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Permanent_Address_Line_2__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Country </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Applicant_Other_Country__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>State </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Applicant_Other_State__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>City </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Applicant_Other_City__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Other City </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Other_City__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Postal Code </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Permanent_Postal_Code__c}"/></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sec-box mailingAdd">
+                <h4 class="appl-ttl">Mailing Address   </h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Address Line 1 </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mailing_Address_Line_1__c}"/> </p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Address Line 2 </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mailing_Address_Line_2__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Country </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Applicant_Mailing_Country__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>State</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.FU_Applicant_Mailing_State__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>City </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p>   <apex:outputtext value="{!contactList.FU_Applicant_Mailing_City__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Other City</strong></p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p>   <apex:outputtext value="{!contactList.Mailing_City__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Postal Code </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mailing_Postal_Code__c}"/></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sec-box parentsDetls">
+                <h4 class="appl-ttl">Parent&#39;s Details   </h4>
+                <h4 class="appl-ttl">Father   </h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Name </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Father_s_First_Name__c}"/> &nbsp; <apex:outputtext value="{!contactList.Father_s_Last_Name__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Email ID </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Father_s_Email_ID__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Mobile No.</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Father_s_Mobile_No_Code__c}"/> - <apex:outputtext value="{!contactList.FUA_Father_s_Mobile_No__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Occupation </strong> </p>
+                    </div>
+                   <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!contactList.Father_s_Occupation__c}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Name of the Company</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!FatherCompany}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Designation</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!contactList.Father_s_Designation__c}"/></p>
+                    </div>
+                </div>
+                
+                <h4 class="appl-ttl">Mother   </h4>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Name </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mother_s_First_Name__c}"/> &nbsp; <apex:outputtext value="{!contactList.Mother_s_Last_Name__c}"/> </p>
+                    </div>
+                </div>   
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Email ID</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mother_s_Email_ID__c}"/>    </p>
+                    </div>
+                </div> 
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Mobile No.</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mother_s_Mobile_No_Code__c}"/> - <apex:outputtext value="{!contactList.FUA_Mother_s_Mobile_No__c}"/></p>
+                    </div>
+                </div>                                
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Occupation </strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Mother_s_Occupation__c}"/>    </p>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Name of the Company</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!MotherCompany}"/></p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Designation</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p> <apex:outputtext value="{!contactList.Mother_s_Designation__c}"/></p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="sec-box hearFlame">
+                <h4 class="appl-ttl">Where did you hear about FLAME University?  </h4>
+                
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Source</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Source__c}"/></p>
+                    </div>
+                </div>
+                <apex:outputPanel rendered="{!contactList.Source__c == 'Other'}">
+                <div class="row">
+                    <div class="col-xs-6">
+                        <p><strong>Other</strong> </p>
+                    </div>
+                    <div class="col-xs-6">
+                        <p><apex:outputtext value="{!contactList.Other__c}"/></p>
+                    </div>
+                </div>
+                </apex:outputPanel>
+            </div>
+            
+            <div class="sec-box eduDtls">
+                <h4 class="appl-ttl">Education Details  </h4>
+                <div class="tableView">
+                    <div class="edu-table">
+                        <div class="table-responsive ct-table"> 
+                            <table class="table table-bordered"> 
+                                <thead> 
+                                    <tr> 
+                                        <th>Year/Class</th> 
+                                        <th>Institution / School</th> 
+                                        <th>Degree / Certificate (Class XII, Diploma etc.)</th> 
+                                        <th>Board / University Examination Body</th> 
+                                        <th>Year of Completion</th> 
+                                        <th>% or CGPA </th> 
+                                        <th>CGPA Out of </th> 
+                                        <th>Major Subjects</th>
+                                        <th>Country</th>
+                                        <th>State</th>
+                                        <th>City</th>
+                                    </tr> 
+                                </thead> 
+                                <tbody> 
+                                    <apex:repeat value="{!educationList}" var="Education">    
+                                        <tr> 
+                                            <td> <apex:outputField value="{!Education.FU_Year_Class__c}" styleClass="form-control"/></td>
+                                            <td>
+                                                
+                                                <apex:outputfield value="{!Education.FUA_Institution_School__c}" styleClass="form-control"/>
+                                            </td> 
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_Degree_Certificate__c}" styleClass="form-control"/>
+                                            </td>
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_Board_University__c} " styleClass="form-control"/>
+                                            </td> 
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_Year_of_Completion__c} " styleClass="form-control"/>
+                                            </td> 
+                                            
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_CGPA_Actual__c} " styleClass="form-control"/>
+                                            </td>
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_CGPA_Out_Of__c}" styleClass="form-control"/>   
+                                            </td>
+                                            
+                                            <td>
+                                                <apex:outputField value="{!Education.FUA_Major_Subjects__c}" styleClass="form-control" />
+                                            </td>
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_Education_Country__c} " styleClass="form-control"/>
+                                            </td>  
+                                            <td>
+                                                <apex:outputfield value="{!Education.FUA_Education_State__c} " styleClass="form-control"/>
+                                            </td>
+                                            
+                                             <td>
+                                                <apex:outputfield value="{!Education.FUA_Education_City__c} " styleClass="form-control"/>
+                                            </td>
+                                        </tr>
+                                       
+                                    </apex:repeat> 
+                                </tbody> 
+                            </table> 
+                        </div>
+                    </div>
+                </div>
+                <div class="mobileView">
+                    <div class="bootstrap">
+                        <apex:repeat value="{!educationList}" var="Education">
+                            <div class="card">
+                                <div class="card-heading">
+                                    {!Education.FU_Year_Class__c}
+                                </div>
+                                <ul class="card-detail card-detail-labels">
+                                    <li>
+                                        <label class="card-detail-label">Institution / School</label>
+                                        <span class="card-detail-value">{!Education.FUA_Institution_School__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">Degree / Certificate (Class XII, Diploma etc.)</label>
+                                        <span class="card-detail-value">{!Education.FUA_Degree_Certificate__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">Board / University Examination Body</label>
+                                        <span class="card-detail-value">{!Education.FUA_Board_University__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">Year of Completion</label>
+                                        <span class="card-detail-value">{!Education.FUA_Year_of_Completion__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">% or CGPA</label>
+                                        <span class="card-detail-value">{!Education.FUA_CGPA_Actual__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">CGPA Out of</label>
+                                        <span class="card-detail-value">{!Education.FUA_CGPA_Out_Of__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">Major Subjects</label>
+                                        <span class="card-detail-value">{!Education.FUA_Major_Subjects__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">Country</label>
+                                        <span class="card-detail-value">{!Education.FUA_Education_Country__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">State</label>
+                                        <span class="card-detail-value">{!Education.FUA_Education_State__c}</span>
+                                    </li>
+                                    <li>
+                                        <label class="card-detail-label">City</label>
+                                        <span class="card-detail-value">{!Education.FUA_Education_City__c}</span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </apex:repeat>
+                    </div>
+                </div>
+            </div>
+            
+            <apex:outputPanel rendered="{!workDetails.size != 0}">
+                <div class="sec-box eduDtls">
+                    <h4 class="appl-ttl">Work Details  </h4>
+                    <div class="tableView">
+                        <div class="edu-table">
+                            <div class="table-responsive ct-table"> 
+                                <table class="table table-bordered"> 
+                                    <thead> 
+                                        <tr> 
+                                            <th>Type</th> 
+                                            <th>Company</th> 
+                                            <th>Designation</th> 
+                                            <th>From</th> 
+                                            <th>To</th> 
+                                            <th>Reporting Manger </th> 
+                                            <th>Your Responsibilities</th>
+                                            <th>Country</th>
+                                            <th>State</th>
+                                            <th>City</th>
+                                            <th>Other City</th>
+                                            <th>CTC</th>
+                                        </tr> 
+                                    </thead> 
+                                    <tbody> 
+                                        <apex:repeat value="{!workDetails}" var="work">    
+                                            <tr> 
+                                                <td> 
+                                                    <apex:outputtext value="{!work.FUA_Type__c}" />
+                                                </td>
+                                                <td>                     
+                                                    <apex:outputtext value="{!work.FUA_Company__c}" />
+                                                </td> 
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Designation__c}" />
+                                                </td>
+                                                <td>
+                                                    <apex:outputField value="{!work.FromDate__c} "/>
+                                                </td> 
+                                                
+                                                <td>
+                                                    <apex:outputfield value="{!work.Todate__c} "/>
+                                                </td>
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Reporting_Person_Details__c}"/>   
+                                                </td>
+                                                
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Your_Responsibilities__c}"/>
+                                                </td>
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Work_Country__c} "/>
+                                                </td>  
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Work_State__c} " />
+                                                </td> 
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Work_City__c} "/>
+                                                </td> 
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_Other_City1__c} "/>
+                                                </td> 
+                                                <td>
+                                                    <apex:outputtext value="{!work.FUA_CTC_INR__c} "/>
+                                                </td> 
+                                            </tr>  
+                                        </apex:repeat>
+                                    </tbody> 
+                                </table> 
+                            </div>
+                        </div>
+                        
+                    </div>
+                    
+                    
+                    <div class="mobileView">
+                        <div class="bootstrap">
+                            <apex:repeat value="{!workDetails}" var="work">
+                                <div class="card">
+                                    <div class="card-heading">
+                                        {!work.FUA_Company__c}
+                                    </div>
+                                    <ul class="card-detail card-detail-labels">
+                                        <li>
+                                            <label class="card-detail-label">Type</label>
+                                            <span class="card-detail-value">{!work.FUA_Type__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Designation</label>
+                                            <span class="card-detail-value">{!work.FUA_Designation__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">From</label>
+                                            <span class="card-detail-value">
+                                                <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}">
+                                                    <apex:param value="{!work.FUA_From_Date__c}"/>
+                                                </apex:outputText>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">To</label>
+                                            <span class="card-detail-value">
+                                                <apex:outputText value="{0,date,dd'-'MMM'-'yyyy}">
+                                                    <apex:param value="{!work.FUA_To_Date__c}"/>
+                                                </apex:outputText>
+                                            </span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Reporting Manger</label>
+                                            <span class="card-detail-value">{!work.FUA_Reporting_Person_Details__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Your Responsibilities</label>
+                                            <span class="card-detail-value">{!work.FUA_Your_Responsibilities__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Country</label>
+                                            <span class="card-detail-value">{!work.FUA_Work_Country__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">State</label>
+                                            <span class="card-detail-value">{!work.FUA_Work_State__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">City</label>
+                                            <span class="card-detail-value">{!work.FUA_Work_City__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">Other City</label>
+                                            <span class="card-detail-value">{!work.FUA_Other_City1__c}</span>
+                                        </li>
+                                        <li>
+                                            <label class="card-detail-label">CTC</label>
+                                            <span class="card-detail-value">{!work.FUA_CTC_INR__c}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </apex:repeat>
+                        </div>
+                    </div>
+                </div>
+            </apex:outputPanel>
+            
+            <div class="sec-box achievment">
+                <h4 class="appl-ttl">List your achievements, awards/honors or scholarships in Sports, Extra-curricular Activities, and/or in Community Service  </h4>
+                <p><apex:outputfield value="{!applicationList.Achievments__c}"/></p>
+            </div>
+            <div class="sec-box otherDtls">
+                <h4 class="appl-ttl"> Other Details (Transfer Student, Re-Applicants, etc. or anything else you would like us to know)</h4>
+                <p><apex:outputfield value="{!applicationList.Other_Details__c}"/></p>
+            </div>
+        </div>
+    </div>
+</apex:component>

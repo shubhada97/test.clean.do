@@ -1,0 +1,21 @@
+<apex:page standardController="Contact" recordSetVar="cons" extensions="UploadIdCardCtrl" >
+    <apex:includeLightning />    
+    <div id="LightningComponentid" />    
+    <script>
+    $Lightning.use("c:uploadIdCardApp", function() {
+        
+        $Lightning.createComponent("c:uploadIdCardComponent",
+          { 
+                 "recordIds": "{!recordIds}"
+          },
+          "LightningComponentid",
+          function(cmp) {
+             console.log('LWC Componenet added in VF page');
+          }); 
+    });
+    </script>
+    
+    <script>
+    //window.open("www.google.com", "_blank")
+    </script>
+</apex:page>

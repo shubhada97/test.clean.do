@@ -1,0 +1,31 @@
+.THIS .slds-global-header{
+    padding-top: 8px;
+    padding-bottom: 8px;
+    font-weight: inherit;
+    color: #0c4570;
+    font-size: 25px;
+    align-self: end;
+    font-family: Georgia, serif;
+    letter-spacing: 1px;
+    word-spacing: 2px;
+    color: #0c4570;
+    font-weight: inherit;
+    text-decoration: none;
+    font-variant: small-caps;
+    text-transform: none;
+}
+
+@media only screen and (max-width: 30em) {
+    .THIS .slds-global-header{
+        font-size: 15px;
+        text-align: right;
+    }
+    .THIS .slds-global-header__logo{
+        height: 1.6rem !important;
+        margin-left: 5px;
+    }
+}
+
+.THIS .slds-global-header__logo{
+    height: 2.4rem;
+}

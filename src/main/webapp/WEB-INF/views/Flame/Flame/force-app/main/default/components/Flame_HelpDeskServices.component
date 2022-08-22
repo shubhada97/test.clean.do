@@ -1,0 +1,70 @@
+<!------------------------
+Author: Deepak Chouhan
+Page Name: Flame_HelpDeskServices
+Created Date:  3/9/2018
+Description: to show the Help Desk input info.
+------------------------->
+<apex:component >
+    <!-- attribute section -->
+    <apex:attribute name="objCase" description="Help Desk Services" type="Case" />
+    <apex:attribute name="IsAttachment" description="add attachment to service" type="Boolean" />
+    
+    
+    <!-- to check the attachment for service page -->
+    <apex:inputCheckbox styleClass="IsAttachCls hideComponent" value="{!IsAttachment}" style="display:none;"/>
+    
+    
+    <!-- Static Field  Section -->    
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Assistance Type</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input HLPAssistTypeCls" onchange="helpDeskAssistType(this);" value="{!objCase.HLP_Assist_Type__c}" required="true"/>
+        </div>
+    </div>  
+    <div class="slds-form-element serviceTypeCls" >
+        <label class="slds-form-element__label" >Service Type</label>
+        <div class="slds-form-element__control CategoryRFCls">                                    
+            <apex:inputField styleClass="slds-input HLPCategoryCls" value="{!objCase.HLP_Category__c}" onchange="helpDeskServiceType(this);" />
+        </div>
+    </div>  
+    <div class="slds-form-element subCategoryCls" >
+        <label class="slds-form-element__label" >Sub Category</label>
+        <div class="slds-form-element__control SubCategoryRFCls">                                    
+            <apex:inputField styleClass="slds-input HLPSubCategoryCls" onchange="helpDeskSubCategory(this);" value="{!objCase.HLP_Sub_Category__c}" />
+        </div>
+    </div>    
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Subject</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.Subject}" required="true"/>
+        </div>
+    </div>  
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Description</label>
+        <div class="slds-form-element__control">                        
+            <apex:inputField styleClass="slds-input" value="{!objCase.Description}"/>
+        </div>
+    </div>  
+    <div class="showHide">        
+        <div class="slds-form-element" style="width:88%;">
+            <label class="slds-form-element__label" >Location</label>
+            <div class="slds-form-element__control requiredInput">                                        
+                <apex:inputField styleClass="slds-input locationIF" value="{!objCase.HLP_Location__c}"/>          
+            </div>
+        </div>        
+        <div class="slds-form-element" >
+            <label class="slds-form-element__label" >Room</label>
+            <div class="slds-form-element__control requiredInput">                                        
+                <apex:inputField styleClass="slds-input roomCls" value="{!objCase.HLP_Room__c}" />
+            </div>
+        </div>      
+    </div>
+    <style>
+        .locationDivCls{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 2px;
+        margin-left: -5px;
+        }
+    </style>    
+</apex:component>

@@ -1,0 +1,259 @@
+<apex:page controller="Flame_Careerjobscontroller" action="{!jobtitlelink}"  docType="html-5.0"  standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+ <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    
+    
+    <style>
+    .navbar .navbar-nav > .flm_Assist > a, .navbar .navbar-nav > .flm_Assist > a:focus, .navbar .navbar-nav > .flm_Assist > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+    }              
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        
+    </style>      
+    
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                                         
+                    <div class="col-lg-12"> 
+                        <div class="sub-heading">
+                            <h6>Jobs</h6>
+                        </div>
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:75px;">                                
+                                <!-- Show Dining details start -->
+       <!-----------------------------------------------------------------------------------------------------------------------> 
+                        
+                        
+      
+     <div class="table-responsive">   
+      <apex:outputPanel id="panel1">
+         <table class="table">
+        
+     <apex:repeat value="{!linkList}" var="job" >
+     <tbody>
+     <tr>
+     
+     <th ><apex:outputField value="{!job.Job_Title__c}"/></th>
+     </tr>
+    <tr>
+      <td><apex:outputField value="{!job.Description_Summary__c}" /> </td>
+      </tr>
+     <tr>
+    <td>
+     
+     <apex:commandlink id="js-back-job-button" value="Back to Jobs" action="{!backtojobs}" style="background: #fff;color: #08466f;border:none;"/></td>
+    <td> 
+    <div id="IdServicePageBtn" class="slds-align_absolute-center hideComponent" style="margin-bottom: 40px;    padding-top: 25px;">
+     <apex:commandButton value="Apply"  action="{!applylink}"   style="color: #fff;background: #ee5c00;padding: 5px 10px;border: 0;" rerender="showmsg,popup" >
+                <apex:param name="rId" value="{!job.id}" assignTo="{!rId}"/>
+                </apex:commandButton></div>       
+                
+                </td>
+                                              
+      </tr>
+   
+  </tbody>
+  </apex:repeat>    
+         </table>  
+    
+    </apex:outputPanel>
+    
+       </div>  
+     <!-------------------------------------------------------------------------------------------------------->
+            <apex:outputPanel id="popup">
+            <apex:outputPanel styleClass="popupBg" layout="block" rendered="{!displayPopUp}"/>
+            <apex:outputPanel styleClass="popup" layout="block" rendered="{!displayPopUp}">
+            <div class="modal-content">
+            <div class="modal-header">
+            <div Class="close">
+            <apex:commandButton value="X" action="{!closePopup}" rerender="popup" style="background-color: #fbb601;border:none;" /></div>
+            
+            </div>
+            <div class="modal-body">
+            <apex:pageMessages id="showmsg" ></apex:pageMessages>
+            <h4> {!paymentErrorMsg} </h4>
+            </div>
+           
+            </div>
+            </apex:outputPanel>
+            </apex:outputPanel>
+           <style type="text/css">
+
+        .popup
+        {
+           
+            z-index: 9999;
+            left: 50%;
+            padding:10px;
+            position: absolute;
+            width: 500px;
+            margin-left: -250px;
+            top:250px;
+        }
+
+        .popupBg
+        {
+            background-color:black;
+            opacity: .5;
+            filter: alpha(opacity = 70);
+           
+            width: 100%;
+            height: 100%;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 1050;
+            position: fixed;
+        }
+
+    </style>
+    <style>
+        
+        /* The Modal (background) */
+        .modal {
+        display: none; /* Hidden by default */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Sit on top */
+        padding-top: 100px; /* Location of the box */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgb(0,0,0); /* Fallback color */
+        background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+        
+        /* Modal Content */
+        .modal-content {
+        position: relative;
+        background-color: #fefefe;
+        margin: auto;
+        padding: 0;
+        border: 0px solid #888;
+        width: 80%;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+        -webkit-animation-name: animatetop;
+        -webkit-animation-duration: 0.4s;
+        animation-name: animatetop;
+        animation-duration: 0.4s
+        }
+        
+        /* Add Animation */
+        @-webkit-keyframes animatetop {
+        from {top:-300px; opacity:0} 
+        to {top:0; opacity:1}
+        }
+        
+        @keyframes animatetop {
+        from {top:-300px; opacity:0}
+        to {top:0; opacity:1}
+        }
+        
+        /* The Close Button */
+        .close {
+        
+        float: right;
+        font-size: 10px;
+        font-weight: none;
+        color: #fbb601;
+        
+        }
+        
+        .close:hover,
+        .close:focus {
+        color: #000;
+        text-decoration: none;
+        
+        }
+        
+        .modal-header {
+        padding: 9px 16px;
+        background-color: #fbb601;
+        color: #fbb601;
+        }
+        
+        .modal-body {
+        padding: 2px 16px;
+        text-align: center;
+        margin-top: 25px;
+        margin-bottom: 25px;
+        }
+        
+       
+        <!-- page message standared css -->
+        .msgIcon {
+        display: none!important
+        }
+        .customMessage * {
+        color: #fff!important
+        
+        }
+        .customMessage {
+        margin: 5px 0!important;
+        max-width: 1280px;
+        opacity: 1!important;
+        width: 100%;
+        font-size: 12px;
+        border: 0px;
+        padding-left: 10px;
+        }
+        .message {
+        opacity: .6
+        
+        }
+        <!-- End --> 
+       
+      </style>
+           
+       
+        <!---------------------------------------------------------------------------------------------------------------------->                       
+                                </div>
+                        </div>
+                    </div>               
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->                        
+           
+        </apex:form>        
+       
+    </body>       
+
+</apex:page>

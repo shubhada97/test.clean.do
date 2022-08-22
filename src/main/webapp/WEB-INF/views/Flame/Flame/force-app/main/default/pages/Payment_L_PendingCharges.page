@@ -1,0 +1,526 @@
+<apex:page sidebar="false"  controller="Ledger_ContactPayment_controller" action="{!PendingPayments}" showheader="false" standardStylesheets="false" cache="false" docType="HTML-5.0" > 
+  <!-- method added by 12/05/2019 -->
+  <script>
+      function handleChange(myRadio){
+          document.getElementById("buttonDiv").style.display="block";
+          if(myRadio.value=='Credit Card'){
+              document.getElementById("creditCardDiv").style.display="block";
+              if(document.getElementById("debitCardDiv")!=null)
+                  document.getElementById("debitCardDiv").style.display="none";
+              if(document.getElementById("netbankingDiv")!=null)
+                  document.getElementById("netbankingDiv").style.display="none";
+              if(document.getElementById("upiDiv")!=null)
+                  document.getElementById("upiDiv").style.display="none";
+              if(document.getElementById("walletDiv")!=null)
+                  document.getElementById("walletDiv").style.display="none";
+          }else if(myRadio.value=='Debit Card'){
+              document.getElementById("debitCardDiv").style.display="block";
+              if(document.getElementById("netbankingDiv")!=null)
+                  document.getElementById("netbankingDiv").style.display="none";
+              if(document.getElementById("upiDiv")!=null)
+                  document.getElementById("upiDiv").style.display="none";
+              if(document.getElementById("walletDiv")!=null)
+                  document.getElementById("walletDiv").style.display="none";
+              if(document.getElementById("creditCardDiv")!=null)
+                   document.getElementById("creditCardDiv").style.display="none";
+          }else if(myRadio.value=='Net Banking'){
+              document.getElementById("netbankingDiv").style.display="block";
+              if(document.getElementById("debitCardDiv")!=null)
+                  document.getElementById("debitCardDiv").style.display="none";
+              if(document.getElementById("upiDiv")!=null)
+                  document.getElementById("upiDiv").style.display="none";
+              if(document.getElementById("walletDiv")!=null)
+                  document.getElementById("walletDiv").style.display="none";
+              if(document.getElementById("creditCardDiv")!=null)
+                  document.getElementById("creditCardDiv").style.display="none";
+          }else if(myRadio.value=='UPI'){
+              document.getElementById("upiDiv").style.display="block";
+              if(document.getElementById("debitCardDiv")!=null)
+                  document.getElementById("debitCardDiv").style.display="none";
+              if(document.getElementById("netbankingDiv")!=null)
+                  document.getElementById("netbankingDiv").style.display="none";
+              if(document.getElementById("walletDiv")!=null)
+                  document.getElementById("walletDiv").style.display="none";
+              if(document.getElementById("creditCardDiv")!=null)
+                  document.getElementById("creditCardDiv").style.display="none";
+          }else if(myRadio.value=='Wallet'){
+              document.getElementById("walletDiv").style.display="block";
+              if(document.getElementById("debitCardDiv")!=null)
+                  document.getElementById("debitCardDiv").style.display="none";
+              if(document.getElementById("netbankingDiv")!=null)
+                  document.getElementById("netbankingDiv").style.display="none";
+              if(document.getElementById("upiDiv")!=null)
+                  document.getElementById("upiDiv").style.display="none";
+              if(document.getElementById("creditCardDiv")!=null)
+                  document.getElementById("creditCardDiv").style.display="none";
+          }
+      }
+  </script>
+  <c:ResourceFile />
+ 
+ 
+    <!-- HEADER START -->
+    <div class="header">
+    <div class="container">
+    <div class="brand"><a href="javascript:void(0)">           
+    <apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+    </div>
+    <c:TopNavigationBar /> 
+    </div>
+
+    </div>
+    <!-- HEADER END -->
+
+    <!-- DASHBOARD START -->
+    <div class="main-dashboard">
+    <div class="container">
+    <div class="dashboard-inner">
+    
+    <apex:form >
+    <c:PaymentTabs staticconid="{!Con.name}" /> 
+    </apex:form> 
+    
+    <apex:form id="rerenderForm">
+    <apex:outputText id="onlinePaymentError" value="{!paymentErrorMsg}" style="Color:red;"/> 
+    </apex:form>
+    
+    
+    <div class="tab-container">
+    <div class="tab-content active">
+    
+    <apex:form id="theForm">
+    <style>
+        .form-control
+        {
+            border: 0px ;
+        }
+    </style>
+     <!--1-->
+   <div class="form-group row">
+  
+    <!--4-->
+    <apex:outputPanel rendered="{!displayAllRecord}">  <!-- @ Sharath output panel 24 dec  start code-->
+   <div class="col-sm-2 " id="firstName">
+    <div class="input-label">
+    <label>Academic Year </label>
+    </div>
+    <div >
+    <apex:inputField value="{!ledgerObj.Academic_Year__c}"  styleClass="form-control" style="background-color:white;">
+    <apex:actionSupport event="onchange" action="{!searchAcademicRecords}" reRender="form,ref,school"/>
+    </apex:inputField>
+    </div>
+    </div>
+    <!--5 -->
+    <div class="col-sm-2 " id="secondName"> 
+    <div class="input-label"> 
+    <label>Semester </label>
+    </div>
+    <div class="input-field">
+    <apex:inputField value="{!ledgerObj.Term_Code__c}"  styleClass="form-control" style="background-color:white;">
+    <apex:actionSupport event="onchange" action="{!searchRecords}" reRender="form,ref,school"/>
+    </apex:inputField>
+    </div>
+    </div> 
+    </apex:outputPanel> 
+    </div>     
+    </apex:form>
+   
+  
+   <style type="text/css">
+        .proccedBtn{
+        position: relative;
+        
+        <!--min-width: 145px;-->
+        height: 42px;
+        text-transform: uppercase;
+        background: #084D89;
+        color: #fff;
+        float: right;
+        margin: 1em 0;
+        padding:0px; 
+        }
+        .outBorder {
+        border:3px outset black;Cambria,Georgia, serif; font-size:15px; width:80%; padding:10px;
+        border-collapse:collapse border-spacing: none;
+        }
+        .inBorder{
+        height:25px;font-size:9pt;font-family: Helvetica;border-right:3px solid #c3c3c3;
+        }
+        .fixedbutton {
+        position: absolute;
+        bottom: 8px;
+        right: 30px;
+        font-size: 14px;
+        min-width: 145px;
+        height: 42px;
+        text-transform: uppercase;
+        background: #084D89;
+        color: #fff;
+        }
+        .Nextbutton {
+        position: absolute;
+        bottom: 8px;
+        right: 160px;
+        font-size: 14px;
+        min-width: 145px;
+        height: 42px;
+        text-transform: uppercase;
+        background: #084D89;
+        color: #fff;
+        }
+
+        @page {
+        margin: 1px 50px 225px 50px; 
+        size:A4;
+        Padding-top:30px;
+
+        @top-center { 
+        content : element(header);
+        }
+
+    .dashboard-inner {
+    min-height: 600px;
+    background: rgba(255,255,255,1);
+    padding: 0px 30px 40px 30px;
+}
+        } 
+         }
+
+        .companyName {  color: red; }  
+        table {width:100%; border-spacing:0; border-collapse:collapse; border-width: 1px; border-color:#084D89;border-style:solid;} 
+        .header-table-data { border-width: 1px; border-color:Black;border-style:solid;background-color:#FFFFFF;padding:0px;
+        color:Black; font-size:13px; font-family:Verdana,Geneva,sans-serif;
+        text-align:center;}
+        .header-table-heading {border-width: 1px; border-color:Black;border-style:solid;background-color:#084D89;padding:0px; 
+        font-weight:normal;color: #f5f5f5; font-size:13px; font-family:Verdana,Geneva,sans-serif;
+        text-align:center;}
+        .header-data { border-width: 0px; border-color:Black;border-style:solid;background-color:#FFFFFF;padding:0px;
+        color:Black; font-size:13px; font-family:Verdana,Geneva,sans-serif;text-align:left; padding-right: 10px;}
+
+        .header-heading {border-width: 0px; border-color:Black;border-style:solid; padding: 0px;
+        font-weight:bold;color:Black; font-size:13px; font-family:Verdana,Geneva,sans-serif;
+        text-align:left;}
+        
+            .dashboard-inner {
+            min-height: 550px;
+            background: rgba(255,255,255,1);
+            padding: 0px 30px 40px 30px;
+            }
+        b, strong {
+    font-weight: 400;
+}
+   </style>      
+
+<div style="align:center;float:center;width:100%;padding-top:1%;overflow;hidden;hight:0">
+    <apex:variable var="total1" value="{!0}"/>
+    <apex:variable var="total2" value="{!0}"/>
+    <apex:form id="form" >
+    <apex:outputPanel id="school">
+     
+    <apex:pageblock id="pgb">
+    
+    <apex:pageMessages />
+        <apex:outputPanel id="ref">
+        <apex:outputText rendered="{!if(displayAcdYearMsg && completeLenderInfoLst.size==0,true,false)}">
+      <center> <h5> Please Select Academic Year And Semester. </h5></center>
+        </apex:outputText>
+        <apex:outputText rendered="{!if(completeLenderInfoLst.size==0 && displayAcdYearMsg == false,true,false)}">
+      <center> <h4> Currently there are no Outstanding Payments. </h4></center>
+        </apex:outputText>
+                
+            <apex:outputPanel rendered="{!if(completeLenderInfoLst.size>0,true,false)}" id="outpanelId">
+           
+            <table cellspacing='5' cellpadding="0" border='1px' width='100%'>  
+            <thead>   
+            <tr width="100%" border="0">
+             <td class="header-table-heading" bgcolor="#084D89"><b>Description </b></td>
+              <!-- @ Sharath added actionRegion 24 dec  start code--> 
+              
+             <apex:actionRegion id="acdYearAndtermIdC" rendered="{!displayAllRecord}">
+                <td class="header-table-heading" bgcolor="#084D89"><b>Academic Year</b></td> 
+                <td class="header-table-heading" bgcolor="#084D89"><b>Semester </b></td>  
+            </apex:actionRegion>
+            
+             <!-- @ Sharath End Code actionRegion  24 dec -->
+            
+            <td class="header-table-heading" bgcolor="#084D89"><b>Amount</b></td>
+           
+            </tr>  
+            </thead>
+            
+            
+            <tbody>
+            <apex:repeat value="{!completeLenderInfoLst}" var="wraprec" id="repeatId"> 
+            <tr>
+            <td  style="align:right;font-size:13px; font-family:Verdana,Geneva,sans-serif;color:Black" >
+            <apex:outputField value="{!wraprec.leRec.Description__c}"/> 
+            <apex:outputPanel rendered="{!IF(wraprec.leRec.Partial_Pay_Amount__c <= 0, false, true)}">
+             -{!wraprec.leRec.Amount__c}<br/>
+             Partial Payment - {!(wraprec.leRec.Partial_Pay_Amount__c)}<br/>
+             Net payable - {!(wraprec.leRec.Amount__c) -(wraprec.leRec.Partial_Pay_Amount__c)}
+          </apex:outputPanel>
+           
+             </td> 
+            
+            <!-- @ Sharath added actionRegion 24 dec  start code--> 
+              <apex:actionRegion id="acdYearAndtermIdV" rendered="{!displayAllRecord}"> 
+
+              <td class="header-table-data"><apex:outputField value="{!wraprec.leRec.Academic_Year__c}" id="AYId" /></td>
+              
+            <td class="header-table-data"><apex:outputField value="{!wraprec.leRec.Term_Code__c}" id="TCId" /></td> 
+          </apex:actionRegion>
+          
+          <!-- @ Sharath End Code actionRegion  24 dec -->
+          
+            <td class="header-table-data"  >
+           
+            {!(wraprec.leRec.Amount__c) -(wraprec.leRec.Partial_Pay_Amount__c)} 
+           
+            </td>
+           
+       <!--     <apex:variable var="total1" value="{!total1+wraprec.leRec.Amount__c}"/> -->
+            
+            </tr>  
+            </apex:repeat>
+            </tbody>
+            </table> 
+            
+          <!---------------------------------------------------------------->  
+            
+            <br/>
+            <apex:outputPanel rendered="{!if(toatalPaymentVal >= Value($Label.payment_Amount),true,false)}"  > <!-- add new condesion--> 
+            <table cellspacing='5' cellpadding="0" border='1px' width='70%'>  
+            <thead>   
+            <tr>
+             <td>Total Outstanding Payment: </td>
+             
+            <td  width="77%" style="text-align:right" >
+            <apex:outputText value="{0, number, #,###}">
+                   <apex:param value="{!ROUND(toatalPaymentVal,0)}" />
+            </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>  
+            </thead>
+            
+            
+            
+            </table> 
+            </apex:outputPanel>
+        <!------------------------------------------------------------------------->
+        <apex:outputPanel rendered="{!if(toatalPaymentVal <= Value($Label.payment_Amount),true,false)}"  > <!-- add new condesion-->
+           <br/>
+           
+            <table cellspacing='5' cellpadding="0" border='1px' width='70%'>  
+            <thead>   
+            <tr>
+             <td>Total Payable: </td>
+             
+            <td  width="77%" style="text-align:right" >
+            <apex:outputText value="{0, number, ###,###,###}">
+                   <apex:param value="{!ROUND(toatalPaymentVal,0)}" />
+            </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            </tr>  
+            </thead>
+            
+            </table> 
+            
+            <apex:commandbutton styleClass="proccedBtn" value="Proceed To Pay" action="{!processtopay}" /> 
+            <apex:param name="contIdParam" value="{!con.id}" assignTo="{!contactId}"/> 
+            
+            </apex:outputPanel>
+        </apex:outputPanel>
+        </apex:outputPanel>   
+ 
+    </apex:pageblock>
+    </apex:outputPanel>
+    <br/>
+   <!-----------------------------------------payment charges 06-05-2019-------------------------------------------------------------> 
+   <apex:outputPanel rendered="{!if(toatalPaymentVal >= Value($Label.payment_Amount),true,false)}" >
+   <apex:outputPanel rendered="{!if(completeLenderInfoLst.size>0,true,false)}"  >
+  
+    <table  border='0px' width='100%' style="border-width: 0px;">  
+            <thead> 
+            <th style="font-weight:normal">  Pay By </th>
+            </thead>
+            <tbody>  
+            <tr>
+             <td><input type="radio"  id="radio-option1" name="paryBy" value="Credit Card" onchange="handleChange(this);"/> <!-- added name,value,onchange Attribute by 12/05/2019 --> <!-- removed Checkedc attribute by 12/05/201912/05/2019 -->
+                 <label class="custom-control-label" for="defaultUnchecked" style="font-weight:normal">Credit Card</label>
+                  <apex:actionsupport event="onchange" rerender="SampleView" action="{!click}" /> </td>
+             </tr>
+           
+             <tr>
+             <td><input type="radio" class ="custom-control-input" id="radio-option2" name="paryBy" value="Debit Card" onchange="handleChange(this);"/> <!-- added name,value,onchange Attribute by 12/05/2019 -->
+                 <label class="custom-control-label" for="defaultUnchecked" style="font-weight:normal">Debit Card</label>
+                 <apex:actionsupport event="onchange" rerender="SampleView" action="{!Debitcardclick}" /></td>
+            </tr><tr>
+           <td>
+           <input type="radio" class ="custom-control-input" id="radio-option3" name="paryBy" value="Net Banking" onchange="handleChange(this);"/> <!-- added name,value,onchange Attribute by 12/05/2019 -->
+           <label class="custom-control-label" for="defaultUnchecked" style="font-weight:normal">Net Banking </label>
+           <apex:actionsupport event="onchange" rerender="SampleView" action="{!Netbankingclick}" /></td> 
+           </tr><tr>
+           <td><input type="radio" id="radio-option4" name="paryBy" value="UPI" onchange="handleChange(this);"/>
+           <label class="custom-control-label" for="defaultUnchecked" style="font-weight:normal">UPI </label>
+           <apex:actionsupport event="onclick" rerender="SampleView" action="{!upiclick}" />
+           </td>
+           
+           </tr><tr>
+           <td><input type="radio" id="radio-option5" name="paryBy" value="Wallet" onchange="handleChange(this);"/>
+           <label class="custom-control-label" for="defaultUnchecked" style="font-weight:normal">Wallet </label>
+            <apex:actionsupport event="onclick" rerender="SampleView" action="{!walletclick}" /> </td>
+           </tr>  
+           </tbody> 
+         </table> 
+   <!----CC----->
+   <br/>
+   
+   <div id="creditCardDiv" style="display:none;">
+  <table cellspacing='5' cellpadding="0" border='1px' width='70%'>
+  <tr>
+   <apex:repeat value="{!code}" var="c" id="repeatId"> 
+   <td>
+   <apex:variable value="{!c.ccAvenue_Credit_Card__c}" var="num1"/>  
+   <label style="font-weight:normal" > Convenience Fee :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}" >
+   <apex:param value="{!ROUND(((toatalPaymentVal * (num1 /100)) * Value($Label.ccAvenue_GST_for_vfpage) +(toatalPaymentVal * (num1 /100))),0)}"  name="inputText"/>
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   </apex:repeat>
+   </tr>
+   <tr>
+   <td>
+   <label style="font-weight:normal" > Total Payable :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}">
+   <apex:param value="{!ROUND(toatalPaymentVal1,0)}" />
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   
+   </tr>
+   </table>
+   </div>
+   <!--- DC -->
+   
+   <div id="debitCardDiv" style="display:none;">
+  <table cellspacing='5' cellpadding="0" border='1px' width='70%'>
+  <tr>
+   <apex:repeat value="{!code}" var="c" > 
+   <td>
+   <apex:variable value="{!c.ccAvenue_Debit_Card__c}" var="num1"/>  
+   <label style="font-weight:normal" > Convenience Fee :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}" >
+   <apex:param value="{!ROUND(((toatalPaymentVal * (num1 /100)) * Value($Label.ccAvenue_GST_for_vfpage) +(toatalPaymentVal * (num1 /100))),0)}"  name="inputText"/>
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   </apex:repeat>
+   </tr>
+   <tr>
+   <td>
+   <label style="font-weight:normal" > Total Payable :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}">
+   <apex:param value="{!ROUND(toatalPaymentVal2,0)}" />
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   
+   </tr>
+   </table>
+   </div>
+   
+   <!--- NB -->
+   
+   <div id="netbankingDiv" style="display:none;">
+  <table cellspacing='5' cellpadding="0" border='1px' width='70%'>
+  <tr>
+   <apex:repeat value="{!code}" var="c" > 
+   <td>
+   <apex:variable value="{!c.ccAvenue_NetBanking_Flat_Charge__c}" var="num1"/>    
+   <label style="font-weight:normal" > Convenience Fee :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}" >
+   <apex:param value="{!ROUND((num1* Value($Label.ccAvenue_GST_for_vfpage) + (num1) ),0)}"  name="inputText"/>
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   </apex:repeat>
+   </tr>
+   <tr>
+   <td>
+   <label style="font-weight:normal" > Total Payable :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}">
+   <apex:param value="{!ROUND(toatalPaymentVal3,0)}" />
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   
+   </tr>
+   </table>
+   </div>
+   <!--- UPI -->
+  
+   <div id="upiDiv" style="display:none;">
+  <table cellspacing='5' cellpadding="0" border='1px' width='70%'>
+  <tr>
+   <apex:repeat value="{!code}" var="c" > 
+   <td>
+   <apex:variable value="{!c.ccAvenue_UPI__c}" var="num1"/>   
+   <label style="font-weight:normal" > Convenience Fee :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}" >
+   <apex:param value="{!ROUND(((toatalPaymentVal * (num1 /100)) * Value($Label.ccAvenue_GST_for_vfpage) +(toatalPaymentVal * (num1 /100))),0)}"  name="inputText"/>
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   </apex:repeat>
+   </tr>
+   <tr>
+   <td>
+   <label style="font-weight:normal" > Total Payable :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}">
+   <apex:param value="{!ROUND(toatalPaymentVal4,0)}" />
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   
+   </tr>
+   </table>
+   </div>
+   <!--- Wallet -->
+  
+  <div id="walletDiv" style="display:none;">
+  <table cellspacing='5' cellpadding="0" border='1px' width='70%'>
+  <tr>
+   <apex:repeat value="{!code}" var="c" > 
+   <td>
+   <apex:variable value="{!c.ccAvenue_Wallet__c}" var="num1"/>  
+   <label style="font-weight:normal" > Convenience Fee :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}" >
+   <apex:param value="{!ROUND(((toatalPaymentVal * (num1 /100)) * Value($Label.ccAvenue_GST_for_vfpage) +(toatalPaymentVal * (num1 /100))),0)}"  name="inputText"/>
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   </apex:repeat>
+   </tr>
+   <tr>
+   <td>
+   <label style="font-weight:normal" > Total Payable :</label>
+   </td><td width="77%" style="text-align:right">
+   <apex:outputText value="{0, number, ###,###,###}">
+   <apex:param value="{!ROUND(toatalPaymentVal5,0)}" />
+   </apex:outputText> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+   
+   </tr>
+   </table>
+   </div>
+   </apex:outputPanel>
+   </apex:outputPanel>
+   <div id="buttonDiv" style="display:none;"> <!-- div added by 12/05/2019 -->
+    <apex:outputPanel rendered="{!if(completeLenderInfoLst.size>0,true,false)}" id="outpanelId">
+      <apex:commandbutton styleClass="proccedBtn" value="Proceed To Pay" action="{!processtopay}" /> 
+      <apex:param name="contIdParam" value="{!con.id}" assignTo="{!contactId}"/>
+   </apex:outputPanel>
+   </div> 
+  
+   <!----------------------------------------------------------------------------------------------------------> 
+    
+   </apex:form>
+        </div>
+        </div>
+     
+        </div>
+        </div>
+        </div>
+        
+       </div>
+   
+    </apex:page>

@@ -1,0 +1,722 @@
+<!------------------------------------------------------------------------------------------------
+* Author: Techila Global Services Pvt Ltd. (Deepak Chouhan)
+* VF Page Name: Flame_AssitServices
+* Created Date: 10/8/2018
+* Description: to create case ticket
+-------------------------------------------------------------------------------------------------->
+<apex:page docType="html-5.0" controller="Flame_AssistAC" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >       
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <!-- VF componen which hold the common java script and css for all pages -->
+    <apex:slds />
+    <c:Flame_HeadResource />         
+    <!-- page css -->
+    
+    <!-- jquery datepicker plugin -->
+    
+    
+    <style>
+        
+        .customValildationError{
+        outline: 0;
+        border-color: #c00 !important;
+        background-color: rgb(255, 255, 255) !important;
+        box-shadow: 0 0 3px #c00;
+        }
+        .customValildationError:focus {    
+        border-color: none;    
+        box-shadow:none;
+        }
+        .requiredInput{
+        border-left-color: #c00;
+        border-left-style: solid;
+        padding-left: 1px;
+        }
+        
+        .errorMsg{
+        color: #c00;
+        }
+        .form-control-label{
+        margin-top:5px;
+        }
+        .loadingBG{
+        position: fixed;
+        top: 0; 
+        left: 0;
+        right: 0; 
+        bottom: 0; 
+        opacity: 0.5; 
+        z-index: 1000; 
+        background-color:#084d89;
+        }
+        .loadingBGP{
+        position: fixed; 
+        left: 0; top: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 1001; 
+        margin: 15% 50%;        
+        } 
+        .lookupInput a{
+        position: absolute;
+        width: 33px !important; 
+        margin-left: 5px;
+        background-image: url(/img/setup/search-icon.png) !important;
+        background-repeat: no-repeat !important;
+        background-position: center !important;
+        display: inline-flex !important;
+        }
+        .lookupInput a img{
+        display:none !important;
+        }
+        .hideComponent{
+        display:none;
+        }
+        .text-content table {
+        box-sizing: border-box;
+        width: 100%;
+        max-width: 100%;
+        border-collapse: collapse;
+        border: solid #e0e0dc;
+        border-width: 1px 0 0 1px;
+        }
+        table {
+        margin-bottom: 24px;
+        }
+        .text-content td, .text-content th {
+        border: solid #e0e0dc;
+        border-width: 0 1px 1px 0;
+        padding: 6px 8px;
+        text-align: left;
+        }
+        .dining-table tr th, td {
+        padding:4px;
+        }
+        .assist-side-menu {
+        margin-bottom:20px;
+        }
+        select{
+        font-size: 16px !important;
+        }
+        .dateFormat{
+        display:none;
+        }
+        .slds-scope .slds-modal__close {
+        
+        top: 0;
+        right: 0;
+        }       
+    </style> 
+    
+   
+    <script type="text/javascript" >
+    $(document).ready(function() {     
+        //applyDatatable();                               
+    });
+    function applyDatatable(){             
+        //var table = $('#caseTicketTbl').dataTable({"pageLength": 10 ,"searching": false,order: [[0, 'desc']]});  
+        //table.order([ 0, 'asc' ]).draw();
+        //$('div.dataTables_length').css("display", "none");
+    }       
+    </script>
+    <body>
+        <apex:form id="IdFrm" html-autocomplete="off">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <div class="col-lg-3">
+                        <div class="assist-side-menu">                             
+                            <!-- Assist type dropdown menu -->
+                  
+    <apex:outputText id="PaymentError" value="{!paymentError}" style="Color:black;"/> 
+          
+                            
+                            
+                            
+                            <apex:actionRegion >
+                                <div class="dropdown">                                    
+                                    <apex:selectList value="{!selectedAssist}" multiselect="false" size="1" styleClass="slds-button slds-button_neutral slds-select" style="text-align:left;height:40px;color:#566573;"><!--btn dropdown-toggle btn-primary assistTypeCls -->
+                                        <apex:selectOptions value="{!assistType}"/>
+                                        <apex:actionSupport event="onchange" action="{!actionSupportOCMethod}" reRender="IdFlameMsg,IdServiceRequest,IdAllTicketStatus,IdTicketDetails,IdDiningDetails" status="IdStatus" oncomplete="showComponents();" />
+                                    </apex:selectList>
+                                </div>
+                            </apex:actionRegion>                            
+                        </div>
+                    </div>
+                    <div class="col-lg-12">                     
+                        <div class="assist-content-area">
+                            <div class="services-content" style="padding-bottom:75px;">
+                                <!-- page load  msg section start -->
+                                <apex:outputPanel id="IdFlameMsg">                                    
+                                    <apex:outputPanel rendered="{!if(selectedAssist==null,true,false)}">
+                                        <div class="">
+                                            <div class="services-content">
+                                                <h3>FLAME University Services</h3>
+                                                <p>Welcome to FLAME University Assist Section. Our goal is to make Assist the “single-window” to provide timely, fast and expeditious services, at all times, to all our stake holders. In order to further streamline the process, we have decided to make use of the state-of-the-art technology platform to provide essential and important services with more accuracy and swiftness. This will further enhance the performance of our well–integrated and highly responsive support structure and also reduce the response time even further.</p>
+                                                <p>From the most basic requests like creating help-desk tickets for maintenance and other essential services to raising travel requests, to tasks like putting up requisitions for transcripts, grade sheets and duplicate mark sheets etc.,  this portal provides prompt attention, action and solutions to all your services needs at FLAME University.</p>
+                                                <p>We hope to serve you all better with the introduction of this automation into our facilities and operations.</p>
+                                            </div>
+                                        </div>
+                                    </apex:outputPanel>                                    
+                                </apex:outputPanel>
+                                <!-- page load  msg section End -->
+                                <!-- Service request form start -->
+                                <apex:outputPanel id="IdServiceRequest" >
+                                <apex:outputPanel rendered="{!isMsgShow}">
+                                    <div class="slds-notify slds-notify_alert slds-theme_alert-texture slds-theme_{!messageType}" role="alert" style="margin-bottom:10px;border-radius: .25rem;">
+                                        <span class="slds-assistive-text">{!messageType}</span>
+                                        <span class="slds-icon_container slds-icon-utility-{!messageType} slds-m-right_small slds-no-flex slds-align-top" title="Description of icon when needed">
+                                            <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/apexpages/slds/latest/assets/icons/utility-sprite/svg/symbols.svg#{!messageType}" />                           
+                                            </svg>
+                                        </span>
+                                        <div class="slds-notify__content">
+                                            <h2 class="slds-text-heading_small ">{!message}</h2>
+                                        </div>
+                                    </div>
+                                </apex:outputPanel>            
+                                    <apex:outputPanel rendered="{!if(selectedAssist!=null,true,false)}">
+                                        <script type="text/javascript" >
+                                        $(document).ready(function() {                                      
+                                            //-- show date picker
+                                            $('.lookupInput').find('input').attr("required", "required");
+                                            $('.roomCls').attr("required", "required");
+                                            $('.dateCls').attr("required", "required");
+                                            $(".customDatePicker").datepicker({ dateFormat: 'dd/mm/yy' }).val();                                            
+                                            $('.CategoryRFCls').addClass('requiredInput');
+                                            $('.SubCategoryRFCls').addClass('requiredInput');
+                                            $('.hideDateFields').addClass('hideComponent');
+                                            showComponents();
+                                            //-- contact validation
+                                            $('.contactValidation').keypress(validateNumber);
+                                            //-- for check travel request
+                                            var requestFor = $('.RequisitionForCls').val();
+                                            showGuestInfo(requestFor);
+                                        });     
+                                        $( ".RequisitionForCls" ).change(function() {
+                                            //$(".GuestInfoCls").toggle();
+                                            showGuestInfo($(this).val());
+                                        });
+                                        $(".RoundTripChk").click(function () {
+                                            if ($(this).is(":checked")) {
+                                                $(".RoundTripCls").show();
+                                            }else {
+                                                $(".RoundTripCls").hide();
+                                            }
+                                        });                                        
+                                        </script>
+                                        <!-- Academic Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Academic_Services,true,false)}">
+                                            <c:Flame_AcademicServices objCase="{!objCase}" IsAttachment="true"/>                                            
+                                        </apex:outputPanel>
+                                        <!-- Academic Services Component End -->
+                                        <!-- Faculty Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Faculty_Services,true,false)}">
+                                            <c:Flame_FacultyServices objCase="{!objCase}" IsAttachment="true"/>
+                                        </apex:outputPanel>                
+                                        <!-- Faculty Services Component End -->
+                                        <!-- Help Desk Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Help_Desk_Services,true,false)}">
+                                            <c:Flame_HelpDeskServices objCase="{!objCase}" IsAttachment="true"/>
+                                        </apex:outputPanel>                        
+                                        <!-- Help Desk Services Component End -->                                                   
+                                        <!-- Night-out Request Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Night_Out_Request,true,false)}">
+                                            <c:Flame_NightOutRequestServices objCase="{!objCase}" IsAttachment="false"/>
+                                        </apex:outputPanel>                                
+                                        <!-- Night-out Request Services Component End -->                                                   
+                                        <!-- Request Assistance Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Request_Assistance,true,false)}">
+                                            <c:Flame_RequestAssistanceServices objCase="{!objCase}" IsAttachment="false" />
+                                        </apex:outputPanel>                                 
+                                        <!-- Request Assistance Services Component Start --> 
+                                        
+                                         <!-- Book Requisition Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Book_Requisition,true,false)}">
+                                            <c:Book_Requisition objCase="{!objCase}" IsAttachment="false" itemList="{!itemList}"/>
+                                        </apex:outputPanel>
+                                        
+                                        
+                                         <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Book_Requisition,true,false)}">
+                                           <apex:outputPanel >
+                                           <table  Class="slds-table slds-table--bordered slds-table--striped" cellspacing="0" cellpadding="0" style="margin-bottom:10px;">
+                         
+                                                                 
+                           <tr class="headerRow" >
+                               <td style="text-align: center;" >Title</td>
+                                <td style="text-align: center;" >Author</td>
+                                <td style="text-align: center;" >Publisher</td>
+                                <td style="text-align: center;" >Year / Ed.</td>
+                                <td style="text-align: center;" >ISBN</td>
+                                <td style="text-align: center;" >Required Copies</td>
+                                
+                                
+                            </tr>
+                             <tbody>
+                                <apex:repeat value="{!itemList}" var="objItem">
+                                <tr>  
+                                    <td style="text-align: center;">  <div class="slds-form-element__control requiredInput"> <apex:inputField styleClass="slds-input roomCls"  value="{!objItem.BR_Title__c}" /></div></td>
+                                    <td style="text-align: center;"> <div class="slds-form-element__control requiredInput"> <apex:inputField styleclass="slds-input "  value="{!objItem.BR_Author__c}" /> </div> </td>
+                                    <td style="text-align: center;"> <apex:inputField styleclass="slds-input"  value="{!objItem.BR_Publisher__c}" /> </td>
+                                    <td style="text-align: center;"> <apex:inputField styleclass="slds-input"  value="{!objItem.BR_Year_Ed__c}" /> </td>
+                                    <td style="text-align: center;"> <apex:inputField value="{!objItem.BR_ISBN__c}" styleclass="slds-input" /> </td>
+                                    <td style="text-align: center;"> <div class="slds-form-element__control requiredInput"> <apex:inputField value="{!objItem.BR_Required_Copies__c}"  styleClass="slds-input roomCls"  /> </div> </td>
+                                  
+                               </tr>
+                               </apex:repeat> 
+                            </tbody>
+                            
+                            
+                            
+                             </table>
+                                           
+                                           </apex:outputPanel>
+                                            <div class="slds-col" style="float: right;">
+                                                <apex:outputPanel id="IdRemoveBtn1">
+                                                    <span>
+                                                        <apex:commandLink styleClass="slds-button" style="font-size:15px;" value="- Delete / " action="{!removeNewItemList}"  Status="IdStatus" rendered="{!if(itemList.size>1,true,false)}"   />                         
+                                                    </span>
+                                                </apex:outputPanel>
+                                                <span>
+                                                    <apex:commandLink styleClass="slds-button" style="font-size:15px;" value="+ Add" action="{!addNewItemList}" Status="IdStatus"  />                       
+                                                </span>
+                                            </div>
+                                        </apex:outputPanel>        
+                                       <script>
+                                       function removevalidation(){
+                                        document.getElementById("title").required = false;
+                                      alert();
+                                       
+                                       }
+                                       
+                                       </script> 
+                                                                
+                                        <!-- Book Requisition Component End -->                                                   
+                                        <!-- Requisition Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Requisition_Request,true,false)}">
+                                            <c:Flame_RequisitionServices objCase="{!objCase}" itemList="{!itemList}" IsAttachment="false"/>
+                                            <apex:outputPanel id="IdRRequest">
+                                                <apex:repeat value="{!itemList}" var="objItem">
+                                                    <div class="slds-form-element" >
+                                                        <label class="slds-form-element__label" >S. No.</label>
+                                                        <div class="slds-form-element__control">                                    
+                                                            <apex:inputField styleClass="slds-input" value="{!objItem.S_No__c}" />
+                                                        </div>
+                                                    </div>  
+                                                    <div class="slds-form-element" >
+                                                        <label class="slds-form-element__label" >Item Description</label>
+                                                        <div class="slds-form-element__control">                                    
+                                                            <apex:inputField styleClass="slds-input" value="{!objItem.Item_Description__c}" />
+                                                        </div>
+                                                    </div>      
+                                                    <div class="slds-form-element" >
+                                                        <label class="slds-form-element__label" >Quantity</label>
+                                                        <div class="slds-form-element__control">                                    
+                                                            <apex:inputField styleClass="slds-input contactValidation" value="{!objItem.Quantity__c}"/>
+                                                        </div>
+                                                    </div>        
+                                                    <div class="slds-form-element" style="margin-bottom:25px;">
+                                                        <label class="slds-form-element__label" >Unit of Measurement</label>
+                                                        <div class="slds-form-element__control">                                    
+                                                            <apex:inputField styleClass="slds-input" value="{!objItem.Units_Of_Measurement__c}"/>
+                                                        </div>
+                                                    </div>  
+                                                </apex:repeat>                                                  
+                                            </apex:outputPanel>                                            
+                                            <div class="slds-col" style="float: right;">
+                                                <apex:outputPanel id="IdRemoveBtn">
+                                                    <span>
+                                                        <apex:commandLink styleClass="slds-button" style="font-size:15px;" value="- Delete / " action="{!removeNewItemList}"  Status="IdStatus" rendered="{!if(itemList.size>1,true,false)}"  />                         
+                                                    </span>
+                                                </apex:outputPanel>
+                                                <span>
+                                                    <apex:commandLink styleClass="slds-button" style="font-size:15px;" value="+ Add" action="{!addNewItemList}" Status="IdStatus"  />                       
+                                                </span>
+                                            </div>
+                                        </apex:outputPanel>                       
+                                        <!-- Requisition Services Component End -->                                                 
+                                        <!-- Suggestions Services Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Suggestions,true,false)}">
+                                            <c:Flame_SuggestionsServices objCase="{!objCase}" IsAttachment="false"/>    
+                                        </apex:outputPanel>                    
+                                        <!-- Suggestions Services Component End --> 
+                                        <!-- Travel Request Component Start -->
+                                        <apex:outputPanel rendered="{!if(commuintyAssistCSIdMap[selectedAssist]==$Label.Travel_Request,true,false)}">
+                                            <c:Flame_TravelRequest objCase="{!objCase}"  IsAttachment="false"/>
+                                        </apex:outputPanel>                    
+                                        <!-- Travel Request Component End -->
+                                    </apex:outputPanel>
+                                    <!-- attachment section  start -->                                    
+                                    <!-- attachment section  start -->
+                                    <div id="IdAttachmentSection" class="hideComponent">
+                                        <div class="form-control-label">        
+                                            <apex:outputText value="Attachment" styleClass="form-control-label"/>
+                                        </div>
+                                        <div class="form-control-label">                                                        
+                                            <!--<apex:outputLabel id="IdAttachLbl" styleClass="btn btn-primary" for="IdAttach"><i class="fa fa-upload"></i>&nbsp;Choose File</apex:outputLabel>-->
+                                            <apex:outputLabel id="IdAttachLbl" styleClass="slds-button " for="IdAttach">                                            
+                                                <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                                    <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                                        <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#upload')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                                    </svg>Upload File
+                                                </span>                                         
+                                            </apex:outputLabel>
+                                            <span id="filesname"></span>
+                                            <apex:inputFile id="IdAttach" value="{!objAttach.body}" accept=".xlsx,.xls,image/*,.doc, .docx,.ppt, .pptx,.txt,.pdf" filename="{!objAttach.name}" style="display:none;" onclick="removeFileName(this);" onchange="checkAttachmentSize(this);"/>        
+                                        </div>
+                                    </div>
+                                    <!-- attachment section  start -->
+                                    <apex:outputPanel rendered="{!if(selectedAssist!=null,true,false)}">
+                                        <div id="IdServicePageBtn" class="slds-align_absolute-center hideComponent" style="margin-bottom: 40px;    padding-top: 25px;" >
+                                            <apex:commandButton styleClass="slds-button slds-button_neutral  saveBtn" action="{!saveCase}" style="float:right;" onclick="checkValidation();" value="Submit" />
+                                            <apex:commandButton styleClass="slds-button slds-button_neutral  saveBtnDisabled" disabled="true" style="float:right;display:none;" value="Submit"/>
+                                        </div>                                  
+                                    </apex:outputPanel>
+                                    
+                               
+  <!-------------------------------->              </apex:outputPanel>
+                                <!-- Service request form End -->                                
+                            </div>
+                        </div>
+                    </div>               
+                </div>
+                <!--Main container -->
+            </div><!-- /#right-panel -->            
+            <!-- Right Panel -->            
+            <!-- Modal -->
+            <button type="button" id="modalBtn" class="showUpload" data-toggle="modal" data-target="#myModal" style="display:none;">Open Modal</button>
+            <!-- Right Panel -->
+            <div class="modal fade" id="myModal" role="dialog" style="top:30%;">
+                <div class="modal-dialog">                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fbb601;">                            
+                            <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+                                <svg class="slds-button__icon " aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align:center;color:#23466c;">
+                            <h6 id="modalText" class="slds-text-heading_small"></h6>
+                            <h6 class="slds-text-heading_small">Maximum file size is 5000 KB.</h6>                            
+                        </div>                      
+                    </div>
+                </div>
+            </div>                      
+            <apex:actionStatus id="IdStatus">
+                <apex:facet name="start">
+                    <div class="loadingBG" >
+                        &nbsp;
+                    </div>  
+                    <div class="loadingBGP" >                        
+                        <i class="fa fa-spinner fa-spin" style="font-size:48px;color:#fbb601;"></i>                        
+                    </div>            
+                </apex:facet>           
+            </apex:actionStatus>
+      
+   
+      
+      </apex:form>        
+        <c:Flame_FooterResource />
+    </body>     
+    <script type="text/javascript" >
+    $(document).ready(function() {  
+        
+    });
+    //-- show hide button and attachment on service page select
+    function showComponents(){
+        var values = $('.assistTypeCls').val();
+        if(values!=''){
+            $('#IdServicePageBtn').removeClass('hideComponent');    
+            var isAttach = $('.IsAttachCls').is(":checked");
+            if(isAttach){
+                $('#IdAttachmentSection').removeClass('hideComponent');
+            }else{
+                $('#IdAttachmentSection').addClass('hideComponent');
+            }   
+            
+        }else{
+            $('#IdServicePageBtn').addClass('hideComponent');    
+        }
+    }
+    //-- check form validation
+    function checkValidation(){
+        var isValid = true;
+        addRequiredAttributeInSelect();
+        var requiredField = $('.requiredInput').find('input, select');
+        $(requiredField).each(function(){
+            var isRequired = $(this).attr('required');
+            if(isRequired=='required'){            
+                var isNullBlank = $(this).val();
+                if(isNullBlank==''){                
+                    $(this).addClass('customValildationError');                
+                }else{
+                    $(this).removeClass('customValildationError');
+                }
+            }
+        });
+        $(requiredField).each(function(){
+            var isRequired = $(this).attr('required');
+            if(isRequired=='required'){             
+                var isNullBlank = $(this).val();
+                if(isNullBlank==''){                
+                    isValid = false;                
+                }
+            }
+        });
+        if(isValid){
+            console.log('form is valid');
+            $('.saveBtn').css("display", "none");                       
+            $('.saveBtnDisabled').css("display", "");                       
+        }else{
+            console.log('form is invalid');
+        }
+    }
+    
+    //-- check valid contact 
+    
+    
+    //-- removed the required attribute from input field for to check ticket status
+    function removeRequiredFieldAttribute(){
+        var requiredField = $('.requiredInput').find('input, select');
+        $(requiredField).each(function(){    
+            $(this).removeAttr('required');
+        });
+    }
+    
+    //-- hide and show guest info fuction
+    
+    function showGuestInfo(requestFor){        
+        if(requestFor=='Guest'){
+            $(".GuestInfoCls").show();
+            var requiredField = $('.GuestInfoCls').find('input');
+            $(requiredField).each(function(){    
+                $(this).val('');
+            });
+        }else{
+            $(".GuestInfoCls").hide(); 
+            var requiredField = $('.GuestInfoCls').find('input');
+            $(requiredField).each(function(){   
+                //-- set dummy value for required field
+                $(this).val('test@email.com');
+            });
+        }
+    }
+    //-- add required attribute into select required field
+    function addRequiredAttributeInSelect(){
+        var requiredField = $('.requiredInput').find('select');
+        $(requiredField).each(function(){
+            $(this).attr("required","required");
+        });
+    }
+    //--  Academic Service methods
+    function showHideAcademicDateFields(ele){
+        var value = $(ele).val();        
+        if(value=='Meeting Request'){       
+            //$('.hideDateFields').addClass('hideComponent');     
+        }else{      
+            //$('.hideDateFields').removeClass('hideComponent');      
+        }
+    }   
+   
+    function academicSubCategoryType(ele){
+        var value = $(ele).val();  
+        console.log('academic :'+value);         
+        if(value=='Medical Certificate'|| value=='Attendance Exemption - Medical' || value=='Compensation' || value=='Event Participation'){
+            $('.hideDateFields').removeClass('hideComponent');
+           
+            $('.fromDateRequired').addClass('requiredInput');
+            $('.toDateRequired').addClass('requiredInput');
+            $('.showHideDateFields').attr("required", "required"); 
+        }else{
+            $('.hideDateFields').addClass('hideComponent'); 
+                 
+            $('.fromDateRequired').removeClass('requiredInput');
+            $('.toDateRequired').removeClass('requiredInput');
+            $('.showHideDateFields').removeAttr('required'); 
+        } 
+        
+        
+    }
+    //-- Help Desk service methods
+    function helpDeskAssistType(ele){
+        lookupLocationRequired(ele);
+        showHideRoomAndLocationfield(ele);        
+    }
+    function lookupLocationRequired(ele){
+        var value = $(ele).val();
+        console.log('Assist type : '+value);        
+        if(value=='Suggestions'){            
+            $('.lookupInput').find('input').removeAttr('required');            
+        }else{            
+            $('.lookupInput').find('input').attr("required", "required");        
+            
+        }
+        if(value=='Other'){
+            $('.subCategoryCls').addClass('hideComponent');                 
+            $('.serviceTypeCls').addClass('hideComponent');                     
+            $('.HLPCategoryCls').removeAttr('required');                        
+            $('.CategoryRFCls').removeClass('requiredInput');
+            $('.SubCategoryRFCls').removeClass('requiredInput');
+             $('.showHide1').addClass('hideComponent');
+        }else{
+            $('.subCategoryCls').removeClass('hideComponent');       
+            $('.serviceTypeCls').removeClass('hideComponent');          
+            $('.HLPCategoryCls').attr("required", "required");         
+            $('.CategoryRFCls').addClass('requiredInput');
+            $('.SubCategoryRFCls').addClass('requiredInput');
+             $('.showHide1').addClass('hideComponent');
+        }
+    }
+    function showHideRoomAndLocationfield(ele){
+        var value = $(ele).val();   
+        console.log(value);
+        if(value=='Lost & Found'){ 
+            $('.subCategoryCls').addClass('hideComponent'); 
+            $('.showHide').addClass('hideComponent');       
+            $('.lookupInput').find('input').removeAttr('required');                        
+            $('.roomCls').removeAttr("required", "required"); 
+            $('.dateCls').removeAttr("required", "required");            
+        }else{
+            $('.subCategoryCls').addClass('hideComponent');      
+            $('.lookupInput').find('input').attr("required", "required");
+            $('.roomCls').attr("required", "required");
+             $('.dateCls').attr("required", "required");
+            $('.showHide').removeClass('hideComponent');            
+        }
+    }
+    function helpDeskServiceType(ele){
+        var value = $(ele).val();   
+        console.log('ServiceType :'+value);
+        if(value!=''){
+            if(value=='ERP' ){  
+                $('.showHide').addClass('hideComponent');       
+                $('.lookupInput').find('input').removeAttr('required');                        
+                $('.roomCls').removeAttr("required", "required");
+                $('.dateCls').removeAttr("required", "required");
+                             
+            }else{      
+                $('.lookupInput').find('input').attr("required", "required");
+                $('.roomCls').attr("required", "required");
+                $('.showHide').removeClass('hideComponent');
+                 $('.dateCls').attr("required", "required");            
+            }
+            
+            if(value=='Electrical'||value=='Electronics'||value=='Miscellaneous' ||value=='Housekeeping'||value=='IT' ||value=='ERP' ){  
+                $('.showHide1').addClass('hideComponent');       
+              
+                             
+            }else{      
+              
+                $('.showHide1').removeClass('hideComponent');            
+            }
+            
+             if(value=='Lost'||value=='Found'){  
+                 $('.subCategoryCls').addClass('hideComponent');       
+                 $('.SubCategoryRFCls').addClass('hideComponent');
+                             
+            }else{      
+              
+                 $('.subCategoryCls').removeClass('hideComponent'); 
+                 $('.SubCategoryRFCls').removeClass('hideComponent');          
+            }
+            
+            if(value=='Electrical'||value=='Electronics'||value=='Miscellaneous' ){
+                $('.subCategoryCls').addClass('hideComponent');       
+                $('.SubCategoryRFCls').removeClass('requiredInput'); 
+                     
+                
+            }else{
+                $('.subCategoryCls').removeClass('hideComponent');       
+                $('.SubCategoryRFCls').addClass('requiredInput');
+                       
+            }           
+        }        
+    }
+    
+    //-- ---------- suggestion service methods------
+    function suggessionCategory(ele){
+        var value = $(ele).val();        
+        console.log('Suugession type : '+value);  
+        if(value=='Dining' || value=='Facilities' || value=='Sports' || value=='Medical' || value=='Transport'){
+            $('.suggessionSubCategory').addClass('hideComponent'); 
+        }else{
+            $('.suggessionSubCategory').removeClass('hideComponent'); 
+        }
+    }
+    
+    
+    //-- Request Assist field show/hide
+    function requestAssistCategory(ele){
+        var value = $(ele).val();
+        if(value=='Training'){                  
+            $('.websiteHideShowCls').addClass('hideComponent');
+            $('.subjectRequired').addClass('requiredInput');
+            $('.subjectHideShowCls').removeClass('hideComponent');      
+            $('.requiredWebSite').removeAttr("required");       
+            $('.requiredSubject').attr("required", "required"); 
+            
+        }else{              
+            $('.subjectHideShowCls').addClass('hideComponent');
+            $('.websiteRequired').addClass('requiredInput');
+            $('.websiteHideShowCls').removeClass('hideComponent');  
+            $('.requiredSubject').removeAttr("required");       
+            $('.requiredWebSite').attr("required", "required");     
+            
+        }
+    }
+    //-- to check upload size and remove file name
+    function checkAttachmentSize(ele){            
+        $('#filesname').text(ele.files[0].name); 
+        var fileSizeInByte = ele.files[0].size;
+        var fileSizeInKB = fileSizeInByte/1024;            
+        if(fileSizeInKB>5000){
+            var fileName = ele.files[0].name +' is too large.'                 
+            $('#modalText').text(fileName);                
+            $( "#modalBtn" ).trigger( "click" );
+            $(ele).val(null);
+            $('#filesname').text('');
+        }
+    }    
+    function removeFileName(ele){
+        $('#filesname').text('');
+    }
+    
+    //-- contact validation
+    function validateNumber(event) {
+        var key = window.event ? event.keyCode : event.which;
+        if (event.keyCode === 8 || event.keyCode === 46) {
+            return true;
+        } else if ( key < 48 || key > 57 ) {
+            return false;
+        } else {
+            return true;
+        }
+    };
+    
+    </script>    
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_assist_ele").addClass("active");
+           $(".flm_assist_ele").addClass("show");
+           $(".flm_assist_ele > .sub-menu").addClass("show");
+           $(".flm_assistRaise_ele").addClass("active");
+
+           $(".flm_menu").click(function(){
+                $(".flm_menu").removeClass("show");
+                $(".flm_menu > .sub-menu").removeClass("show");
+                
+           })
+        });
+    </script>  
+</apex:page>

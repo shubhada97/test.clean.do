@@ -1,0 +1,79 @@
+<!------------------------
+Author: Deepak Chouhan
+Page Name: Flame_RequisitionServices
+Created Date:   3/9/2018
+Description: to show the Requisition Services  input info.
+------------------------->
+<apex:component >
+    <!-- attribute section -->
+    <apex:attribute name="objCase" description="Requisition Services" type="Case" />    
+    <apex:attribute name="itemList" description="Requisition Services" type="Item__c[]" />    
+    <apex:attribute name="IsAttachment" description="add attachment to service" type="Boolean" />
+    
+    
+     <!-- to check the attachment for service page -->
+    <apex:inputCheckbox styleClass="IsAttachCls hideComponent" value="{!IsAttachment}" style="display:none;"/>
+    
+    <!-- Static Field  Section -->    
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Requisition Type</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.RQN_Requisition_Type__c}" required="true"/>
+        </div>
+    </div>      
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Requesting On Behalf Of</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.RQN_Requesting_On_Behalf_Of__c}" />
+        </div>
+    </div>
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Purpose</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.RQN_Requisition_Purpose__c}" required="true"/>
+        </div>
+    </div>  
+    <div style="font-size: 15px;font-weight:bold;margin-bottom: 15px;margin-top: 20px;color: #566573;text-transform:capitalize;">
+        <h6>Item Details</h6>
+    </div>   
+    <!--
+    <apex:outputPanel id="IdRRequest" >
+        <apex:repeat value="{!itemList}" var="objItem">
+            <div class="slds-form-element" >
+                <label class="slds-form-element__label" >S. No.</label>
+                <div class="slds-form-element__control">                                    
+                    <apex:inputField styleClass="slds-input" value="{!objItem.S_No__c}" />
+                </div>
+            </div>  
+            <div class="slds-form-element" >
+                <label class="slds-form-element__label" >Item Description</label>
+                <div class="slds-form-element__control">                                    
+                    <apex:inputField styleClass="slds-input" value="{!objItem.Item_Description__c}" />
+                </div>
+            </div>      
+            <div class="slds-form-element" >
+                <label class="slds-form-element__label" >Quantity</label>
+                <div class="slds-form-element__control">                                    
+                    <apex:inputField styleClass="slds-input" value="{!objItem.Quantity__c}"/>
+                </div>
+            </div>        
+            <div class="slds-form-element" >
+                <label class="slds-form-element__label" >Unit of Measurement</label>
+                <div class="slds-form-element__control">                                    
+                    <apex:inputField styleClass="slds-input" value="{!objItem.Units_Of_Measurement__c}"/>
+                </div>
+            </div>  
+        </apex:repeat>
+    </apex:outputPanel>
+    <apex:actionRegion>
+        <div class="slds-col">
+            <span>
+                <apex:commandLink styleClass="slds-button slds-button_text-destructive" value="Remove" action="{!removeNewItemList}"  Status="IdStatus" reRender="IdRRequest"/>                         
+            </span>
+            <span>
+                <apex:commandLink styleClass="slds-button slds-button_neutral slds-float_right" value="Add" action="{!addNewItemList}" Status="IdStatus" reRender="IdRRequest" />                       
+            </span>
+        </div>
+    </apex:actionRegion> 
+    -->
+</apex:component>

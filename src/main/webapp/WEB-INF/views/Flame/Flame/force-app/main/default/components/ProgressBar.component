@@ -1,0 +1,16 @@
+<apex:component controller="ProgressBarCtrl">
+<!--<apex:attribute type="String" name="staticconid" assignTo="{!StaticContactId}" description="Value to pass into the controller" required="true"/>-->
+    <!-- Progress Bar Start-->
+    <script>
+        $(document).ready(function(){
+            $('.progress-bar').attr('style','width:{!applicationProgress}%');
+        });
+    </script>
+        <div class="prbar-content">
+            <div class="pull-left">You have completed {!applicationProgress} % of your application</div><br/>
+            <div class="progress">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    <!-- Progress Bar End-->
+</apex:component>

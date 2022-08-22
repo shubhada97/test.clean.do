@@ -1,0 +1,136 @@
+<apex:page controller="Flame_QuickLinkController" docType="html-5.0" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >   
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <apex:slds />
+    <c:Flame_HeadResource /> 
+    <script type="text/javascript">
+    
+    function dosomething(val){
+        console.log(val);
+        actFunction(val);
+    }
+    </script>
+    <style>
+        .navbar .navbar-nav > .flm_QuickLink > a,
+        .navbar .navbar-nav > .flm_QuickLink > a:focus,
+        .navbar .navbar-nav > .flm_QuickLink > a:hover {
+        color: #fff !important;
+        background-color: #fbb601 !important;
+        padding-left: 10px;
+        }
+        .assist-content-area {
+        background-color: #fff;
+        padding: 15px;
+        
+        }
+        .a, .button {
+        text-decoration: none;
+        outline: none !important;
+        -webkit-transition: all 0.25s ease;
+        -moz-transition: all 0.25s ease;
+        -ms-transition: all 0.25s ease;
+        -o-transition: all 0.25s ease;
+        transition: all 0.25s ease;
+        
+        }
+        .quicklinks-content-area {
+        background-color: #fff;   
+        }
+        .quicklinks-content-area .nav {
+            display: table;
+            width: 100%;
+            border-bottom: none;
+        }
+        .quicklinks-content-area .nav-tabs .nav-link {
+            background-color: #fff;
+            border: 1px solid #566573;
+            color: #566573;
+            font-size: 14px;
+            border-radius: 0;
+            margin-bottom: 10px;
+            text-decoration: none;
+        }
+        .quicklinks-content-area .nav-tabs .nav-link:hover {
+            background-color: #fbb601;
+            text-decoration: none;
+            color: #fff;
+        }
+        .quicklinks-content-area .nav-tabs .nav-link.active {
+        background-color: #fbb601;
+        }
+        .sub-heading h6 {
+            font-size: 20px;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        
+    </style>
+    <body>
+        <apex:form id="IdFrm">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->            
+                <apex:actionFunction name="actFunction" action="{!quickLinkcategry}" reRender="quickLink" status="IdStatus">
+                    <apex:param id="aname" name="input1" value=""/> 
+                </apex:actionFunction>
+                <div class="content slds-col slds-size_1-of-1">  
+                    
+                    <div class="slds-col slds-size_1-of-1">
+                        <div class="sub-heading">
+                            <h6>Quick Links</h6>
+                        </div>                        
+                        <div class="quicklinks-content-area">
+                            <div class="tabs-left">
+                                <div class="slds-grid slds-wrap">
+                                    <div class="slds-col slds-size_1-of-1 slds-medium-size_1-of-4" style="padding:0;">
+                                        <ul class="nav nav-tabs" id="nav-tab" role="tablist">                                  
+                                            <apex:repeat value="{!stringList}" var="category">
+                                                <li style="margin-bottom: 5px;">
+                                                    <a class="slds-button slds-button_neutral slds-select" id="{!category}" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-content" aria-selected="false" onClick="dosomething(this.id);" style="text-align: left;height: 40px;color: #566573;    padding-top: 5px;">{!category}</a>
+                                                </li>                                                                                                                            
+                                            </apex:repeat>
+                                        </ul>
+                                    </div>
+                                    <apex:outputPanel Id="quickLink" style="width:50%">                                               
+                                        <apex:repeat value="{!stringList}" var="category">
+                                            <apex:outputtext rendered="{!if(category == Header,true,false)}">
+                                                <div class="slds-col slds-size_1-of-1 slds-medium-size_3-of-4" style="padding-left:30px;">      
+                                                    <apex:outputText style="font-weight:bold;color:#566573;font-size:15px;" value="{!Header}"  rendered="{!if(category == Header,true,false)}"/><br/>                                                  
+                                                    <apex:repeat value="{!QuickLinkWrapperList}" var="list">                                                                                               
+                                                        <apex:outputtext rendered="{!if(list.objRes.Category__c == category && CONTAINS(list.objRes.Link_URL__c, 'www'),true,false)}">
+                                                            <span Style="text-decoration: underline;"><a style="color: #007bff;" href="http://{!list.objRes.Link_URL__c}" target="_blank" >{!list.objRes.Name}</a></span><br/>
+                                                        </apex:outputtext>
+                                                        <apex:outputtext rendered="{!if(list.objRes.Category__c == category && NOT(CONTAINS(list.objRes.Link_URL__c, 'www')),true,false)}">
+                                                            <span Style="text-decoration: underline;"><a style="color: #007bff;" href="{!list.objRes.Link_URL__c}" target="_blank" >{!list.objRes.Name}</a></span><br/>
+                                                        </apex:outputtext>                                                                                                     
+                                                    </apex:repeat>
+                                                </div>
+                                            </apex:outputtext>
+                                        </apex:repeat>   
+                                    </apex:outputPanel>                                     
+                                </div>
+                            </div>
+                        </div>                    
+                    </div>
+                    <!--Main container -->
+                    
+                </div>
+            </div><!-- /#right-panel -->            
+            <!-- Right Panel -->
+        </apex:form>        
+        <c:Flame_FooterResource />
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_quicklink_ele").addClass("active");
+        });
+    </script>  
+</apex:page>

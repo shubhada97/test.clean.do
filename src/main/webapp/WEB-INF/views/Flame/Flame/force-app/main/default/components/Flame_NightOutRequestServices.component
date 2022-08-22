@@ -1,0 +1,57 @@
+<!------------------------
+Author: Deepak Chouhan
+Page Name: Flame_NightOutRequestServices
+Created Date:   3/9/2018
+Description: to show the Night-out Request input info.
+------------------------->
+<apex:component >
+    <!-- attribute section -->
+    <apex:attribute name="objCase" description="Night-out Request Services" type="Case" />    
+    <apex:attribute name="IsAttachment" description="add attachment to service" type="Boolean" />
+    
+     <!-- to check the attachment for service page -->
+    <apex:inputCheckbox styleClass="IsAttachCls hideComponent" value="{!IsAttachment}" style="display:none;"/>
+    
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Emergency Contact Number</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input contactValidation" value="{!objCase.Emergency_Contact_Number__c}"  required="true"/>
+        </div>
+    </div>  
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Night-out Purpose/Itinerary</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.TRL_Purpose_Of_The_Visit__c}" required="true"/>
+        </div>
+    </div>
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Message to Warden</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.Message__c}" />
+        </div>
+    </div>
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >From</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.TRL_Travel_From__c}" required="true"/>
+        </div>
+    </div>
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Visiting Place</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.TRL_Travel_To__c}" required="true" html-placeholder="Area & City"/>    
+        </div>
+    </div>
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Night-out Date</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.TRL_Departure_Date__c}" required="true"/>
+        </div>
+    </div>    
+    <div class="slds-form-element" >
+        <label class="slds-form-element__label" >Return Date</label>
+        <div class="slds-form-element__control">                                    
+            <apex:inputField styleClass="slds-input" value="{!objCase.TRL_Return_Date__c}"/>
+        </div>
+    </div>
+</apex:component>

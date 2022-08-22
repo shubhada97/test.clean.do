@@ -1,0 +1,67 @@
+<apex:component controller="Ledger_ContactPayment_controller" allowDML="true" >
+   <apex:attribute type="String" name="ConName"  description="Value to pass into the controller" /> 
+    <apex:attribute type="String" name="ConId"  description="Value to pass into the controller" />  
+    
+    <style>
+        .modal-backdrop.in{
+           top: inherit;
+        }
+        .main-dashboard {
+            margin-top: 0px !important;
+        }
+        .top-nav li:first-child {
+            padding-right: 0px !important;
+        }
+        .questionClass{
+            font-size: 160% !important;
+            line-height: 0 !important;
+        }
+    </style>
+     <div class="top-nav">
+                <ul>
+                    <li class="dropdown">
+                        <a id="dLabel" data-target="#" href="http://example.com" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                            <span>
+                                Welcome {!myConVal.name}   &nbsp;<apex:image url="{!URLFOR($Resource.flameZip, 'img/icon3.png')}"/>
+                            </span>
+                        </a>
+                         <!---Sharath ---> 
+                        <a id="dLabel" role="button" aria-expanded="false">
+                        <td> <span>Program : {!conLstVal.Program_Interested_In__c} </span> </td>
+                        </a>
+                        <!---Sharath ---> 
+                        <ul class="dropdown-menu" aria-labelledby="dLabel">
+                            
+                            <li>
+                             
+                                <a href="javascript:void(0)" onclick="ConfirmLogout()">
+                                    <i class="fa fa-switch"></i> Logout
+                                </a>
+                            </li>
+                            
+                        </ul>
+                    </li>
+                     <li>
+                        <a href="javascript:void(0)">
+                      
+                          </a>
+                    </li>
+                </ul>
+            </div>
+            
+            
+     
+           
+<script>
+    function ConfirmLogout() {
+        var logout = confirm("Are you sure you want to logout ?");
+        if (logout){
+       
+            window.location.href = "{!$Site.Prefix}/secur/logout.jsp";
+        }
+    }
+    </script>
+ 
+        
+   
+</apex:component>

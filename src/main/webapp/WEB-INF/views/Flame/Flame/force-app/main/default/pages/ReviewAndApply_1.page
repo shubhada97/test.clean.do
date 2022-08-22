@@ -1,0 +1,186 @@
+<apex:page controller="FUA_ReviewApply_Controller" sidebar="false" showHeader="false"  standardStylesheets="false" doctype="HTML-5.0" title="Review & Apply">
+<Apex:form >
+<html lang="en">
+<head>
+
+<c:ResourceFiles />
+
+</head>
+<body>
+<!-- HEADER START -->
+<div class="header">
+    <div class="container">
+        <div class="brand"><a href="javascript:void(0)">           
+            <apex:image url="{!URLFOR($Resource.flameZip, 'img/logo.png')}"/></a>
+        </div>
+        <c:FU_TopNavigation_1 />
+    </div>
+</div>
+<!-- HEADER END -->
+
+<!-- DASHBOARD START -->
+<div class="main-dashboard">
+    <div class="container">
+        <div class="dashboard-inner">
+          
+            <c:HeaderAndTabs_1 />
+           
+            <div class="tab-container">
+                
+                <div class="tab-content active" id="tab2">
+                    <form>
+                     
+
+                        <h4 class="sub-ttl"> Review My Application</h4>
+                        <apex:outputText value="{!ErrorMsg}" style="color:red"/>
+                        <!--Sneha - pass Contact Id-->
+                        <c:Application_iframe_outer_1 />
+
+                        <h4 class="sub-ttl"> Declaration</h4>
+                        <div class="declarion-status" id="dStatus">
+                            <div class="checkbox">
+                                <label>
+                                  
+                                    <p class="colorClass">I have carefully read the instructions and agree to abide by the decision of FLAME University regarding my selection to the program.</p>
+
+<p class="colorClass">I certify that the information furnished in this application form is accurate and complete to the best of my knowledge and belief. I also authorize FLAME University to carry out any kind of verification of academic or employment details given in my application. In case any discrepancy, FLAME University holds the right to reject the application.</p>
+
+<p class="colorClass">I understand that nothing in this application form guarantees admission, any type of grant/scholarship and/or any type of commitment on the part of FLAME University. It will entirely be at the discretion of FLAME University to accept or reject this application.</p>
+
+<p class="colorClass">I have read and understood the minimum eligibility criteria of the program on the FLAME University website. I understand that if I do not meet the minimum eligibility criteria, my application to FLAME University will stand annulled.</p>
+                           <!--          <input type="checkbox" value="" class="chx" style="width: 20px;  height: 20px;color: #369; margin-left: -26px;padding-bottom:5px;"> <strong> I have read and accept declaration above. </strong> </input> -->
+                                </label>
+                            </div>
+                            
+ <input type="checkbox" value="" class="chx" style="width: 20px;  height: 20px;color: #369; margin-left: -2px;padding-bottom:5px;"> <strong> I have read and accept declaration above. </strong> </input>
+                     
+                            <span class="declMsg errorMsg"></span>
+                        </div>
+
+                        <div class="submited-application">
+                            <div class="row">
+                                <div class="col-sm-3 col-xs-6" id="decDate">
+                                    <label>Date:</label>
+                                        <apex:outputText value="{!SubmissionDate}" styleClass="form-control"/>
+                                        <span class="declDateMsg errorMsg"></span>
+                                </div>
+                                <div class="col-sm-3 col-xs-6" id="decPlace">
+                                    <label>Place<span class="astrick">*</span></label>
+                                        <apex:inputfield value="{!applicationList.FUA_Submission_Place__c}" styleClass="form-control"/>
+                                        <span class="declPlcMsg errorMsg"></span>
+                                </div>
+                                <div class="col-sm-6 col-xs-12" id="decAppName">
+                                    <label>Applicant Name/Person Applying<span class="astrick">*</span></label>
+                                    <apex:inputfield value="{!applicationList.FUA_Applicant_Name__c}" styleClass="form-control"/>
+                                    <span class="declNameMsg errorMsg"></span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-buttons">
+                        <apex:commandButton value="Apply" styleClass="btn next-btn  pull-right" onclick="if(declaration()==false){return false;};" action="{!saveData}"/>
+                       <!---    <apex:commandButton value="Save & exit" onclick="if(declaration()==false){return false;};" action="{!saveData2}" styleClass="btn save-btn" oncomplete="return false;">
+                                 <apex:param name="SaveExit" assignto="{!SaveExit}" value="SaveExit" />
+                             </apex:commandButton>    -->               
+                        </div>
+                    
+                    <!-- Change made by <<Akhilesh>> at Techila <<>> on <<19-09-2016>>. <<To add action Function Which will save the data and after Complete Logout>> -->
+                        
+                      <apex:actionFunction action="{!saveAllData}" immediate="false" name="saveandexit" id="logoutSave" oncomplete="redirectBack();">
+                           <apex:param name="SaveExit" assignto="{!SaveExit}" value="SaveExit" />
+                       </apex:actionFunction> 
+                           
+                    </form>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</div>
+<!-- DASHBOARD END -->
+
+<!-- FOOTER START -->
+<c:FooterComponent_1 />
+<!-- FOOTER END -->
+
+<!-- Change made by <<Akhilesh>> at Techila <<>> on <<19-09-2016>>. <<To add action Function Which will save the data and after Complete Logout>> -->
+<apex:outputPanel id="JSPanel" >
+        <script>
+            function redirectBack() {
+                 window.location.href = "{!$Site.Prefix}/secur/logout.jsp";
+            }
+        </script>
+</apex:outputPanel>
+    
+<script>
+function declaration(){
+    var counter=0;
+    var a=$('#dStatus input[type="checkbox"]:checked').length;
+    if(a <= 0){
+        $('.declMsg').text('Declaration is required.');
+        
+                // Change made by <<Akhilesh>> at Techila <<>> on <<12-09-2016>>. <<To add Focus for Declaration>>  
+                $('#dStatus input[type="checkbox"]').focus();               
+                return false;
+                
+        
+    counter++;
+    }else{
+        $('.declMsg').text('');
+    }
+
+    var b=$('#decDate input[type="text"]').val();
+    if(b == ""){
+        $('.declDateMsg ').text('Date is required.');
+    counter++;
+    }else{
+        $('.declDateMsg ').text('');
+    }
+
+    var c=$('#decPlace input[type="text"]').val();
+    if(c == ""){
+        $('.declPlcMsg').text('Place is required.'); 
+        
+        // Change made by <<Akhilesh>> at Techila <<>> on <<12-09-2016>>. <<To add Focus for Place>>    
+            $('#decPlace input[type="text"]').focus();                  
+        return false;
+        
+    counter++;
+    }else{
+        $('.declPlcMsg').text('');
+    }
+
+    var d=$('#decAppName input[type="text"]').val();
+    if(d == ""){
+        $('.declNameMsg').text('Applicant Name is required.'); 
+        
+        // Change made by <<Akhilesh>> at Techila <<>> on <<12-09-2016>>. <<To add Focus for Applicant>>    
+            $('#decAppName input[type="text"]').focus();                    
+        return false;
+        
+        
+    counter++;
+    }else{
+        $('.declNameMsg').text('');
+    }
+
+    if(counter>0){
+        return false;
+    }
+    return true;
+}
+
+
+</script>
+
+<style>
+     .colorClass{
+        color:#1a82c3;
+        }
+  
+</style>
+    
+</body>
+</html>
+</Apex:form>
+</apex:page>

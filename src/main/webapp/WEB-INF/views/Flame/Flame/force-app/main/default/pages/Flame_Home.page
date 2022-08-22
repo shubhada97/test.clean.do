@@ -1,0 +1,647 @@
+<!------------------------------------------------------------------------------------------------
+* Author: Techila Global Services Pvt Ltd. (Deepak Chouhan)
+* Edited: Cloudalyze Services LLP (Saheel Deshpande)
+* VF Page Name: Flame_Home
+* Created Date: August 02 2018
+* Description: home page of customer community
+-------------------------------------------------------------------------------------------------->
+<apex:page controller="Flame_HomeAC" docType="html-5.0" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India">
+    <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+   <script>
+        var userType ='{!$User.FirstName} {!$User.LastName}';
+        console.log('User Type '+userType);
+        if(userType=='FLAME Community Site Guest User'){
+           //window.open("https://https://my1.flame.edu.in/","_self");          
+           window.location.href ='https://my.flame.edu.in/s/login';
+        }
+    </script>
+    <apex:slds />
+    <c:Flame_HeadResource /> 
+    <style>
+        .navbar .navbar-nav > .flm_Home > a,
+        .navbar .navbar-nav > .flm_Home > a:focus,
+         .navbar .navbar-nav > .flm_Home > a:hover 
+       {
+            color: #fff !important;
+          //  background-color: #fbb601 !important; 
+            padding-left: 10px;
+        }
+        .main-slider a table tr td img {
+            min-height: 342px;
+        }
+        
+        .latest-news .image-effect {
+            min-height: 230px;
+            background-color: #084d89;
+        }
+        .latest-events img {
+            min-height: 230px;
+        }
+        .latest-news a table tr td p {
+            margin:0;
+        }
+        .latest-events a table tr td p {
+            margin:0;
+        }
+        @media (max-width: 769px) {
+            .latest-news .image-effect {
+                min-height: auto;
+            }
+            .latest-events {
+                min-height: auto;
+            }
+            .home-carousel h3 {
+                font-size: 14px;
+                line-height: 18px;
+            }
+            .main-slider a table tr td img {
+                min-height: auto;
+            }
+        }
+        
+        /* arrow css */
+
+    .news-section .slider-arrows .carousel-control-next, .news-section .slider-arrows .carousel-control-prev, .events-section .slider-arrows .carousel-control-next, .events-section .slider-arrows .carousel-control-prev{
+        width: 5%;
+        top: -38%;
+    }
+        
+        .slider-arrows {
+            text-align: right;
+            margin-top: 20px;
+        }
+        .slider-arrows a {
+            background-color: transparent;
+            padding: 0;
+            margin: 0;
+        }
+        .home-carousel {
+            width: 100%;
+            right: 0;
+            left: 0;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
+        .announcements-section p {
+            margin-left:0;
+        }
+        .announcements a:hover {
+            text-decoration:none;
+        }
+        .announcements-section .annou-scroller {
+            max-height: 280px;
+        }
+        .carousel-caption {
+            bottom: 0px;
+        }
+         @media screen and (max-width: 769px) {
+             .announcements-section .title {
+                 font-size: 20px;
+             }
+             .news-section .title {
+                 font-size: 20px;
+             }
+             .events-section .title {
+                 font-size: 20px;
+             }
+             .mt-3 {
+                 margin-top: 5px !important;
+             }
+             .carousel-caption {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
+         }
+
+.events-section, .news-section{
+    display:inline-block;
+    width:100%;
+    margin-bottom: 30px;
+}
+        
+ .events-section .col-lg-12,
+ .news-section .col-lg-12{
+    position:relative;
+ }
+.events-section .col-lg-12 .carousel, 
+.news-section .col-lg-12 .carousel  {
+    position: relative;
+}
+.events-section .col-lg-12 .carousel .slider-arrows, 
+.news-section .col-lg-12 .carousel .slider-arrows {
+    position: absolute;
+    right: 0;
+    width: 60px;
+}
+
+.slider-arrows {
+    position: absolute;
+    width: 100%;
+    height: 25px;
+    margin: 0;
+    top: -50px;
+        z-index: 999;
+}
+.slider-arrows .first_button, 
+.slider-arrows .last_button,
+.slider-arrows .first_btn, 
+.slider-arrows .last_btn{
+      width: 70px;
+    position: absolute;
+    right: 5px ;
+    top: 0;
+}
+.news-section .slider-arrows .carousel-control-next, 
+.news-section .slider-arrows .carousel-control-prev, 
+.events-section .slider-arrows .carousel-control-next, 
+.events-section .slider-arrows .carousel-control-prev {
+    display: inline-block !important;
+    width: 25px;
+    height: 25px;
+}
+div#NewsDiv, div#EventsDiv {
+    display: inline-block;
+    width: 100%;
+}
+.latest-news h3, .latest-events h3 {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+        margin-top: 0;
+}
+.latest-news p, 
+.latest-events p {
+    display: block;
+    display: -webkit-box;
+    max-width: 100%;
+    height: 72px;
+    margin: 0 auto;
+    font-size: 14px;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    position: relative;
+}
+p.readmore_lnk {
+    height: auto;
+        padding-top: 8px;
+}
+ .latest-events .latest-events {
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+@media(min-width:1280px){
+    div#right-panel .content {
+        padding: 0;
+    }
+        div#right-panel {
+        max-width: 1100px;
+    }
+}
+        @media(max-width:575px){
+        .Back_bton button.Back_btn_arrow{
+        display:none !important;
+        }
+        a.navbar-brand.mobile-logo {
+    margin-left: 11px;
+}
+        }
+    </style>
+    <body>
+        <apex:form id="IdFrm">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>  
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <div class="content mt-3">
+                <!----------------------------08/01/2020--Add the Alumni profile to display ------------------------------------->
+                <apex:outputText rendered="{!if(userContact.Primary_Contact_Type__c ='Alumni' ,true,false)}">                              
+                    <div class="events-section" id="EventsDiv">
+                        <div class="col-lg-12">
+                            <div class="title"><i class="fa fa-graduation-cap"></i> Alumni Stories  
+                             </div>
+                        </div> 
+                        <div class="col-lg-12" style="padding:0;">
+                            <div id="carouselExample2" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                                    <apex:repeat value="{!AlumniList}" var="item">
+                                        <div class="carousel-item col-lg-4 col-md-4 events_citem">
+                                            <div class="panel panel-default">
+                                            <div class="latest-events">
+                                               
+                                                  <apex:commandLink action="{!readMoreDetailPage}">               
+                                                            <apex:outputField value="{!item.Image__c}" /> 
+                                                            <apex:param name="objectName" value="Flame_Event__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>
+                                                 
+                                                    <h3>
+                                                        <apex:commandLink action="{!readMoreDetailPage}" value="{!item.Heading__c}">
+                                                            <apex:param name="objectName" value="Flame_Event__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>
+                                                    </h3>
+                                                   
+                                                    <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text <a href="">Read More</a></p> -->
+                                                    <p>
+                                                        <apex:outputText value="{!contentMap[item.id]}" />&nbsp;
+                                                       
+                                                    </p>
+                                                    <p class="readmore_lnk"> <apex:commandLink action="{!readMoreDetailPage}" value="Read More">
+                                                        <apex:param name="objectName" value="Flame_Event__c"/>
+                                                        <apex:param name="recordId" value="{!item.Id}"/>
+                                                    </apex:commandLink></p>
+                                                </div>
+                                           </div>
+                                        </div>                          
+                                    </apex:repeat>
+                                </div>
+                                 <!----side arrows -------> 
+                <div class="slider-arrows">
+                <div class="first_button">
+                <a class="first_button carousel-control-prev" href="#carouselExample2" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="sr-only">Previous</span>
+                </a>
+                </div>
+                <div class="last_button">
+                <a class="last_button carousel-control-next text-faded" href="#carouselExample2" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="sr-only">Next</span>
+                </a>
+                </div>
+                </div>
+            
+           <!----side arrows end ------->   
+                                 </div>
+                                  
+                                  </div>
+                                 
+                                   </div>
+              </apex:outputText>
+                
+                <!----------------------------------------ENd------------------------------------------------------------------------>
+                <div class="events-section" id="NewsDiv">
+                        <div class="col-lg-12 over">
+                            <div class="col-lg-6 no-padding">
+                            <div class="title no-border no-margin"><i class="fa fa-bullhorn"></i> Announcements |<apex:commandLink action="{!subnewAnnouncement}" value="Add Announcement" style="font-size: 15px; color: #084d89"/><br/>
+                                </div>
+                            </div>
+                       <!-- <div class="col-lg-6 text-right no-padding">
+                            <div class="title no-border no-margin" ><i class="fa fa-comments"></i> <a href="/Flame_Chatter">Collaborate</a><br/>
+                            </div>
+                        </div>-->
+                            <hr class="no-border title-underline"/>
+                    </div> 
+                      <div class="col-lg-12" style="padding:0;" id="AnnouncementDiv">  
+                       <div id="carousel-1" class="carousel slide" data-ride="carousel" data-interval="false">
+                       <div class="carousel-inner row w-100 mx-auto" role="listbox"> 
+                       <apex:repeat value="{!announcementList}" var="item">
+                       <div class="carousel-item col-lg-4 col-md-4 events_citem">
+                       <div class="panel panel-default">
+                       
+                        <div class="latest-news">
+                                           
+                        <h3> 
+                                                                           
+                        <apex:commandLink action="{!readMoreDetailPage}" value="{!item.Heading__c}">                
+                      <!--  <apex:param name="objectName" value="Flame_News__c"/> -->
+                        <apex:param name="objectName" value="Flame_Event__c"/>
+                        <apex:param name="recordId" value="{!item.Id}"/>
+                        </apex:commandLink>
+                        </h3>
+                        <p>
+                        <apex:outputText value="{!contentMap[item.id]}" />&nbsp;
+                        </p>
+                        <p class="readmore_lnk">
+                            <apex:commandLink action="{!readMoreDetailPage}" value="Read More">
+                                <apex:param name="objectName" value="Flame_Event__c"/>
+                                <apex:param name="recordId" value="{!item.Id}"/>
+                            </apex:commandLink>
+                        </p>
+                        </div> </div></div>
+                        </apex:repeat>
+                       </div>
+                      
+                      <div class="slider-arrows">
+                                    <div class="first_button">
+                                        <a class="first_button carousel-control-prev" href="#carousel-1" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </div>
+                                    <div class="last_button">
+                                        <a class="last_button carousel-control-next text-faded" href="#carousel-1" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                      
+                       </div>
+                      </div>  
+                </div>
+                <style>
+                .carousel-control-prev-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23aaa' viewBox='0 0 8 8'%3E%3Cpath d='M5.25 0l-4 4 4 4 1.5-1.5-2.5-2.5 2.5-2.5-1.5-1.5z'/%3E%3C/svg%3E");
+                }
+                
+                .carousel-control-next-icon {
+                background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23aaa' viewBox='0 0 8 8'%3E%3Cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3E%3C/svg%3E");
+                }
+                </style>   
+                    <!-------------------------------------------------------------------------------------------------------->
+                                      
+                    <div class="events-section" id="EventsDiv">
+                        <div class="col-lg-12">
+                            <div class="title"><i class="fa fa-calendar"></i> Events |<apex:commandLink value=" Calendar" action="{!viewallevents}" style="font-size: 15px;color: #084d89;" /> |
+                            <apex:commandLink action="{!subnewEvents}" value=" Add Event" style="font-size: 15px; color: #084d89;"/>
+                             </div>
+                        </div> 
+                        <div class="col-lg-12" style="padding:0;">
+                            <div id="carouselExample2" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                                    <apex:repeat value="{!eventList}" var="item">
+                                        <div class="carousel-item col-lg-4 col-md-4 events_citem">
+                                            <div class="panel panel-default">
+                                             <!---------------27-09--2019 hide images------------------------->
+                                               <div class="latest-events">
+                                                    
+                                                  
+                                                    <h3>
+                                                        <apex:commandLink action="{!readMoreDetailPage}" value="{!item.Heading__c}">
+                                                            <apex:param name="objectName" value="Flame_Event__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>
+                                                    </h3>
+                                                     
+                                                      <div class="latest-events"><i class="fa fa-clock-o"></i> &nbsp;
+                                                   <!--    <apex:outputText  value="{0,date,M/d/yyyy h:mm a}">
+                                                            <apex:param value="{!item.StartDateTime__c}" />
+                                                            <apex:param value="{!NOW()}" />
+                                                        </apex:outputText>  -->
+                                                      
+                                                      <apex:outputField value="{!item.StartDateTime__c}" id="FillDate"/> &nbsp;
+                                                      <i class="fa fa-hand-o-right"></i> &nbsp; 
+                                                      <apex:outputField value="{!item.Venue__c}" id="FillDate1"/>
+                                                    </div>
+                                                    
+                                                    <!--<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text <a href="">Read More</a></p> -->
+                                                    <p>
+                                                        <apex:outputText value="{!contentMap[item.id]}" />&nbsp;
+                                                    </p>
+                                                    <p class="readmore_lnk">
+                                                        <apex:commandLink action="{!readMoreDetailPage}" value="Read More">
+                                                        <apex:param name="objectName" value="Flame_Event__c"/>
+                                                        <apex:param name="recordId" value="{!item.Id}"/>
+                                                    </apex:commandLink>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>                          
+                                    </apex:repeat>
+                                </div>
+                                <div class="slider-arrows">
+                                    <div class="first_btn">
+                                        <a class="first_btn carousel-control-prev" href="#carouselExample2" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </div>
+
+                                    <div class="last_btn">
+                                        <a class="last_btn carousel-control-next text-faded" href="#carouselExample2" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+     <!---------------------------------------------------------------------------------------------------------------------------- -->                    
+                    <div class="news-section" id="NewsDiv">
+                        <div class="col-lg-12">
+                            <div class="title"><i class="fa fa-file"></i> News |<apex:commandLink value=" All News" action="{!ViewallNews}" style="font-size: 15px;color: #084d89;" /> | <apex:commandLink action="{!subnewNews}" value=" Add News" style="font-size:15px;color: #084d89;"/>
+                             </div>
+                        </div>
+                        <div class="col-lg-12" style="padding:0;">
+                            <div id="carouselExample" class="carousel slide" data-ride="carousel" data-interval="false">
+                                <div class="carousel-inner row w-100 mx-auto" role="listbox">
+                                    <apex:repeat value="{!newsList}" var="item">
+                                        <div class="carousel-item col-lg-4 col-md-4 news_citem">
+                                            <div class="panel panel-default">
+                                                <div class="latest-news">
+                                                <!---------------27-09--2019 hide images------------------------->
+                                               <!--     <div class="image-effect">
+                                                        <apex:commandLink action="{!readMoreDetailPage}">               
+                                                            <apex:outputField value="{!item.Image__c}"/> 
+                                                            <apex:param name="objectName" value="Flame_News__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>                                                        
+                                                    </div>    -->                                                   
+                                                    <h3>                                                    
+                                                        <apex:commandLink action="{!readMoreDetailPage}" value="{!item.Heading__c}">                
+                                                            <apex:param name="objectName" value="Flame_Event__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>
+                                                    </h3>                                                
+                                                    <p>
+                                                        <apex:outputText value="{!contentMap[item.id]}" />&nbsp;
+                                                      
+                                                    </p>
+                                                    <p class="readmore_lnk">
+                                                        <apex:commandLink action="{!readMoreDetailPage}" value="Read More">
+                                                            <apex:param name="objectName" value="Flame_Event__c"/>
+                                                            <apex:param name="recordId" value="{!item.Id}"/>
+                                                        </apex:commandLink>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>                                    
+                                    </apex:repeat>
+                                </div>
+                              
+                                <div class="slider-arrows">
+                                    <div class="first_button">
+                                        <a class="first_button carousel-control-prev" href="#carouselExample" role="button" data-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Previous</span>
+                                        </a>
+                                    </div>
+                                    <div class="last_button">
+                                        <a class="last_button carousel-control-next text-faded" href="#carouselExample" role="button" data-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="sr-only">Next</span>
+                                        </a>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </div>                    
+                </div> <!-- .content -->
+            </div><!-- /#right-panel -->            
+            <!-- Right Panel -->
+        </apex:form>        
+        <c:Flame_FooterResource />
+         <script>
+    jQuery(document).ready(function($) {
+                   
+        !function(t){t.fn.bcSwipe=function(e){var n={threshold:50};return e&&t.extend(n,e),this.each(function(){function e(t){1==t.touches.length&&(u=t.touches[0].pageX,c=!0,this.addEventListener("touchmove",o,!1))}function o(e){if(c){var o=e.touches[0].pageX,i=u-o;Math.abs(i)>=n.threshold&&(h(),t(this).carousel(i>0?"next":"prev"))}}function h(){this.removeEventListener("touchmove",o),u=null,c=!1}var u,c=!1;"ontouchstart"in document.documentElement&&this.addEventListener("touchstart",e,!1)}),this}}(jQuery);
+                         
+        // Swipe functions for Bootstrap Carousel
+        jQuery('.carousel').bcSwipe({ threshold: 50 }); 
+
+        // To add first, second and last class to item
+        jQuery('#carouselExample.carousel').each(
+          function() {
+            var a = jQuery('.carousel-item', $(this)).length;
+            var b= a-3;
+           $("#carouselExample.carousel div.carousel-item:nth-child("+b+")").addClass("last"); 
+           $("#carouselExample.carousel div.carousel-item").first().addClass("first active");
+           $("#carouselExample.carousel div.carousel-item:nth-child("+2+")").addClass("second"); 
+           $("#carouselExample.carousel div.carousel-item").last().addClass("last");      
+          }
+        );
+
+        // To add first, second and last class to item
+        jQuery('#carouselExample2.carousel').each(
+          function() {
+            var a = jQuery('.carousel-item', $(this)).length;
+            var b= a-3;
+           $("#carouselExample2.carousel div.carousel-item:nth-child("+b+")").addClass("last");  
+           $("#carouselExample2.carousel div.carousel-item").first().addClass("first active");
+           $("#carouselExample2.carousel div.carousel-item:nth-child("+2+")").addClass("second"); 
+           $("#carouselExample2.carousel div.carousel-item").last().addClass("last");       
+          }
+        );
+        
+        // check if first active and then hide pre arrow
+         if ( $('#carouselExample.carousel div.carousel-item.first').hasClass('active') ) {         
+           $("#carouselExample div.slider-arrows a.first_button").css({"pointer-events": "none", "display": "none"});
+         } 
+
+         if ( $('#carouselExample2.carousel div.carousel-item.first').hasClass('active') ) {            
+           $("#carouselExample2 div.slider-arrows a.first_btn").css({"pointer-events": "none", "display": "none"});
+         } 
+         
+         
+        // check last_button active and hide next
+         $(".last_button").click(function(){
+
+             if($('#carouselExample.carousel div.carousel-item.last').hasClass('active') ) 
+            {
+               $("#carouselExample div.slider-arrows a.last_button").css({"pointer-events": "none", "display": "none"});  
+               $('head').append('<style type="text/css">@media screen and (max-width: 767px){ #carouselExample div.slider-arrows a.last_button { pointer-events: auto !important}}</style>');     
+            }          
+
+             if($('#carouselExample div.slider-arrows a.first_button').css('pointer-events') === 'none')
+            {
+                $("#carouselExample div.slider-arrows a.first_button").css({"pointer-events": "auto", "display": "flex"});             
+            }
+    
+        });
+
+         // check first_button active and hide pre
+        $(".first_button").click(function(){   
+
+            if ( $('#carouselExample.carousel div.carousel-item.second').hasClass('active') ) 
+            {           
+               $("#carouselExample div.slider-arrows a.first_button").css({"pointer-events": "none", "display": "none"});
+               $('head').append('<style type="text/css">@media screen and (max-width: 767px){ #carouselExample div.slider-arrows a.first_button { pointer-events: auto !important}}</style>'); 
+            } 
+            
+            if($('#carouselExample div.slider-arrows a.last_button').css('pointer-events') === 'none')
+            {
+                $("#carouselExample div.slider-arrows a.last_button").css({"pointer-events": "auto", "display": "flex"});               
+            }
+          
+          });
+
+         // check last_btn active and hide next
+         $(".last_btn").click(function(){
+
+             if($('#carouselExample2.carousel div.carousel-item.last').hasClass('active') ) 
+             {
+                $("#carouselExample2 div.slider-arrows a.last_btn").css({"pointer-events": "none", "display": "none"}); 
+                 $('head').append('<style type="text/css">@media screen and (max-width: 767px){ #carouselExample2 div.slider-arrows a.last_btn { pointer-events: auto !important}}</style>');          
+             }      
+
+            if($('#carouselExample2 div.slider-arrows a.first_btn').css('pointer-events') === 'none')
+            {
+                $("#carouselExample2 div.slider-arrows a.first_btn").css({"pointer-events": "auto", "display": "flex"});
+            }       
+        });
+
+        // check first_btn active and hide pre
+         $(".first_btn").click(function(){   
+
+
+            if ( $('#carouselExample2.carousel div.carousel-item.second').hasClass('active') ) 
+            {       
+               $("#carouselExample2 div.slider-arrows a.first_btn").css({"pointer-events": "none", "display": "none"});
+                $('head').append('<style type="text/css">@media screen and (max-width: 767px){ #carouselExample2 div.slider-arrows a.first_btn { pointer-events: auto !important}}</style>'); 
+            } 
+
+            if($('#carouselExample2 div.slider-arrows a.last_btn').css('pointer-events') === 'none')
+            {
+                $("#carouselExample2 div.slider-arrows a.last_btn").css({"pointer-events": "auto", "display": "flex"});
+            }
+          
+          });       
+        
+     });
+
+    </script>
+
+        <script>
+        $(document).ready(function(){
+            setImgHeight('NewsDiv');
+            setImgHeight('EventsDiv');        
+            setImgAnnouncementHeight('AnnouncementDiv');
+            
+            //-- add active class in carousel
+            $('.announcement_citem:first-child').addClass('active');
+            $('.news_citem:first-child').addClass('active');
+            $('.events_citem:first-child').addClass('active');
+            
+            //-- slider jqeury
+            
+        });
+        
+        //-- set height and width of image
+        function setImgHeight(ele){    
+            var div_Id = document.getElementById(ele);
+            var allImg = div_Id.getElementsByTagName("img");
+            for(i = 0; i < allImg.length; i++) {
+                allImg[i].style.maxHeight= 230+'px';
+                allImg[i].style.height = 'auto';
+                allImg[i].style.width = 100+'%';
+            }
+        }
+        function setImgAnnouncementHeight(ele){    
+            var div_Id = document.getElementById(ele);
+            var allImg = div_Id.getElementsByTagName("img");
+            for(i = 0; i < allImg.length; i++) {
+                allImg[i].style.maxHeight= 342+'px';
+                allImg[i].style.height = 'auto';
+                allImg[i].style.width = 100+'%';
+            }
+        }        
+        //-- slider jquery
+        </script>
+    </body>
+    <script type="text/javascript">
+        $(document).ready(function(){
+           $(".flm_home_ele").addClass("active");
+        });
+    </script>  
+</apex:page>

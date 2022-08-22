@@ -1,0 +1,1168 @@
+<apex:page controller="Flame_jobs_controller" action="{!FLAME_Jobs_Register}" docType="html-5.0"  standardStylesheets="fales" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+ <html lang='en'>
+ <meta charset='UTF-8'/>
+ <link rel='stylesheet' href='styles.css'/>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0' />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" type='text/css' media='all'/> 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/> 
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,800&subset=latin,greek,vietnamese,cyrillic-ext,latin-ext,cyrillic' rel='stylesheet' type='text/css'/>
+   
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link  href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+ 
+       <script type="text/javascript">
+               
+                </script>
+<style type="text/css">
+ 
+.dateFormat {
+   display: none;
+}
+</style>
+ <style>
+ * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+ html {
+font-size: 10px;
+font-family: sans-serif;
+}
+body {
+
+    margin: 0;
+    padding: 0;
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    background-color: #fff;
+    position: relative;
+    font: 400 12px/20px 'Roboto Slab', serif;
+    color: #5b5b5b;
+
+}
+ 
+.page {
+    display: flex;
+    flex-wrap: wrap;
+    background: #fff;
+    color: #191919;
+    border: 1px solid #d9d9d9;
+    padding: 40px;
+    position: relative;
+    width: 1160px;
+    z-index: 1;
+    border-radius: 3px;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+ 
+  
+  
+}
+#header {
+
+    width: 100%;
+    padding: 10px 0;
+    background-color: #ffffff;
+    border: 0px solid #666;
+}
+.container {
+  padding-right: 15px;
+  padding-left: 15px;
+  margin-right: auto;
+  margin-left: auto;
+}
+@import url('https://fonts.googleapis.com/css?family=Roboto+Slab');
+*{ margin:0; padding:0; outline:none;}
+body{ margin:0; padding:0; -ms-word-wrap:break-word; word-wrap:break-word; background-color:#fff; position:relative; font:400 12px/20px 'Roboto Slab', serif; color:#5b5b5b;}
+.row {
+
+    margin-right: -15px;
+    margin-left: -15px;
+
+}
+#header .logo {
+
+    float: left;
+    margin-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 15px;
+    padding-right: 15px;
+
+}
+.logo {
+
+    margin: 0 auto 0 0;
+        margin-top: 0px;
+
+}
+img {
+
+    margin: 0;
+    padding: 0;
+    border: none;
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+.top-social {
+
+    margin: 0;
+    text-align: right;
+    margin-top:25px;
+    float:right;
+
+}
+.top-social a {
+
+    color: #c5c5c5;
+    background-color: none;
+    margin-right: 5px;
+    text-align: right;
+}
+.top-social a .fa {
+
+    border: 1px solid #c5c5c5;
+    display: inline-table;
+    text-align: center;
+    vertical-align: middle;
+    width: 30px;
+    height: 30px;
+    border-radius: 15px;
+
+}
+.fa-lg {
+
+    font-size: 1.33333333em;
+    line-height: 0.75em;
+    vertical-align: -15%;
+
+}
+.fa {
+      padding: 12px;
+      text-align: center;
+      text-decoration: none;
+      margin: 5px 2px;
+      
+      
+    }
+    
+    .fa:hover {
+        opacity: 0.7;
+    }
+    .fa-facebook {
+                  background: #3B5998;
+                  color: white;
+                }
+                 
+                 .fa-twitter {
+                  background: #55ACEE;
+                  color: white;
+                }
+                .fa-linkedin {
+                  background: #007bb5;
+                  color: white;
+                }
+                 
+                 .fa-youtube {
+                  background: #bb0000;
+                  color: white;
+                }
+                
+                .fa-instagram {
+                  background: #125688;
+                  color: white;
+                }
+                 .topnav-right {
+                  float: right;
+                }
+                    
+  #appoint:hover {
+ background-color: #08466f;
+} 
+h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
+
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: inherit;
+
+}
+ .clear {
+clear: both;
+}
+.content-area {
+   width: 1160px;
+    margin: 0 auto;
+    padding: 50px 0;
+ border: 0px solid #666;
+} 
+
+
+.copyright-wrapper {
+
+    position: relative;
+    padding: 10px 0;
+    background-color: #08466F;
+    color: #ffffff;
+    border-top: #F9A91C 3px solid;
+
+}
+.copyright-wrapper .inner {
+
+    width: 1170px;
+    margin: auto;
+
+}
+.copyright {
+
+    margin: auto;
+    text-align: center;
+
+}
+p {
+
+    
+    padding: 0;
+    margin: 10px 0;
+}
+@import url(https://fonts.googleapis.com/css?family=Titillium+Web:300);
+
+.main-menu:hover,nav.main-menu.expanded {
+width:100px;
+overflow:visible;
+}
+
+
+.main-menu {
+position:absolute;
+border: 2px solid #c2e9fb;
+left:-10px;
+width:40px;
+overflow:hidden;
+-webkit-transition:width .03s linear;
+transition:width .03s linear;
+-webkit-transform:translateZ(0) scale(1,1);
+z-index:1000;
+border-radius: 0 5px 5px 0;
+color: white;
+text-decoration: none;
+font-size: 20px;
+
+}
+
+.main-menu>ul {
+margin:7px 0;
+}
+
+.main-menu li {
+position:relative;
+display:block;
+width:250px;
+}
+
+.main-menu li>a {
+position:relative;
+
+font-size: 14px;
+text-decoration:none;
+-webkit-transform:translateZ(0) scale(1,1);
+-webkit-transition:all .1s linear;
+transition:all .1s linear;
+  
+}
+
+.main-menu .nav-icon {
+position:relative;
+display:table-cell;
+width:60px;
+height:36px;
+text-align:center;
+vertical-align:middle;
+font-size:18px;
+}
+
+.main-menu .nav-text {
+position:relative;
+display:table-cell;
+vertical-align:middle;
+width:100px;
+font-family: 'Titillium Web', sans-serif;
+color: white;
+}
+
+
+
+.no-touch .scrollable.hover {
+overflow-y:hidden;
+}
+
+.no-touch .scrollable.hover:hover {
+overflow-y:auto;
+overflow:visible;
+}
+
+a:hover,a:focus {
+text-decoration:none;
+}
+nav {
+-webkit-user-select:none;
+-moz-user-select:none;
+-ms-user-select:none;
+-o-user-select:none;
+user-select:none;
+}
+
+nav ul,nav li {
+outline:0;
+margin:0;
+padding:0;
+}
+
+.main-menu li:hover>a,nav.main-menu li.active>a,.dropdown-menu>li>a:hover,.dropdown-menu>li>a:focus,.dropdown-menu>.active>a,.dropdown-menu>.active>a:hover,.dropdown-menu>.active>a:focus,.no-touch .dashboard-page nav.dashboard-menu ul li:hover a,.dashboard-page nav.dashboard-menu ul li.active a {
+color:#fff;
+/*background-color:#5fa2db;*/
+}
+#home {
+  top: 200px;
+  
+  background-color: #4CAF50;
+}
+
+#jobs{
+top: 260px;
+background-color: #2196F3;
+}
+#about {
+  top: 320px;
+  background-color: #555;
+}
+
+#contact {
+  top: 380px;
+  background-color: #f44336;
+}
+ .margen{
+margin-bottom:10%;
+} 
+  /* Section A */
+
+#section-a {
+ 
+  padding-bottom: 1em;
+  
+  
+}  
+/* Section B */
+
+#section-b {
+  padding: 2em 1em 1em;
+  background: #28609014;
+}
+
+#section-b ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+#section-b li {
+  margin-bottom: 1em;
+  background: #fff;
+  color: #5b5b5b;
+}
+
+.card-content {
+  padding: 1.5em;
+} 
+/* Section C */
+
+#section-c {
+  background: #fff;
+  color: #333;
+  padding: 2em;
+ 
+}
+
+/* Section D / Boxes */
+
+#section-d .box {
+  padding: 2em;
+  color: #fff;
+  
+}
+
+#section-d .box:first-child {
+  background: #2690d4;
+}
+
+/* Footer */
+
+#main-footer {
+  padding: 0.3em;
+  background: #084d89;
+  color: #fff;
+  text-align: center;
+  border-top: #F9A91C 3px solid;
+}
+
+#main-footer a {
+  color: #2690d4;
+  text-decoration: none;
+}   
+/* Media Queries */
+
+@media (min-width: 700px) {
+  .grid {
+    display: grid;
+   
+  }
+
+  #section-a .content-text {
+    columns: 2;
+    column-gap: 2em;
+  }
+
+  #section-a .content-text p {
+    padding-top: 0;
+  }
+
+  .content-wrap,
+  #section-b ul {
+    grid-column: 2/4;
+  }
+
+  .box,
+  #main-footer div {
+    grid-column: span 2;
+  }
+
+  #section-b ul {
+    display: flex;
+    justify-content: space-around;
+  }
+
+  #section-b li {
+    width: 31%;
+  }
+}
+/* Header Showcase */
+#showcase {
+  
+  color: #fff;
+  text-align: center;
+}  
+h2.entry-title, h1.page-title {
+    font-size: 25px;
+    color: #08466f;
+    padding-bottom:20px;
+
+}
+h2.entry-title{ font:400 25px 'Roboto Slab', serif;}
+.entry-content table, .comment-body table{ border-collapse:collapse; margin:10px 0;}
+.main-container{margin:1px; padding:0;background: #F9A91C 3px ;padding-bottom: 1em; width:100%; } 
+.btn {
+  display: inline-block;
+  background:#084d89;
+  color: #fff;
+  text-decoration: none;
+  padding: 1em 2em;
+  border: 0px solid #666;
+  margin: 0.5em 0;
+  
+  margin-top:25px;
+  font-size: 13px;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+  
+   transition: .5s;
+ 
+}
+
+.btn:hover {
+  background: #ee5c00;
+  color: #ffffff;
+  opacity:1;
+}
+
+label, .radio label {
+    min-height: 20px;
+    margin-bottom: -10%;
+    font-weight: 400;
+    cursor: pointer;
+}
+span {color:red;margin-right:1.25em;display:inline-block;}
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+/* Full-width input fields */
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 9px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus, input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+.form-control, select{
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+
+
+
+
+                   
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+@media (min-width: 992px) {
+  .container {
+    width: 970px;
+  }
+}
+@media (min-width: 1200px) {
+  .container {
+    width: 1170px;
+  }
+}
+@media screen and (max-width:479px) {
+
+*{box-sizing:border-box;}
+    #header{ width:100%; padding:15px 0;}
+    #header .logo{ float:none;}
+    .copyright-wrapper .inner{ width:100%;}
+    .copyright{ float:none; text-align:center; margin-bottom:10px;}
+    .sicons { width:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    .copyright-txt, .design-by { text-align:center; float:none;}
+    .container { padding:0 20px;}
+    #header { width:100%; padding:0 20px; position:inherit !important;}
+    .logo { float:none; text-align:center;}
+    .content-area{ width:auto; margin:0 20px; padding:50px 0;margin-left:35px;}
+    .site-main{ width:auto; margin:0; padding:0; float:none;}
+    h2.entry-title { font-size:20px;}
+   
+}
+/* Mobile Landscape View */
+
+@media screen and (max-width:719px) and (min-width:480px) { 
+    *{box-sizing:border-box;}
+    #appoint .appoint-inner .appoint-col .appoint-details h4 { font-size:13px;}
+    .container { width:auto; padding:0 20px;}
+    #header { padding:0 20px; position:inherit !important;}
+    .logo { float:none; text-align:center;}
+    .top-social{ float:none; text-align:center;}
+    .alignleft, img.alignleft { float:none; display:block;}
+    .sicons { width:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    .copyright-txt, .design-by { text-align:center; float:none;}
+    #header .logo{ float:none;}
+    .copyright-wrapper .inner{ width:100%;}
+    .foot-top { width:auto; text-align:center;}
+    .copyright{ float:none; text-align:center; margin-bottom:10px;}
+     section{ padding:40px 0;}
+     .content-area{ width:auto; margin:0 20px; padding:50px 0;margin-left:35px;}
+    .site-main{ width:auto; margin:0; padding:0; float:none;}
+    a.contact{ margin-top:5px !important; font-size:12px !important;}
+    .nivo-directionNav a{ top:39% !important;}
+     h2.section-title{ margin-bottom:5px;}
+     
+    }
+    /* Tablet View */
+
+@media screen and (max-width:999px) and (min-width:720px) { 
+    *{box-sizing:border-box;}
+    .container { width:auto; padding:0 20px;}
+    #header { padding:0 20px;}
+    .sicons { width:94%; margin:auto;}
+    .footer, .copyright { width:auto; padding:0 20px;}
+    #header .logo{ float:none; text-align:center;}
+    .top-social{ float:none; text-align:center;}
+    .content-area{ width:auto; margin:0 20px; padding:50px 0;margin-left:35px;}
+    .copyright-wrapper .inner{ width:95%; margin: auto;}
+    .social-icons a { margin-right:6px;}
+    #main-footer, .copyright ul li, .footer-menu ul li a{ font-size:14px;}
+    .foot-top { width:auto; text-align:center;}
+    }
+    @media screen and (min-width: 1000px) {
+    
+    
+    }
+    @media screen and (min-width:1000px) and (max-width:1159px){
+    .copyright-wrapper .inner{ width:95%;}
+    .nivo-caption{ top:17% !important; height:auto !important;}
+    .cat_comments .cat{ width:48%;}
+    .top-search input.search-submit { top:-39px;}
+    .content-area{ width:95%; padding:50px 0; margin:0 auto;margin-left:35px;}
+}
+</style>
+ <head>
+
+</head>
+ <apex:form id="frm">
+ <body>
+<header id="header" >
+<div class="container">
+<div class="row">
+<div class="logo">
+ <a href=" {!$Site.BaseUrl}/apex/FLAME_Home_Jobs_page"  rel="home" itemprop="url">
+    <img width="240" height="79" src="{!URLFOR($Resource.flamejobportal)}"  />
+    </a>              
+</div>
+<div  >
+<div class="top-social">
+   <a href="https://www.facebook.com/FlameUniversity" target = "_blank"><i class="fa fa-facebook fa-lg " ></i></a>
+        <a href="https://twitter.com/flameuniversity" target = "_blank"><i class="fa fa-twitter fa-lg"></i></a>
+        <a href="https://www.linkedin.com/company/flameuniversity/ " target = "_blank"><i class="fa fa-linkedin fa-lg"></i></a>
+        <a href="https://www.youtube.com/user/FLAMEUniversity/" target = "_blank"><i class="fa fa-youtube  fa-lg"></i></a>
+        <a href="https://www.instagram.com/flameuniversity/" target = "_blank"><i class="fa fa-instagram fa-lg"></i></a>
+        <a href=" {!$Site.BaseUrl}/apex/FLAME_Contact_Jobs_page" target = "_blank"><i class="fa fa-question-circle fa-lg"></i></a>
+    </div>
+    </div>
+</div>
+</div>
+
+</header>
+<div class="clear"></div>
+
+     
+<div class="appoint">
+<div class="main-container">
+ </div>
+</div>
+<div class="clear"></div>
+<div class="content-area">
+ <h2 class="entry-title">Registration &amp; Personal Information</h2>
+ <div class="clear"></div>
+       <apex:repeat value="{!linkList}" var="job"  id="details">
+                            <div><label ><b> Job Applying For:{!job.Job_Title__c}</b> - FLAME University Campus</label ></div>
+                            </apex:repeat>
+                            <hr/>
+                            <!-------------------> 
+    <div><label > Please complete the questions below to the best of your ability.</label ></div>
+     <div class="half-row">
+     <div class="half">
+    
+            <div class="form-group row">
+            <div class="col-sm-6" id="rd_email">
+            <apex:messages />
+            <apex:messages id="InvalidData" styleClass="errorMsg try" rendered="!{!ErrorLogin}"/>   
+            <div class="input-label"><label>Email <span class="astrick">*</span></label></div>                                                                                
+            <div class="input-text">
+            <apex:inputText styleClass="form-control " value="{!conn.Email}" >
+            <apex:actionSupport event="onchange" action="{!checkExistingContact}" 
+            status="checkingcontact" rerender="frm" />
+            </apex:inputText>
+            <apex:actionStatus id="checkingcontact" >
+            <apex:facet name="start" >
+            <img src="https://i.gifer.com/7MX9.gif" style="height:25px" />                    
+            </apex:facet>
+            </apex:actionStatus>
+            </div> 
+            <span class="emMsg errorMsg"></span>
+            </div>
+            </div>                          
+            </div>
+        <hr/>
+           </div>                          
+        <!-------->   
+        
+      <apex:outputPanel layout="none" rendered="{!existingContactId!=''}"> 
+       <h2 class="entry-title">Access Key</h2><br/>
+       <h4>If you need any assistance proceeding ahead, please email techsupport@flame.edu.in.</h4><hr/>
+       
+    <!--    <div class="form-group row">
+                                <div class="col-sm-6" id="rd_mobile"> 
+                                    <div class="input-label"><label>Mobile <span class="astrick">*</span></label></div>
+                                    <div class="input-text overflow">
+                                        <div class="media2">
+                                            
+                                            <div class="media-body2 ct-tooltip"  data-tooltip="We recommend your password to be at least 8 characters along with a number">
+                                                <apex:inputField value="{!conn.FUA_Mobile__c}"  styleClass="form-control"/> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <span class="mobMsg errorMsg"></span> 
+                                </div>
+                            </div>
+        
+        
+                         
+         <div class="form-group row">
+        <div class="col-sm-6" id="rd_dob">
+         <div class="input-label"><label>Date Of Birth (DD/MM/YYYY)<span class="astrick">*</span></label></div>  
+        <div class="input-text" for="date3">
+        <apex:inputField value="{!conn.DOB__c}"   styleClass="form-control"  /> 
+      <!--  <input type="text" id="datepicker" styleClass="form-control" value="{!BirthdateValue}"/ > -->
+   <!--     </div>  
+        <span class="dobMsg errorMsg"></span>                
+        </div>           
+       </div> -->
+    
+    
+                            
+                            <div class="form-group row">
+                                <div class="col-sm-6" id="rd_otp"> 
+                                    <div class="input-label"><label>Key<span class="astrick">*</span></label></div>
+                                    <div class="input-text" >
+                                    <!--  -->
+                                    
+                                      <apex:inputField value="{!conn.Payment_Key__c}"   styleClass="form-control" />
+                                  <apex:commandButton value="Recieve Key in Email" action="{!SendEmail}" Styleclass="btn"/>     
+                                    </div>
+                                     <apex:pageMessages ></apex:pageMessages>
+                                    <span class="otpMsg errorMsg"></span> 
+                                </div>
+                            </div>                    
+                           
+      <div>
+                      <apex:outputPanel layout="none" rendered="{!existingContactId !=''}">
+                       <apex:commandButton value="Next" Styleclass="btn"  action="{!createnewcontact}" onclick="if(validateSecurityQuestions()==false){return false;};" />
+                       </apex:outputPanel>
+      </div>
+      
+       
+        
+      </apex:outputPanel> 
+ 
+  <apex:outputPanel layout="none" rendered="{!existingContactId==''}">
+        <div class="sign-up-sec">
+            <div class="outer">
+                <div class="adv-box"></div>
+                <div class="sign-up-box ct-form">
+                    
+                   
+                                                           
+                       <div class="half-row">
+                        <div class="half">
+                            <div class="form-group row">
+                                <div class="col-sm-6" id="firstName">
+                                    <div class="input-label"><label>First Name <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                        <apex:inputField value="{!conn.FirstName}" styleClass="form-control"/>
+                                    </div>
+                                    <span class="fnMsg errorMsg"></span>
+                                </div>
+                                <div class="col-sm-6" id="lastName">
+                                    <div class="input-label"><label>Last Name <span class="astrick">*</span></label></div>
+                                    <div class="input-text hide-msg">
+                                       <apex:inputText value="{!conn.LastName}" styleClass="form-control" />
+                                    </div>
+                                    <span class="lnMsg errorMsg"></span>
+                                </div>
+                            </div>
+                            
+                          <!--    <div class="form-group row">
+                              <div class="col-sm-6" id="rd_dob" >
+                              <div class="input-label"><label> Date Of Birth (DD/MM/YYYY) <span class="astrick">*</span></label></div>
+                              <div class="input-text">
+                            <apex:inputField value="{!conn.DOB__c}"  id="datepicker" required="true" styleClass="form-control" />
+                            
+                              </div>
+                              <span class="dobMsg errorMsg"></span>
+                               </div>
+                           <!--    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+                                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+                                <script>
+                                jQuery(function() {
+                                jQuery("[id='{!$Component.datepicker}']").datepicker({
+                                format: 'dd-mm-yyyy'
+                                });
+                                });
+                                </script>  -->
+                                <div class="form-group row">
+                                <div class="col-sm-6" id="rd_dob" >
+                                <div class="input-label"><label> Date Of Birth (DD/MM/YYYY) <span class="astrick">*</span></label></div>
+                                <div class="input-text">
+                                <apex:inputField value="{!conn.DOB__c}"  styleClass="form-control" id="myForm" />
+                                <!--   <input type="text" id="datepicker" styleClass="form-control" value="{!BirthdateValue}"/ >  -->
+                                </div>
+                                <span class="dobMsg errorMsg"></span>
+                                </div> 
+                                
+                                <div class="col-sm-6" id="rd_mobile">
+                                    <div class="input-label"><label>Mobile number <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                        <apex:inputField value="{!Conn.FUA_Mobile__c}" styleClass="form-control"  />       
+                                    </div>
+                                   <span class="mobMsg errorMsg"></span>
+                                </div>
+                                 </div>
+                                 
+                                 
+                                 <div class="form-group row">
+                                <div class="col-sm-6" id="rd_mobile_first">
+                                    <div class="input-label"><label>Country code <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                    <apex:inputField value="{!Conn.FU_Mobile_Phone_Code__c}" styleClass="form-control" />    
+                                    </div>
+                                    <span class="mobfrMsg errorMsg"></span>
+                                </div>
+                               
+                                <div class="col-sm-6" id="rd_country">
+                                    <div class="input-label"><label>Country <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                    <apex:inputField value="{!Conn.FU_Applicant_Other_Country__c}" styleClass="form-control" />    
+                                    </div>
+                                    <span class="cMsg errorMsg"></span>
+                                </div>
+                            
+                            </div>
+                       
+                       
+                       
+                       
+                            <div class="form-group row">
+                            
+                             <div class="col-sm-6" id="rd_state">
+                                    <div class="input-label"><label>State <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                        <apex:inputField value="{!Conn.FU_Applicant_Other_State__c}" styleClass="form-control" onchange="clearOtherCity();" />       
+                                    </div>
+                                    <span class="stMsg errorMsg"></span>
+                                </div>
+                            
+                            
+                            
+                                <div class="col-sm-6" id="rd_city">
+                                    <div class="input-label"><label> City <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                    <apex:inputField value="{!Conn.FU_Applicant_Other_City__c}" styleClass="form-control" />    
+                                    </div>
+                                     <span class="ctMsg errorMsg"></span>
+                                </div>
+                                
+                              
+                                </div>
+                                
+                               <div class="form-group row">
+                                
+                                
+                                 <div class="col-sm-6" id="rd_zip">
+                                    <div class="input-label"><label>Postal Code  <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                        <apex:inputField value="{!conn.Contact_Zip_Code__c}" styleClass="form-control"  />       
+                                    </div>
+                                    <span class="zipMsg errorMsg"></span>
+                                </div>
+                                
+                                <div class="hide">
+                                <div class="col-sm-6 " id="rd_Ocity">
+                                    <div class="input-label"><label>Other City  <span class="astrick">*</span></label></div>
+                                    <div class="input-text">
+                                        <apex:inputField value="{!Conn.Other_City__c}" styleClass="form-control"  />       
+                                    </div>
+                                    <span class="OctMsg errorMsg"></span>
+                                </div>
+                                </div>
+                            </div>
+                            
+                         
+                            
+                          <div style="text-align:center;" > 
+                       
+                       <apex:outputPanel layout="none" rendered="{!existingContactId ==''}">
+                           <apex:commandButton id="IdTicketBtn"  value="Next" Styleclass="btn"  action="{!createnewcontact}" onclick="if(valid()==false){return false;};" />
+                        </apex:outputPanel>
+                          </div>
+                       </div>
+                        </div>
+                      
+                </div>
+            </div>
+        </div>              
+       </apex:outputPanel>
+  
+ </div>
+ <!------------------------------------------------------------------------------------------------------------->
+         
+  
+     
+   <apex:includeScript value="{!URLFOR($Resource.flameZip, 'js/jquery.js')}"/>  
+<script>
+
+   function clearOtherCity(){
+        
+        $('#rd_Ocity input[type="text"]').val('');
+        $('#rd_Ocity').parent().addClass('hide');
+        $('#rd_city select').val('');
+    }
+     function showOtherCity()
+     {
+       var a = $('#rd_Ocity input[type="text"]').val(); 
+       if(a != '')
+       {
+          $('#rd_Ocity').parent().removeClass('hide');  
+       } 
+     }
+     
+      $(document).on('change','#rd_country select',function(){
+        var c = $(this).val();
+        if(c=="India"){          
+            $('#rd_Ocity').parent().addClass('hide');
+            $('#rd_Ocity input[type="text"]').val('');
+        }else{
+             $('#rd_Ocity input[type="text"]').val('');
+             $('.OctMsg').text('');
+             $('#rd_Ocity').parent().removeClass('hide');
+        }
+        });
+        
+        $(document).on('change','#rd_city select',function(){
+        var c = $(this).val();
+        if(c=="Other"){
+            $('#rd_Ocity input[type="text"]').val('');
+            $('.OctMsg').text('');
+            $('#rd_Ocity').parent().removeClass('hide');
+        }else{
+              $('#rd_Ocity input[type="text"]').val('');
+             $('#rd_Ocity').parent().addClass('hide');
+        }
+        });
+     
+   <!-------------------------------------------------------------------------------------------------------->
+    function valid(){
+         var counter=0;   
+         var a=$('#firstName input[type="text"]').val();
+        if(a==""){
+             $('.fnMsg').text('Please enter First Name.');
+           counter++;
+         }else{
+             $('.fnMsg').text('');
+         } 
+         var b=$('#lastName input[type="text"]').val(); 
+         if(b==""){
+             $('.lnMsg').text('Please enter Last Name.');
+           counter++;
+         }else{
+             $('.lnMsg').text('');
+         } 
+         
+         var c=$('#rd_country select').val(); 
+         if(c==""){
+             $('.cMsg').text('Country is required.');
+           counter++;
+         }else{
+             $('.cMsg').text('');
+         }
+         
+         
+         var d=$('#rd_state select').val(); 
+         if(d==""){
+             $('.stMsg').text('State is required.');
+           counter++;
+         }else{
+             $('.stMsg').text('');
+         }
+         if(c!=="" && d!==""){
+             var p=$('#rd_city select').val();
+             if(p=="" || p=="__"){
+                 $('.ctMsg').text('City is required.');
+                 counter++;
+             }else{
+                $('.ctMsg').text('');
+             }
+        }else{
+            $('.ctMsg').text('');
+         }
+         
+      /*   var e=$('#rd_otherCity select').val(); 
+         if(e==""){
+             $('.ctMsg').text('City is required.');
+           counter++;
+         }else{
+             $('.ctMsg').text('');
+         }*/
+         if(c!=="India"){             
+             var j=$('#rd_Ocity input[type="text"]').val(); 
+             if(j=="" || j==undefined){
+                 $('.OctMsg').text('Other City is required.');
+                 counter++;
+             }else{
+                 $('.OctMsg').text('');
+             }
+         }
+         
+         var it=$('#rd_city select').val();
+         if(it=="Other"){
+           var tt=$('#rd_Ocity input[type="text"]').val();
+           if(tt=="" || tt==undefined){
+              $('.OctMsg').text('Other City is required.');
+               counter++;
+           }else{
+               $('.OctMsg').text('');
+           }  
+         }
+         
+         var f=$('#rd_mobile_first select').val(); 
+         if(f==""){
+             $('.mobfrMsg').text('Country code is required.');
+           counter++;
+         }else{
+             $('.mobfrMsg').text('');
+         }
+         
+         var g=$('#rd_mobile input[type="text"]').val();
+         if(g==""){
+             $('.mobMsg').text('Please enter Mobile Number.');
+           counter++;
+         }else{
+             $('.mobMsg').text('');
+             if(g.length > 10){
+                $('.mobMsg').text('Mobile Number should be 10 digits.');
+                counter++;
+             }
+             if(g.length < 10){
+                $('.mobMsg').text('Mobile Number should be 10 digits.');
+                counter++;
+             }
+         }
+         
+         //27 Nov 2018 Date of birth validation
+         var dob = $('#rd_dob input[type="text"]').val();
+         if(dob==""){
+             $('.dobMsg').text('Date Of Birth is required.');
+            counter++;
+         }else{
+             $('.dobMsg').text('');
+         }
+         
+         
+      var i=$('#rd_email input[type="text"]').val(); 
+         if(i==""){
+             $('.emMsg').text('Please enter your Email ID.');
+           counter++;
+         }else{
+               var ab = emailValidation(i);
+            if(ab){
+                 $('.emMsg').text('');
+             }else{
+                  $('.emMsg').text('Please enter valid Email ID.');
+                  return false;
+             }
+            $('.emMsg').text(''); 
+          
+          $('.emMsg').text(''); 
+        }
+        
+         var h=$('#rd_zip input[type="text"]').val();
+        if(h==""){
+             $('.zipMsg').text('Postal Code is required.');
+           counter++;
+         }else{
+             $('.zipMsg').text('');
+         }  
+         
+
+         if(counter>0){
+            return false;
+         }
+         return true;
+      }
+      function emailValidation(em) {
+        intRegex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+        var emailflag = intRegex.test(em);
+        if (!emailflag) {
+           return false;
+        }else{
+            return true;
+        }
+    };
+     $(document).on('keyup','#rd_mobile input[type="text"]', numberOnly);
+    function numberOnly(current) {
+        this.value = this.value.replace(/[^0-9.]/g, '').substring(0,10);
+    }
+    function charLimit(e){
+        this.value=this.value.substring(0,80);
+    }
+     function emailCharlimit(e){
+        this.value=this.value.substring(0,60);
+    }
+    $(document).on('keyup','#firstName input[type="text"]',charLimit);
+    $(document).on('keyup','#lastName input[type="text"]',charLimit);    
+    $(document).on('keyup','#rd_email input[type="text"]',emailCharlimit);
+   
+    function validateSecurityQuestions(){
+        var counter=0;  
+         var dob = $('#rd_dob input[type="text"]').val();
+         if(dob==""){
+             $('.dobMsg').text('Date Of Birth is required.');
+            counter++;
+         }else{
+             $('.dobMsg').text('');
+         }
+         
+         var bdy = $('#rd_bdy input[type="text"]').val();
+         if(bdy==""){
+             $('.bdyMsg').text('Please enter Bachelors Degree Year.');
+            counter++;
+         }else{
+             $('.bdyMsg').text('');
+         }
+         
+         var g=$('#rd_mobile input[type="text"]').val();
+         if(g==""){
+             $('.mobMsg').text('Please enter Mobile Number');
+           counter++;
+         }else{
+             $('.mobMsg').text('');
+             if(g.length > 10){
+                $('.mobMsg').text('Mobile Number should be 10 digits.');
+                counter++;
+             }
+             if(g.length < 10){
+                $('.mobMsg').text('Mobile Number should be 10 digits.');
+                counter++;
+             }
+         }
+         
+          var otp = $('#rd_otp input[type="text"]').val();
+         if(otp==""){
+             $('.otpMsg').text('Key is required');
+            counter++;
+         }else{
+             $('.otpMsg').text('');
+         }
+         
+         
+         
+         if(counter>0){
+            return false;
+         }
+         return true;
+    }
+    
+    
+   
+    
+      </script>
+  
+<!--footer-->
+<div class="margen"></div>
+<div class="clear"></div>
+<div class="copyright-wrapper">
+<div class="inner">
+<div class="copyright">
+<p>FLAME University  Job Portal 2020 | <a style="color:#fff;" href="http://www.flame.edu.in/" target = "_blank">www.flame.edu.in</a></p>               
+</div><!-- copyright --><div class="clear"></div>           
+</div><!-- inner -->
+</div>
+    </body>
+ </apex:form>
+ </html>
+</apex:page>

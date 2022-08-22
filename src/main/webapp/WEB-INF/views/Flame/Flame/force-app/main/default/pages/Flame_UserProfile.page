@@ -1,0 +1,661 @@
+<!------------------------------------------------------------------------------------------------
+* Author: Techila Global Services Pvt Ltd. (Deepak Chouhan)
+* VF Page Name: Flame_UserProfile
+* Created Date: 1/10/2018
+* Description: to show current user information
+-------------------------------------------------------------------------------------------------->
+<apex:page controller="Flame_UserProfileAC" docType="html-5.0" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >   
+     <apex:includeScript value="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" />
+    <apex:slds />
+    <c:Flame_HeadResource />     
+    <style>
+        .navbar .navbar-nav > .user_profile .flm_UserProfile,
+        .navbar .navbar-nav > .user_profile .flm_UserProfile a:focus,
+        .navbar .navbar-nav > .user_profile .flm_UserProfile a:hover {
+            color: #fff !important;
+            background-color: #fbb601 !important;        
+        }
+        .navbar .navbar-nav > .user_profile .flm_UserProfile .fa-user {
+            color:#fff;
+        }
+        .navbar .navbar-nav > .user_profile .flm_UserProfile a {
+            color:#fff !important;
+        }
+        .showUpload{
+            display:none;
+        }
+        .fb-image-profile {
+            max-width: 300px;
+            max-height: 300px;
+            min-height: 170px;
+        }
+        .slds-scope .slds-modal__close {
+            top: 0;
+            right: 0;
+        }
+        #IdUploadSection {
+            width: 100%;
+            float: left;
+            margin-top: 10px;
+        }
+        .information tr td {
+                word-break: break-all;
+        }
+        .fb-profile-text > h1 {
+            font-weight: 700;
+            font-size: 18px;
+        }
+        @media screen and (max-width: 768px) {
+            .fb-image-profile {
+                width: 30%;
+                min-height: 100px;
+                margin:-45px 10px 0px 10px;
+            }
+        .cr-boundary{
+        	width:100% !important;
+        	height:300px !important;
+          }
+        .cr-viewport.cr-vp-square{
+        	width:85% !important;
+        	height:270px !important;
+        }
+        .modal{
+        	z-index: 9999999 !important;
+        }
+        }
+        input.btn.slds-button.slds-button_neutral {
+            border: 1px solid rgb(1, 118, 211) !important;
+        }
+		
+    </style>
+    
+    <script>
+    
+    $(document).ready(function() {
+        $('.cancelBtnCls').css('display','none');
+    });
+    </script>
+    <body>
+        <apex:form id="IdFrm">
+            <!-- Left Panel -->
+            <aside id="left-panel" class="left-panel">
+                <c:Flame_SideMenuBar />
+            </aside>
+            <!-- Left Panel -->            
+            <!-- Right Panel -->            
+            <div id="right-panel" class="right-panel">                
+                <!-- Header-->
+                <c:Flame_HeaderBar />
+                <!-- Header-->                                
+                <!--Main container -->  
+                <div class="content mt-3">                                     
+                    <div class="">
+                        <div class="fb-profile">                            
+                            <apex:image html-align="left" styleClass="fb-image-lg" url="{!URLFOR($Resource.FlameCommunity, 'FlameCommunity/images/profile-banner.jpg')}" />                            
+                            <div>
+                                <apex:image html-align="left" styleClass="fb-image-profile thumbnail" url="{!URLFOR($Resource.FlameCommunity, 'FlameCommunity/images/user_avatar.png')}" rendered="{!if(publicURL=='',true,false)}"/>
+                                <apex:image html-align="left" styleClass="fb-image-profile thumbnail" url="{!publicURL}" rendered="{!if(publicURL!=null,true,false)}"/>
+                                <!--<apex:image html-align="left" styleClass="fb-image-profile thumbnail" url="/servlet/servlet.FileDownload?file={!attachId}" rendered="{!if(attachId!=null,true,false)}"/>-->
+                            </div>
+                            <apex:outputPanel rendered="{!if(peopleId==null,true,false)}">
+                                <div class="fb-profile-text">
+                                    <h1>{!objContact.Name}</h1>
+                                    <p style="display: inline;">{!profileName}</p><span>&nbsp;|</span>
+                                    <!--<button type="button" id="uploadBtn" class="slds-button uploadBtnCls" >Upload Image</button> -->
+                                    <button type="button" id="cancelBtn" class="slds-button cancelBtnCls" >Cancel</button>
+                                    <button type="button" id="cropBtn" class="slds-button" data-toggle="modal" data-target="#cropImage">Upload Image</button>
+                                    <div id="IdUploadSection" class="showUpload">
+                                        <apex:outputLabel id="IdAttachLbl" styleClass="slds-button " for="IdAttach">
+                                            <!--<i class="fa fa-upload"></i>&nbsp;Choose File-->                                            
+                                            <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#upload')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                                </svg>Upload Files
+                                            </span>                                         
+                                        </apex:outputLabel>
+                                        <span id="filesname"></span>
+                                        <apex:inputfile id="IdAttach" value="{!file.versionData}" accept="image/jpeg,image/png" filename="{!file.pathOnClient}" style="display:none;" />              
+                                        <!--<apex:commandButton value="Upload" action="{!uploadProfileImage}" styleClass="slds-button slds-button_neutral"/>-->
+                                    </div> 
+                                    <p style="font-weight:bold;">
+                                       {!disclaimer} 
+                                    </p>
+                                </div>
+                            </apex:outputPanel>
+                            <apex:outputPanel rendered="{!if(peopleId!=null,true,false)}">
+                                <div class="fb-profile-text">
+                                    <h1>{!objContact.Name}</h1>
+                                    <p>{!peopleProfile}</p>
+                                </div>
+                            </apex:outputPanel>
+                            
+                        </div>                        
+                        <div class="col-lg-12 padding0 user-details">
+                            <div class="default-tab">
+                                <nav>
+                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                        <!--<a class="nav-item nav-link active show" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="false">Feeds</a>-->
+                                        <a class="nav-item nav-link active show" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">About</a>
+                                    </div>
+                                </nav>
+                                <div class="tab-content pl-3 pt-4 pr-3" id="nav-tabContent">                                    
+                                    <div class="tab-pane fade show active" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                                        <apex:outputPanel >
+                                            <apex:outputPanel rendered="{!if(peopleId==null,true,false)}">
+                                                <div class="col-lg-6">
+                                                    <!--<div class="slds-text-heading_small">User Information</div>-->
+                                                    <br/>
+                                                    <table class="table information">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Full Name</th>
+                                                                 <td><apex:outputText value="{!objContact.Name}" />
+                                                            <!--     <apex:inputText value="{!objContact.Name}" styleClass="slds-input " rendered="{!inputMode}"/> --></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Email Address</th>
+                                                                <td><apex:outputText value="{!objContact.Email}" rendered="{!outputMode}"/>
+                                                                <apex:inputText value="{!objContact.Email}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.MobilePhone), 'none', 'table-row')};">
+                                                                <th scope="row">Phone Number</th>
+                                                                <td><apex:outputText value="{!objContact.MobilePhone}" rendered="{!outputMode}"/>
+                                                                <apex:inputText value="{!objContact.MobilePhone}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Gender__c), 'none', 'table-row')};">
+                                                                <th scope="row">Gender</th>
+                                                                <td><apex:outputText value="{!objContact.Gender__c}"/></td>
+                                                            </tr>
+                                                            
+                                                            <tr style="display:table-row">
+                                                                <th scope="row">DOB</th>
+                                                                <td>
+                                                                    <apex:outputText value="{0,date,dd/MM/yyyy}">
+                                                                        <apex:param value="{!objContact.Date_of_Birth__c}" />
+                                                                    </apex:outputText>
+                                                                </td>
+                                                            </tr>
+                                                            
+                                                            <tr style="display:table-row">
+                                                                <th scope="row">Blood Group</th>
+                                                                <td>
+                                                                    <apex:selectList value="{!selectedVal}" multiselect="false" id="selectedVal" size="1">
+                                                                        <apex:selectOptions value="{!ItemsList}" />
+                                                                    </apex:selectList>
+                                                                    <apex:inputHidden value="{!objContact.Id}" id="contactId"/>
+                                                                </td>
+                                                            </tr>
+                                                          
+                                                            <tr  style="display: {!IF(ISBLANK(objContact.CVUE_Student_Number__c), 'none', 'table-row')};" >
+                                                                <th scope="row" >Student No</th>
+                                                                <td>
+                                                                 <apex:outputText value="{!objContact.CVUE_Student_Number__c}" >
+                                                                  </apex:outputText>
+                                                                </td>    
+                                                              </tr> 
+                                                            
+
+                                                           <tr style="display: {!IF(ISBLANK(objContact.Faculty__c), 'none', 'table-row')};">
+                                                                <th scope="row">Faculty</th>
+                                                                <td>{!objContact.Faculty__c}</td>
+                                                            </tr>      
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Date_of_Joining__c), 'none', 'table-row')};">
+                                                                <th scope="row">Date of Joining</th>
+                                                                <td>{!objContact.Date_of_Joining__c}</td>
+                                                            </tr>    
+                                                        <tr style="display: {!IF(ISBLANK(objContact.Designation_Name__c), 'none', 'table-row')};">
+                                                                <th scope="row">Designation</th>
+                                                                <td>{!objContact.Designation_Name__c}</td>
+                                                            </tr>  
+                                                             <tr >
+                                                                <th scope="row">Current Company </th>
+                                                                 <td><apex:outputText value="{!objContact.Current_Company__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputText value="{!objContact.Current_Company__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>      
+                                                            <tr >
+                                                              <th scope="row">Industry</th>
+                                                                 <td><apex:outputText value="{!objContact.Industry__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputField value="{!objContact.Industry__c}" styleClass="slds-input " rendered="{!inputMode}"/></td> 
+                                                            </tr>     
+                                                          
+                                                          <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Student'}"> 
+                                                             
+                                                            <tr >
+                                                              <th scope="row">Faculty Advisor</th>
+                                                                 <td><apex:outputText value="{!objContact.Faculty_Advisor__r.Name}" rendered="{!outputMode}"/>
+                                                                 <apex:inputField value="{!objContact.Faculty_Advisor__r.Name}" styleClass="slds-input " rendered="{!inputMode}"/></td> 
+                                                            </tr>     
+                                                            
+                                                            <tr >
+                                                              <th scope="row">House</th>
+                                                                 <td><apex:outputText value="{!objContact.House__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputField value="{!objContact.House__c}" styleClass="slds-input " rendered="{!inputMode}"/></td> 
+                                                            </tr>     
+                                                          	
+                                                          </apex:outputText>
+                                                                                                
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                                <div class="col-lg-6">
+                                                    <!-- <div class="slds-text-heading_small">Address Information</div>-->
+                                                    <br/>
+                                                    <table class="table information">
+                                                        <tbody>
+                                                            <tr >
+                                                                <th scope="row">Address 1</th>
+                                                               <td><apex:outputText value="{!objContact.Contact_Address_Line_1__c}" rendered="{!outputMode}"/>
+                                                                <apex:inputText value="{!objContact.Contact_Address_Line_1__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th scope="row">Address 2</th>
+                                                                <td><apex:outputText value="{!objContact.Contact_Address_Line_2__c}" rendered="{!outputMode}"/>
+                                                                <apex:inputText value="{!objContact.Contact_Address_Line_2__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th scope="row">City</th>
+                                                                <td><apex:outputText value="{!objContact.Contact_City__c}" rendered="{!outputMode}"/>
+                                                                <apex:inputField value="{!objContact.Contact_City__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th scope="row">State</th>
+                                                                <td><apex:outputText value="{!objContact.Contact_State__c}" rendered="{!outputMode}"/>
+                                                                <apex:inputfield value="{!objContact.Contact_State__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th scope="row">Country</th>
+                                                                <td><apex:outputText value="{!objContact.Contact_Country__c}" rendered="{!outputMode}"/>
+                                                                <apex:inputField value="{!objContact.Contact_Country__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                            <tr >
+                                                                <th scope="row">Zip Code</th>
+                                                                 <td><apex:outputText value="{!objContact.Contact_Zip_Code__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputField value="{!objContact.Contact_Zip_Code__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                             <tr style="display: {!IF(ISBLANK(objContact.Department__c), 'none', 'table-row')};">
+                                                                <th scope="row">Department</th>
+                                                                <td><apex:outputText value="{!objContact.Department__c}"/></td>
+                                                            </tr>
+                                                             <tr style="display: {!IF(ISBLANK(objContact.Employee_Id__c), 'none', 'table-row')};">
+                                                                <th scope="row">Employee ID</th>
+                                                                <td><apex:outputText value="{!objContact.Employee_Id__c}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Current_Designation__c), 'none', 'table-row')};">
+                                                                <th scope="row">Current Designation</th>
+                                                                 <td><apex:outputText value="{!objContact.Current_Designation__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputText value="{!objContact.Current_Designation__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr>
+                                                              <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Alumni'}"> 
+                                                             <tr>
+                                                                <th scope="row">Designation</th>
+                                                                <td>{!objContact.Designation_Name__c}</td>
+                                                             </tr>
+                                                               </apex:outputText>
+                                                            <tr >
+                                                                <th scope="row">LinkedIn profile URL </th>
+                                                                 <td><apex:outputText value="{!objContact.LinkedIn_profile_URL__c}" rendered="{!outputMode}"/>
+                                                                 <apex:inputText value="{!objContact.LinkedIn_profile_URL__c}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr> 
+                                                           <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Student'}"> 
+                                                            
+                                                             <tr >
+                                                                <th scope="row">Peer Mentor</th>
+                                                                 <td><apex:outputText value="{!objContact.Peer_Mentor__r.name}" rendered="{!outputMode}"/>
+                                                                 <apex:inputText value="{!objContact.Peer_Mentor__r.name}" styleClass="slds-input " rendered="{!inputMode}"/></td>
+                                                            </tr> 
+                                                           
+                                                           </apex:outputText>
+                                                            
+                                                            
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="clearfix">
+                                                    
+                                                </div>
+                                                <div class="col-lg-12">
+                                                    <table class="table information submit-btn">
+                                                        <tr>    
+                                                          <td align="center" style="text-align:center"><apex:commandButton value="Submit" action="{!fillProjectTasks}" onclick="return confirmWindow();" styleClass="slds-button slds-button_neutral" /></td>  
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        <apex:outputPanel >
+                                            <apex:outputPanel rendered="{!if(peopleId!=null,true,false)}">
+                                                <div class="col-lg-6">
+                                                    <!--<div class="slds-text-heading_small">Faculty Information</div>-->
+                                                    <br/>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <th scope="row">Full Name</th>
+                                                                <td><apex:outputText value="{!objContact.Name}"/></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <th scope="row">Email Address</th>
+                                                                <td><apex:outputText value="{!objContact.Email}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Faculty__c), 'none', 'table-row')};"> 
+                                                                <th scope="row">Faculty</th>
+                                                                <td>{!objContact.Faculty__c}</td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Designation_Name__c), 'none', 'table-row')};">
+                                                                <th scope="row">Designation</th>
+                                                                <td>{!objContact.Designation_Name__c}</td>
+                                                            </tr>
+                                                                                                                        
+                                                             <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Alumni'}"> 
+                                                             
+                                                            <tr >
+                                                                <th scope="row">LinkedIn profile URL </th>
+                                                                 <td><apex:outputText value="{!objContact.LinkedIn_profile_URL__c}" />
+                                                                 </td>
+                                                            </tr>      
+                                                            
+                                                             </apex:outputText>                                                              
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-lg-6">
+                                                    <!--<div class="slds-text-heading_small">Additional Information</div>-->
+                                                    <br/>
+                                                    <table class="table">
+                                                        <tbody>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Department__c), 'none', 'table-row')};">
+                                                                <th scope="row">Department</th>
+                                                                <td><apex:outputText value="{!objContact.Department__c}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Office_Building__r.Name), 'none', 'table-row')};">
+                                                                <th scope="row">Office Building</th>
+                                                                <td><apex:outputText value="{!objContact.Office_Building__r.Name}"/></td>
+                                                            </tr>
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Office_Room__c), 'none', 'table-row')};">
+                                                                <th scope="row">Office Room</th>
+                                                                <td><apex:outputText value="{!objContact.Office_Room__c}"/></td>
+                                                            </tr>                                                    
+                                                            <tr style="display: {!IF(ISBLANK(objContact.Phone), 'none', 'table-row')};">
+                                                                <th scope="row">Phone</th>
+                                                                <td><apex:outputText value="{!objContact.Phone}"/></td>
+                                                            </tr>
+                                                             <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Alumni'}"> 
+                                                             <tr >
+                                                                <th scope="row">Current Company </th>
+                                                                 <td><apex:outputText value="{!objContact.Current_Company__c}" /></td>
+                                                                 
+                                                            </tr> 
+                                                              <tr>
+                                                                <th scope="row">Current Designation</th>
+                                                                 <td><apex:outputText value="{!objContact.Current_Designation__c}"/>
+                                                                </td>
+                                                            </tr> 
+                                                            <tr >
+                                                              <th scope="row">Industry</th>
+                                                                 <td><apex:outputText value="{!objContact.Industry__c}" /></td>
+                                                                
+                                                            </tr>
+                                                            
+                                                           <apex:outputText rendered="{!objContact.Primary_Contact_Type__c ='Student'}"> 
+                                                             
+                                                            <tr >
+                                                              <th scope="row">Faculty Advisor</th>
+                                                                 <td><apex:outputText value="{!objContact.Faculty_Advisor__c}" /></td>
+                                                                
+                                                            </tr>
+                                                            
+                                                            <tr >
+                                                              <th scope="row">House</th>
+                                                                 <td><apex:outputText value="{!objContact.House__c}" /></td>
+                                                                
+                                                            </tr>
+                                                            </apex:outputText>                                                    
+                                                            
+                                                             </apex:outputText>                                                     
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                                
+                                            </apex:outputPanel>
+                                        </apex:outputPanel>
+                                        
+                                     
+                                        
+                                    </div>
+                                </div>                                
+                            </div>
+                        </div>
+                    </div> <!-- /container -->  
+                </div>
+                <apex:outputPanel rendered="{!objContact.Primary_Contact_Type__c ='Alumni'}">
+              <!--   <apex:outputPanel rendered="{if(peopleId!=null,true,false)}"> -->
+                 <div style="text-align: center;" >
+                <apex:commandLink rendered="{!outputMode && peopleId=null}" value="Edit"  styleClass="slds-button slds-button_neutral " action="{!enterInputMode}"  />
+                <apex:commandLink rendered="{!inputMode && peopleId=null}"  value="Save"  styleClass="slds-button slds-button_neutral saveBtn" action="{!exitInputMode}" />
+                </div>
+                </apex:outputPanel>
+               <!-- </apex:outputPanel> -->
+                <!--Main container -->
+            </div><!-- /#right-panel -->            
+            <button type="button" id="modalBtn" class="showUpload" data-toggle="modal" data-target="#myModal">Open Modal</button>
+            <!-- Right Panel -->
+            <div class="modal fade" id="myModal" role="dialog" style="top:30%;">
+                <div class="modal-dialog">                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fbb601;">                            
+                            <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+                                <svg class="slds-button__icon " aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align:center;color:#23466c;">
+                            <h6 id="modalText" class="slds-text-heading_small"></h6>
+                            <h6 class="slds-text-heading_small">Maximum file size is 5000 KB.</h6>                            
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+            </apex:form> 
+            
+            <div class="modal fade" id="cropImage" role="dialog">
+                <div class="modal-dialog" style="width:97% !important">                  
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                        <div class="modal-header" style="background-color: #fbb601;">                            
+                            <button type="button" class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" data-dismiss="modal">
+                                <svg class="slds-button__icon " aria-hidden="true">
+                                    <use xlink:href="{!URLFOR($Asset.SLDS, 'assets/icons/utility-sprite/svg/symbols.svg#close')}" xmlns:xlink="http://www.w3.org/1999/xlink" />
+                                </svg>
+                                <span class="slds-assistive-text">Close</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" style="text-align:center;color:#23466c;">
+                         <apex:form enctype="multipart/form-data">
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+                            <script type="text/javascript" src="https://coderszine.com/demo/crop-image-and-upload-using-jquery-and-php/croppie/croppie.js"></script>
+                             <link rel="stylesheet" href="https://coderszine.com/demo/crop-image-and-upload-using-jquery-and-php/croppie/croppie.css" />
+                                       
+                            <input type='file' id="images" class="slds-button slds-button_neutral" accept="image/jpeg,image/png" name="{!objContact.Id}" />
+                             <img id="target" class="crop" src="#"  style="border:1px solid;display:none;"  />
+                             <input type="hidden" id="contactId" value="{!objContact.Id}" />
+                             <input type="hidden" id="stuName" value="{!objContact.Name}" />
+                             <input type="hidden" id="stuNumber" value="{!objContact.CVUE_Student_Number__c}" />
+                            <div id="upload-image"></div>
+                             <div class="crop_preview">
+                                <div id="upload-image-i"></div>
+                            </div>
+                            <apex:commandButton value="Save Image" styleClass="slds-button slds-button_neutral" onclick="saveImage();return false;" />
+                        </apex:form>
+                        </div>                      
+                    </div>
+                </div>
+            </div>
+            <!--<apex:image url="{!publicURL}"/>-->
+                        
+        <c:Flame_FooterResource />
+        <script>
+        $(".uploadBtnCls").click(function () {
+            $('#IdUploadSection').removeClass('showUpload');
+            $('.uploadBtnCls').css('display','none');  
+            $('.cancelBtnCls').css('display','');             
+        });
+        $(".cancelBtnCls").click(function () {
+            $('#IdUploadSection').addClass('showUpload');            
+            $('.cancelBtnCls').css('display','none');  
+            $('.uploadBtnCls').css('display','');  
+        });               
+        function checkAttachmentSize(ele){            
+            $('#filesname').text(ele.files[0].name); 
+            var fileSizeInByte = ele.files[0].size;
+            var fileSizeInKB = fileSizeInByte/1024;            
+            if(fileSizeInKB>5000){
+                var fileName = ele.files[0].name +' is too large.'                 
+                $('#modalText').text(fileName);                
+                $( "#modalBtn" ).trigger( "click" );
+                $(ele).val(null);
+                $('#filesname').text('');
+            }
+        }
+        </script>
+         <script type="text/javascript">
+        
+        $(document).ready(function(){
+           $(".flm_profile_ele").addClass("active");
+           $(".flm_profile_ele").addClass("show");
+           $(".flm_profile_ele > .sub-menu").addClass("show");
+           $(".flm_profileMy_ele").addClass("active");
+
+           $(".flm_menu").click(function(){
+                $(".flm_menu").removeClass("show");
+                $(".flm_menu > .sub-menu").removeClass("show");
+                
+           })
+        });
+    </script>
+    <script type="text/javascript">
+        function confirmWindow(){
+            if(confirm("Are you sure, you want to update your profile?")){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        var canvas,fileName;
+        $image_crop = $('#upload-image').croppie({
+            enableExif: true,
+            viewport: {
+                width: 400,
+                height: 400,
+                type: 'square'
+            },
+            boundary: {
+                width: 460,
+                height: 400
+            }
+        });
+        $('#images').on('change', function () { 
+            var reader = new FileReader();
+            fileName = this.files[0].name;
+            reader.onload = function (e) {
+                $image_crop.croppie('bind', {
+                    url: e.target.result
+                }).then(function(){
+                    console.log('dsdssd'+reader.result);
+                    console.log('jQuery bind complete');
+                });			
+            }
+            reader.readAsDataURL(this.files[0]);
+        });
+        
+       function saveImage(){
+            $image_crop.croppie('result', {
+                type: 'canvas',
+                size: 'viewport'
+            }).then(function (response) {
+                //var p1 = response;
+            	var fileContents=response;
+            	var base64Mark = 'base64,';
+            	var dataStart = fileContents.indexOf(base64Mark) + base64Mark.length;
+            	fileContents = fileContents.substring(dataStart);
+                var p1 = fileContents;
+                var contactId = document.getElementById('contactId').value;
+                let stuName = document.getElementById('stuName').value;
+                let studentNumber = document.getElementById('stuNumber').value;
+                let extension = fileName.split('.').pop().toLowerCase();
+                //console.log(response);
+                console.log(p1);
+                console.log(fileContents);
+                console.log(contactId);
+                console.log(stuName);
+                console.log(studentNumber);
+                let photoName = studentNumber+'_'+stuName+'_Photograph'+'.'+extension;
+                console.log('Title:'+photoName);
+                {!$RemoteAction.Flame_UserProfileAC.saveImage}(photoName,fileContents,contactId, onSaveResult); 
+                })
+            .catch(error => {
+                alert('Please select file first!');
+            });
+        }
+        
+        
+        
+        $("#imgInp").change(function(){
+            console.log(this);
+            readURL(this);
+        });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                $("#target").css("display", "block");
+                $("#preview").css("display", "block");
+                fileName = input.files[0].name;
+                var reader = new FileReader();
+                var size;
+                reader.onload = function (e) {
+                    $('#target').attr('src', e.target.result);
+                        $('#target').Jcrop({
+                            onChange : updatePreview,
+                            onSelect : updatePreview,
+                            allowSelect: true,
+                            allowMove: true,
+                            aspectRatio: 1
+                        });                    
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function updatePreview(c) {
+            if(parseInt(c.w) > 0) {
+                // Show image preview
+                var imageObj = $("#target")[0];
+                canvas = $("#preview")[0];
+                var context = canvas.getContext("2d");
+                context.drawImage(imageObj, c.x, c.y, c.w, c.h, 0, 0, canvas.width, canvas.height);
+            }
+        };
+        function onSaveResult(result, event) {
+            alert('File was saved as: '+result);
+            location.reload();
+        }
+
+        function saveImage22(obj){
+            var p1 = canvas.toDataURL("image/png").match(/data:(.+);base64,(.+)/);
+            var contactId = document.getElementById('contactId').value;
+            let stuName = document.getElementById('stuName').value;
+        	let studentNumber = document.getElementById('stuNumber').value;
+            let extension = fileName.split('.').pop().toLowerCase();
+           
+            console.log(p1);
+            console.log(contactId);
+            console.log(stuName);
+            console.log(studentNumber);
+  			let photoName = studentNumber+'_'+stuName+'_Photograph'+'.'+extension;
+            console.log('Title:'+photoName);
+            {!$RemoteAction.Flame_UserProfileAC.saveImage}(photoName,p1[2],contactId, onSaveResult);            
+        }    
+    </script>
+    </body>
+</apex:page>

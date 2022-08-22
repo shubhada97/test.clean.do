@@ -1,0 +1,1350 @@
+<apex:page docType="html-5.0" controller="ShowFeedBackController" standardStylesheets="true" lightningStylesheets="true" showHeader="false" sidebar="false" cache="false" title="FLAME University - The Pioneers of Liberal Education in India" >
+   <apex:slds />
+   <c:Flame_HeadResource />
+   <style>
+      .navbar .navbar-nav > .flm_Pay > a, .navbar .navbar-nav > .flm_Pay > a:focus, .navbar .navbar-nav > .flm_Pay > a:hover {
+      color: #fff !important;
+      background-color: #fbb601 !important;
+      padding-left: 10px;
+      }
+      .pay-side-menu .btn-primary {
+      color: #fff;
+      background-color: #084d89;
+      border-color: #084d89;
+      width: 100%;
+      text-align: left;
+      margin-bottom: 20px;
+      font-size: 14px;
+      padding:10px;
+      }
+      .pay-content-area {
+      background-color: #fff;
+      //padding: 20px;
+      //border: 1px solid #eae9e9;
+      font-size: 14px;
+      float: left;
+      width: 100%;
+      }
+      .pay-content-area .table td, .pay-content-area .table th {
+      padding: .6rem;
+      }
+      .pay-content-area .heading {
+      background-color: #084d89;
+      padding: 8px 10px;
+      margin-bottom: 20px;
+      color: #fff;
+      font-size: 16px;
+      }
+      .btn-outline-primary {
+      border-color: #084d89;
+      color: #084d89;
+      }
+      .btn-outline-primary:hover {
+      background-color: #084d89;
+      border-color: #084d89;
+      }
+      .filter-options {
+      background-color: #f7f7f7;
+      margin-bottom: 40px;
+      margin-top: 30px;
+      border-bottom: 1px solid #dee2e6;
+      }
+      .filter-options table {
+      margin-bottom:0;
+      }
+      .dateFormat{
+      display:none;
+      }
+      .loadingBG{
+      position: fixed;
+      top: 0; 
+      left: 0;
+      right: 0; 
+      bottom: 0; 
+      opacity: 0.5; 
+      z-index: 1000; 
+      background-color:#084d89;
+      }
+      .loadingBGP{
+      position: fixed; 
+      left: 0; top: 0; 
+      bottom: 0; 
+      right: 0; 
+      z-index: 1001; 
+      margin: 15% 50%;        
+      } 
+      .payment-filter-table tr td {
+      width:50%;
+      }
+      td, th {
+      border: 0px  solid #dddddd;
+             }
+      
+      tr:nth-child(even) {
+      background-color: #D3D3D3;
+      }  
+      .errorM4 .msgIcon, .errorSmall {
+      background-image: url(/img/samples/flag_red.gif) !important;
+      }
+      .myCustomMessage .message {
+      background: none  !important;
+      border: none !important;
+      }
+      
+   </style>
+   <style>
+label, .radio label {
+    min-height: 20px;
+    padding-left: 5px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    font-weight: 400;
+    cursor: pointer;
+  
+}
+
+.myCheckBox{
+width:600px;font-size: 16px; margin-left:10px;
+}
+@media only screen and (max-width: 600px) {
+.myCheckBox{
+width:30px;
+margin-left:-10px;
+
+}
+
+}
+</style>
+<body onLoad="noBack()">
+     <script type = "text/javascript" >
+    function preventBack(){window.history.forward();}
+    setTimeout("preventBack()", 0);
+    window.onunload=function(){null};
+    </script>
+</body>      
+   <body>
+      <apex:form id="frmId">
+         <aside id="left-panel" class="left-panel" >
+            <c:Flame_SideMenuBar />
+         </aside>
+         <div id="right-panel" class="right-panel">
+            <!-- Header-->
+            <!--  Main container --> 
+            <div class="content mt-3">                                                         
+            <div class="col-lg-12"> 
+           
+          
+             <apex:outputPanel id="outPanelId">
+               <script>
+                  function funcOnComp(varA){
+                  if(varA){
+                  alert('Please click ok/close to confirm your submission');
+                  }
+                  redirectToDetailPage();
+                  }
+               </script>
+               <script>
+                  function hideContent()
+                  {
+                      document.getElementById("{!$Component.content}").style.display="none";
+                  }
+               </script>
+                   
+            </apex:outputPanel>
+            <apex:pageMessages id="pb_error"/>
+            <apex:actionFunction name="doSave" rerender="outPanelId" action="{!SaveFeedBack}" oncomplete="funcOnComp('{!isChanged}');  "/>
+            <apex:actionFunction name="redirectToDetailPage" action="{!redirectToRequiredPage}"/>
+ <!---------------------------------------- For Faculty FeedBack ----------------------------------------> 
+            <apex:outputPanel >
+               <apex:outputText rendered="{!if(lstofCourseFeedback.size >0,true,false)}">
+                  <!--- Display CourseOffering Name ------>
+                  <div class="slds-form-element" style="font-size: 16px; "  >
+                     <table border="1" id="td01" style="width:95%; margin-top:20px;" align="center">
+                        <tr>
+                           <td scope="col">
+                              Course : &nbsp;  
+                              <apex:outputText value="{!strcourseofferingName}" rendered="{!if(strcourseofferingName !=null, true,false)}" />
+                           </td>
+                        </tr>
+                     </table>
+                     <br></br>
+                  </div>
+                  <html>
+                     <apex:variable var="countque1"  value="{!0}"/>
+                     <apex:variable var="countque2"  value="{!0}"/>
+                     <apex:variable var="countque3"  value="{!0}"/>
+                     <apex:variable var="countque4"  value="{!0}"/>
+                     <apex:variable var="countque5"  value="{!0}"/>
+                     <apex:variable var="countque6"  value="{!0}"/>
+                     <apex:variable var="countque7"  value="{!0}"/>
+                     <apex:variable var="countque8"  value="{!0}"/>
+                     <apex:variable var="countque9"  value="{!0}"/>
+                     <apex:variable var="countque10" value="{!0}"/>
+                     <apex:variable var="countque11" value="{!0}"/>
+                     <apex:variable var="countque12" value="{!0}"/>
+                     <apex:variable var="countque13" value="{!0}"/>
+                     <apex:variable var="countque14" value="{!0}"/>
+                     <apex:variable var="countque15" value="{!0}"/>
+                     <apex:variable var="countque16" value="{!0}"/>
+                     <apex:variable var="countque17" value="{!0}"/>
+                     <apex:variable var="countque18" value="{!0}"/>
+                     <apex:variable var="countque19" value="{!0}"/>
+                     <apex:variable var="countque20" value="{!0}"/>
+                     <apex:variable var="countque21" value="{!0}"/>
+                     <apex:variable var="countque22" value="{!0}"/>
+                     <apex:variable var="countrow"   value="{!0}"/>
+                     <apex:variable var="countrows"  value="{!0}"/>
+                     <apex:variable var="countroww"  value="{!0}"/>
+                     <div style="display: block;">
+                        <div class="slds-form-element" style="font-size: 16px;">
+                           <table style="width:95%" align="center" border="1px;" class="list"  cellspacing="0" cellpadding="0">
+                              <tr class="headerRow" >
+                                 <apex:outputPanel rendered="{!if(AND(isAcedmicM, strterm = 'MidTerm'),true,false)}" >
+                                    <td border="1px;" rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#</td>
+                                    <td rowspan="2">{!Mque1}</td>
+                                    <td rowspan="2">{!Mque2}</td>
+                                    <td rowspan="2">{!Mque3}</td>
+                                    <td rowspan="2">{!Mque4}</td>
+                                    <td rowspan="2">{!Mque5}</td>
+                                 </apex:outputPanel>
+                                 
+                                 <apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+                                    <td rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#</td>
+                                    <td rowspan="2">{!que1}</td>
+                                    <td rowspan="2">{!que2}</td>
+                                    <td rowspan="2">{!que3}</td>
+                                    <td rowspan="2">{!que4}</td>
+                                    <td rowspan="2">{!que5}</td>
+                                    <td rowspan="2">{!que6}</td>
+                                    <td rowspan="2">{!que7}</td>
+                                    <td rowspan="2">{!que8}</td>
+                                    <td rowspan="2">{!que9}</td>
+                                    <td rowspan="2">{!que10}</td>
+                                 </apex:outputPanel>
+                                 <!--- Questions For Sports start ---->
+                                 <apex:outputPanel rendered="{!isSports}" >
+                                    <td rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#</td>
+                                    <td rowspan="2">{!Sque1}</td>
+                                    <td rowspan="2">{!Sque2}</td>
+                                    <td rowspan="2">{!Sque3}</td>
+                                    <td rowspan="2">{!Sque4}</td>
+                                    <td rowspan="2">{!Sque5}</td>
+                                    <td rowspan="2">{!Sque6}</td>
+                                    <td rowspan="2">{!Sque7}</td>
+                                    <td rowspan="2">{!Sque8}</td>
+                                    <td rowspan="2">{!Sque9}</td>
+                                    <td rowspan="2">{!Sque10}</td>
+                                 </apex:outputPanel>
+                                 <!--- Questions For Sports End ---->
+                                 <!--- Answers For Sports Start ---->
+<apex:outputPanel rendered="{!isSports}" >                                
+                             <tbody>
+                                 <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                                    <tr>
+                                       <apex:variable value="{!countrow + 1}" var="countrow"/>
+                                       <td style="text-align: center;">{!countrow}</td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque1" value="{!((countque1)+(VALUE(objCFB.Q1A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q1A__c}"/>
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque2" value="{!((countque2)+(VALUE(objCFB.Q2A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q2A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque3" value="{!((countque3)+(VALUE(objCFB.Q3A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q3A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque4" value="{!((countque4)+(VALUE(objCFB.Q4A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q4A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque5" value="{!((countque5)+(VALUE(objCFB.Q5A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q5A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque6" value="{!((countque6)+(VALUE(objCFB.Q6A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q6A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque7" value="{!((countque7)+(VALUE(objCFB.Q7A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q7A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque8" value="{!((countque8)+(VALUE(objCFB.Q8A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q8A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque9" value="{!((countque9)+(VALUE(objCFB.Q9A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q9A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque10" value="{!((countque10)+(VALUE(objCFB.Q10A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q10A__c}" />
+                                       </td>
+                                       
+                                    </tr>
+                                 </apex:repeat>
+                              </tbody>
+</apex:outputPanel>
+                                 <!--- Answers For Sports End ---->
+                              </tr>
+                              
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >                                
+                             <tbody>
+                                 <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                                    <tr>
+                                       <apex:variable value="{!countrow + 1}" var="countrow"/>
+                                       <td style="text-align: center;">{!countrow}</td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque1" value="{!((countque1)+(VALUE(objCFB.Q1A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q1A__c}"/>
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque2" value="{!((countque2)+(VALUE(objCFB.Q2A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q2A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque3" value="{!((countque3)+(VALUE(objCFB.Q3A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q3A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque4" value="{!((countque4)+(VALUE(objCFB.Q4A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q4A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque5" value="{!((countque5)+(VALUE(objCFB.Q5A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q5A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque6" value="{!((countque6)+(VALUE(objCFB.Q6A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q6A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque7" value="{!((countque7)+(VALUE(objCFB.Q7A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q7A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque8" value="{!((countque8)+(VALUE(objCFB.Q8A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q8A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque9" value="{!((countque9)+(VALUE(objCFB.Q9A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q9A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque10" value="{!((countque10)+(VALUE(objCFB.Q10A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q10A__c}" />
+                                       </td>
+                                       
+                                    </tr>
+                                 </apex:repeat>
+                              </tbody>
+</apex:outputPanel>
+    
+<apex:outputPanel rendered="{!if(AND(isAcedmicM, strterm = 'MidTerm'),true,false)}" >
+                                <tbody>
+                                 <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                                    <tr>
+                                       <apex:variable value="{!countrow + 1}" var="countrow"/>
+                                       <td style="text-align: center;">{!countrow}</td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque1" value="{!((countque1)+(VALUE(objCFB.Q1A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q1A__c}"/>
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque2" value="{!((countque2)+(VALUE(objCFB.Q2A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q2A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:outputField value="{!objCFB.Q3A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:outputField value="{!objCFB.Q4A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:outputField value="{!objCFB.Q5A__c}" />
+                                       </td>
+                                    </tr>
+                                 </apex:repeat>
+                              </tbody>
+</apex:outputPanel> 
+                              
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+                              <tr>
+                                 <td style="text-align: center;">
+                                    Average:
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque1/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque2/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque3/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque4/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque5/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque6/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque7/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque8/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque9/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque10/countrow}" />
+                                    </apex:outputText>
+                                 </td>
+                                 
+                              </tr>
+</apex:outputPanel>                               
+                           </table>
+                           
+                        </div>
+                     </div>
+
+                    <!------ Instructor Average ----->
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >                   
+                     <div class="slds-form-element" style="font-size: 16px;">
+                        <table border="1" style="width:95%" align="center">
+                           <tr>
+                              <td style="text-align: Left;">
+                                 Instructor Average:
+                                 <apex:outputText value="{0, number, 0.00}">    
+                                    <apex:param value="{!ROUND((countque1/countrow+countque2/countrow+countque3/countrow+countque4/countrow+countque5/countrow+countque6/countrow+countque7/countrow+countque8/countrow+countque9/countrow+countque10/countrow)/10,2)}" />
+                                 </apex:outputText>
+                              </td>                      
+                           </tr>
+                        </table>
+                        <br></br>
+                     </div>
+</apex:outputPanel>                  
+                     <!------ End Instructor Average ----->
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >                        
+<!----- 11 to 15 Questions -------->
+                     <div style="display: block;">
+                        <div class="slds-form-element" style="font-size: 16px;">
+                           <table style="width:95%" align="center" border="1px;" class="list"  cellspacing="0" cellpadding="0">
+                              <tr class="headerRow" >
+                                                                 
+                                 <apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+                                   
+                                    <td rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#</td>
+                                    <td rowspan="2">{!que11}</td>
+                                    <td rowspan="2">{!que12}</td>
+                                    <td rowspan="2">{!que13}</td>
+                                    <td rowspan="2">{!que14}</td>
+                                    <td rowspan="2">{!que15}</td>
+                                    
+                                 </apex:outputPanel>
+                                 
+                              </tr>
+                              <tbody>
+                                 <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                                    <tr>
+                                      <apex:variable value="{!countrows + 1}" var="countrows"/>
+                                       <td style="text-align: center;">{!countrows}</td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque11" value="{!((countque11)+(VALUE(objCFB.Q11A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q11A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque12" value="{!((countque12)+(VALUE(objCFB.Q12A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q12A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque13" value="{!((countque13)+(VALUE(objCFB.Q13A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q13A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque14" value="{!((countque14)+(VALUE(objCFB.Q14A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q14A__c}" />
+                                       </td>
+                                       <td style="text-align: center;">
+                                          <apex:variable var="countque15" value="{!((countque15)+(VALUE(objCFB.Q15A__c)))}"/>
+                                          <apex:outputField value="{!objCFB.Q15A__c}" />
+                                       </td>
+                                       
+                                    </tr>
+                                 </apex:repeat>
+                              </tbody>
+                              
+                              
+                              <tr>
+                                 <td style="text-align: center;">
+                                    Average:
+                                 </td>
+                                 
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque11/countrows}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque12/countrows}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque13/countrows}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque14/countrows}" />
+                                    </apex:outputText>
+                                 </td>
+                                 <td style="text-align: center;">
+                                    <apex:outputText value="{0, number, 0.00}">
+                                       <apex:param value="{!countque15/countrows}" />
+                                    </apex:outputText>
+                                 </td>
+                              </tr>
+                              
+                           </table>
+                          
+                        </div>
+                     </div>
+</apex:outputPanel>                  
+<!----- 11 to 15 Questions -------->
+                     
+
+                     <!------ Course Average  ----->
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >                    
+                     <div class="slds-form-element" style="font-size: 16px;" >
+                        <table border="1" style="width:95%" align="center">
+                           <tr>
+                              <td style="text-align: Left;">
+                                 Course Average:      
+                              
+                                 <apex:outputText value="{0, number, 0.00}">
+                                    <apex:param value="{!ROUND((countque11/countrows+countque12/countrows+countque13/countrows+countque14/countrows+countque15/countrows)/5,2)}" />
+                                 </apex:outputText>
+                              </td>
+                           </tr>
+                        </table>
+                        
+                     </div>
+
+                     
+                     <!------ End Course Average  ----->  
+<!----- 16 to 22 Questions -------->
+                     <div style="display: block; margin-top:20px;">
+                        <div class="slds-form-element" style="font-size: 16px;">
+                        
+                              <p style="color:Black; margin-bottom:8px;" ><strong> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Optional Questions Feedback </strong></p>
+                        
+                           <table style="width:95%"  align="center" border="1px;" class="list"  cellspacing="0" cellpadding="0">
+                            
+                              <tr class="headerRow" >
+                                
+                                 <apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+                                    <td rowspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;#</td>
+                                    <td rowspan="2">{!que16}</td>
+                                    <td rowspan="2">{!que17}</td>
+                                    <td rowspan="2">{!que18}</td>
+                                    <td rowspan="2">{!que19}</td>
+                                    <td rowspan="2">{!que20}</td>
+                                    <td rowspan="2">{!que21}</td>
+                                    <td rowspan="2">{!que22}</td>
+                                 </apex:outputPanel>
+                              </tr>
+                              <tbody>
+                                 <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                                    <tr>
+                                       <apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+                                          <apex:variable value="{!countroww + 1}" var="countroww"/>
+                                          <td style="text-align: center;">{!countroww}</td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q16A__c}"/>
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q17A__c}" />
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q18A__c}" />
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q19A__c}" />
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q20A__c}" />
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q21A__c}" />
+                                          </td>
+                                          <td style="text-align: center;">
+                                             <apex:outputField value="{!objCFB.Q22A__c}" />
+                                          </td>
+                                       </apex:outputPanel>
+                                    </tr>
+                                 </apex:repeat>
+                              </tbody>
+                             
+                           </table>
+                           <br></br>
+                        </div>
+                     </div>
+                     
+<!----- 16 to 22 Questions -------->
+
+                     <!----------- 31 ------------->
+                     <div class="slds-form-element" style="font-size: 16px; margin-bottom:80px;" >
+                        <table style="width:95%" align="center" border="1px;">
+                           <td>{!que31}</td>
+                           <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                              <tr>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q31A__c}" />
+                                 </td>
+                              </tr>
+                           </apex:repeat>
+                        </table>
+                     </div>
+                     <!----------- End 31 ------------->
+</apex:outputPanel>                     
+<apex:outputPanel rendered="{!if(AND(isAcedmicM, strterm = 'MidTerm'),true,false)}" >       
+        <!----------- Mid Term 31 & 32 ------------->
+                     <div class="slds-form-element" style="font-size: 16px; margin-top: 20px; margin-bottom:80px;" >
+                        <table style="width:95%" align="center" border="1px;">
+                           <tr>
+                           <td>{!Mque31}</td>
+                           <td>{!Mque32}</td>
+                           <td>{!Mque33}</td>
+                           <td>{!Mque34}</td>
+                           <td>{!Mque35}</td>
+                           <td>{!Mque36}</td>
+                           </tr>
+                          <tbody>
+                           <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                              <tr>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q31A__c}" />
+                                 </td>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q32A__c}" />
+                                 </td>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q33A__c}" />
+                                 </td>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q34A__c}" />
+                                 </td>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q35A__c}" />
+                                 </td>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q36A__c}" />
+                                 </td>
+                              </tr>
+                           </apex:repeat>
+                           </tbody>
+                        </table>
+                     </div>
+</apex:outputPanel>                  
+                     <!----------- Mid Term 31 & 32  ------------->
+<apex:outputPanel rendered="{!isSports}" >       
+        <!----------- Mid Term 31 & 32 ------------->
+                     <div class="slds-form-element" style="font-size: 16px; margin-top: 20px;" >
+                        <table style="width:95%" align="center" border="1px;">
+                           <tr>
+                           <td>{!Sque31}</td>
+                           </tr>
+                           <apex:repeat value="{!lstofCourseFeedback}" var="objCFB">
+                              <tr>
+                                 <td style="text-align: left;">
+                                    <apex:outputField value="{!objCFB.Q31A__c}" />
+                                 </td>
+                              </tr>
+                           </apex:repeat>
+                        </table>
+                     </div>
+</apex:outputPanel>                       
+                  </html>
+               </apex:outputText>
+            </apex:outputPanel>
+<!--------------------Test-------------------->
+<apex:outputPanel rendered="{!if(AND(lstofCourseFeedback.size = 0,strCFId != null),true,false)}" >
+
+<div class="slds-form-element" style="font-size: 16px; margin-top: 350px;"  >  
+<center> <h4 style="font-size: 2.0rem;"> Currently there are no course feedbacks submitted !!!!. </h4></center>
+</div>     
+</apex:outputPanel>
+
+<!--------------------Test-------------------->
+
+<!----------------------------------------For Student View ----------------------------------------> 
+<apex:outputPanel rendered="{!if(OR(strCFId =null,strCFId =''),true,false)}" >   
+
+<!--- Display CourseOffering Name, Faculty Name And Term ------>
+<div class="sub-heading"  >  
+ <h6>Course :     {!courseofferingName }</h6>
+</div> 
+                                    
+
+<!---------------------------------------------------------------- ------------------------------------------------------------------------------------------------------------>        
+<!--Save the Course FeedBack for Academic Course  with Mid Term -->  
+
+        <div class="content mt-50" style="font-size: 16px;" >      
+        
+        <apex:outputPanel rendered="{!if(AND(isAcedmicM, strterm = 'MidTerm'),true,false)}" >
+        
+        <div style="margin-bottom: 10px; font-weight:bold;">
+        <apex:outputText ><Left><h4 style="font-size: 1.0rem;"><br></br>
+        A rating of 1 means the faculty is considered "Very unclear." A rating of 5 means the faculty is considered "Very clear."
+        </h4></Left></apex:outputText>
+        </div> 
+
+         <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+        <label class="slds-form-element">{!Mque1}</label>
+        <div class="slds-form-element__control" style=" text-align:center;" > 
+        <apex:selectRadio style="width:150px;" id="radioSelectM1" value="{!ans1}" layout="PageDirection" label="Q1" required="true" >
+        <apex:selectOptions value="{!M11RadioOptions}" />
+        </apex:selectRadio>
+        </div> 
+        </div> 
+        
+        <div style="margin-bottom: 10px; font-weight:bold;">
+        <apex:outputText ><Left><h4 style="font-size: 1.0rem;"><br></br>
+        A rating of 1 means the faculty is considered "Not helpful." A rating of 5 means the faculty is considered "Very helpful."
+        </h4></Left></apex:outputText>
+        </div> 
+        
+        <div class="slds-form-element" style="margin-bottom: 40px; font-size: 16px;">
+        <label class="slds-form-element" >{!Mque2}</label>
+        <apex:selectRadio style="width:150px;" id="radioSelectM2" value="{!ans2}" layout="PageDirection" label="Q2" required="true" >
+        <apex:selectOptions value="{!M2RadioOptions}"/>
+        </apex:selectRadio>
+        </div>  
+        
+        <div class="slds-form-element" style="margin-bottom: 40px; font-size: 16px;">
+        <label class="slds-form-element" >{!Mque3}</label>
+        <apex:selectRadio style="width:150px;" id="radioSelectM3" value="{!ans3}" layout="PageDirection" label="Q3" required="true" >
+        <apex:selectOptions value="{!M1RadioOptions}"/>
+        </apex:selectRadio>
+        </div>  
+
+        <div class="slds-form-element" style="margin-bottom: 40px; font-size: 16px;">
+        <label class="slds-form-element" >{!Mque4}</label>
+        <apex:selectRadio style="width:150px;" id="radioSelectM4" value="{!ans4}" layout="PageDirection" label="Q4" required="true" >
+        <apex:selectOptions value="{!M1RadioOptions}"/>
+        </apex:selectRadio>
+        </div>  
+        
+        <div class="slds-form-element" style="margin-bottom: 40px; font-size: 16px;">
+        <label class="slds-form-element" >{!Mque5}</label>
+        <apex:selectRadio style="width:150px;" id="radioSelectM5" value="{!ans5}" layout="PageDirection" label="Q5" required="true" >
+        <apex:selectOptions value="{!M1RadioOptions}"/>
+        </apex:selectRadio>
+        </div>  
+        
+        <div class="slds-form-element" style="font-size: 16px;">
+        <label class="slds-form-element" style="font-size: 16px;" >{!Mque31}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input"  value="{!objCF.Q31A__c}"/>
+        </div>
+        </div>
+        
+        <div class="slds-form-element" style="font-size: 16px;">
+        <label class="slds-form-element" style="font-size: 16px;" >{!Mque32}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input"  value="{!objCF.Q32A__c}"/>
+        </div>
+        </div>
+        
+        <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+         <label class="slds-form-element" style="font-size: 16px;" >{!Mque33}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input" value="{!objCF.Q33A__c}"/>
+        </div>
+        </div>   
+
+        <div class="slds-form-element" style="font-size: 16px;">
+        <label class="slds-form-element" style="font-size: 16px;" >{!Mque34}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input"  value="{!objCF.Q34A__c}"/>
+        </div>
+        </div>   
+        
+        <div class="slds-form-element" style="font-size: 16px;">
+        <label class="slds-form-element" style="font-size: 16px;" >{!Mque35}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input"  value="{!objCF.Q35A__c}"/>
+        </div>
+        </div>
+        
+        <div class="slds-form-element" style="font-size: 16px;">
+        <label class="slds-form-element" style="font-size: 16px;" >{!Mque36}</label>
+        <div class="slds-form-element__control">                                    
+        <apex:inputField styleClass="slds-input"  value="{!objCF.Q36A__c}"/>
+        </div>
+        </div>
+        
+</apex:outputPanel>
+    </div> 
+
+<!--Save the Course FeedBack for Academic Course  with End Term -->  
+
+<div class="content mt-50">      
+<apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}" >
+    <div style="margin-bottom: 10px; font-weight:bold;">
+    <apex:outputText >
+    <Left>
+    <h4 style="font-size: 1.0rem;"><br></br>
+    Describe the frequency of your instructor’s teaching procedures:  
+    (1-Hardly ever, 2-Occasionally, 3-Sometimes, 4-Frequently, 5-Almost always)
+    </h4>
+    </Left>
+    </apex:outputText>
+    </div> 
+<!----
+<div class="slds-form-element">
+<Left> <h4 style="font-size: 1.0rem;"> Section-A </h4></Left> 
+</div>  
+--->
+
+            <div class="slds-form-element " style="font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element">{!que1}</label>
+            <div class="slds-form-element__control myCheckBox" > 
+            <apex:selectRadio id="radioSelectE1" value="{!ans1}" layout="lineDirection" label="Q1" required="true"  >
+            <apex:selectOptions value="{!RadioOptions}" />
+            </apex:selectRadio> 
+            </div> 
+            </div>
+       
+
+            <div class="slds-form-element" style="font-size: 16px;border-bottom: 1px solid #F5F5F5;" >
+            <label class="slds-form-element" >{!que2}</label>
+            <div class="slds-form-element__control myCheckBox" >                                    
+            <apex:selectRadio id="radioSelectE2" value="{!ans2}" layout="lineDirection" label="Q2" required="true" >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="font-size: 16px;border-bottom: 1px solid #F5F5F5;" >
+            <label class="slds-form-element" >{!que3}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE3" value="{!ans3}" layout="lineDirection" label="Q3" required="true" >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" style="font-size: 16px;" >{!que4}</label>
+            <div class="slds-form-element__control myCheckBox" >                                    
+            <apex:selectRadio id="radioSelectE4" value="{!ans4}" layout="lineDirection" label="Q4" required="true"  >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!que5}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE5" value="{!ans5}" layout="lineDirection" label="Q5" required="true" >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que6}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE6" value="{!ans6}" layout="lineDirection" label="Q6" required="true"  >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que7}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE7" value="{!ans7}" layout="lineDirection" label="Q7" required="true"  >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+            
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que8}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE8" value="{!ans8}" layout="lineDirection" label="Q8" required="true" >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que9}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE9" value="{!ans9}" layout="lineDirection" label="Q9" required="true" >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que10}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE10" value="{!ans10}" layout="lineDirection" label="Q10" required="true"  >
+            <apex:selectOptions value="{!RadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>  
+
+            <!-- SECTION - B -->
+
+            <div style="margin-bottom: 10px; font-weight:bold;">
+            <apex:outputText ><Left><h4 style="font-size: 1.0rem;"><br></br>
+
+            Describe the degree your agreement with the following statements  
+
+            (1-Strongly disagree, 2-Disagree, 3-Neutral, 4-Agree, 5-Strongly agree).
+
+            </h4></Left></apex:outputText>
+            </div> 
+            <!----
+            <div class="slds-form-element">
+            <apex:outputText >
+            <Left> <h4 style="font-size: 1.0rem;"> Section-B </h4></Left>
+            </apex:outputText>
+            </div>
+            ---->   
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que11}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE11" value="{!ans11}" layout="lineDirection" label="Q11" required="true"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que12}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE12" value="{!ans12}" layout="lineDirection" label="Q12" required="true"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que13}</label>
+            <div class="slds-form-element__control  myCheckBox" >                                    
+            <apex:selectRadio id="radioSelectE13" value="{!ans13}" layout="lineDirection" label="Q13" required="true"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que14}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE14" value="{!ans14}" layout="lineDirection" label="Q14" required="true"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+           <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que15}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE15" value="{!ans15}" layout="lineDirection" label="Q15" required="true"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+            
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!Que31}</label>
+            <div class="slds-form-element__control ">                                    
+            <apex:inputField styleClass="slds-input"  value="{!objCF.Q31A__c}"/>
+            </div>
+            </div> 
+            
+            </apex:outputPanel>
+            </div>
+<!----------------  from Custom label data for Mid ------------------>
+   
+    <div class="content mt-50"> 
+    <apex:outputPanel rendered="{!if(AND(isAcedmicM, strterm = 'MidTerm'),true,false)}">
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT1'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQMT1'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q37A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+            
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT2'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQMT2'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q38A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT3'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQMT3'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q39A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    
+            
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT4'].Active__c == true,true,false)}"> 
+      <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            {!mapofDevloperNmaeToMD['DYNQMT4'].Question__c}
+            <div class="slds-form-element__control" style=" text-align:center;" > 
+            <apex:selectRadio style="width:150px;" id="radioSelectMl1" value="{!objCF.Q40A__c}" layout="PageDirection">
+            <apex:selectOptions value="{!labelRadioOptions}" />
+            </apex:selectRadio>
+            </div> 
+            </div>
+            </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT5'].Active__c == true,true,false)}"> 
+      <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            {!mapofDevloperNmaeToMD['DYNQMT5'].Question__c}
+            <div class="slds-form-element__control" style=" text-align:center;" > 
+            <apex:selectRadio style="width:150px;" id="radioSelectMl2" value="{!objCF.Q41A__c}" layout="PageDirection">
+            <apex:selectOptions value="{!labelRadioOptions}" />
+            </apex:selectRadio>
+            </div> 
+            </div>
+            </apex:outputpanel>
+            
+     <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQMT6'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQMT6'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q42A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    </apex:outputPanel>
+    </div>
+    
+    <!----------------  from Custom label data for End ------------------>
+   
+    <div class="content mt-50"> 
+    <apex:outputPanel rendered="{!if(AND(isAcedmicE, strterm = 'EndTerm'),true,false)}">
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET1'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQET1'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q37A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+            
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET2'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQET2'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q38A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET3'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQET3'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q39A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET4'].Active__c == true,true,false)}"> 
+      <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!mapofDevloperNmaeToMD['DYNQET4'].Question__c} </label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectEl1" value="{!objCF.Q40A__c}" layout="lineDirection">
+            <apex:selectOptions value="{!labelRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET5'].Active__c == true,true,false)}"> 
+       <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!mapofDevloperNmaeToMD['DYNQET5'].Question__c} </label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectEl2" value="{!objCF.Q41A__c}" layout="lineDirection">
+            <apex:selectOptions value="{!labelRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+    </apex:outputpanel>
+    
+    <apex:outputpanel rendered="{!if(mapofDevloperNmaeToMD['DYNQET6'].Active__c == true,true,false)}"> 
+    <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+    {!mapofDevloperNmaeToMD['DYNQET6'].Question__c}
+    <div class="slds-form-element__control" style="margin-bottom: 10px;">
+    <apex:inputField value="{!objCF.Q42A__c}" styleclass="slds-input"/> 
+    </div>
+    </div>
+    </apex:outputpanel>
+    
+    </apex:outputPanel>
+    </div>
+   
+    <!--- Custom label data for End Code ----------------->
+    
+<apex:outputPanel rendered="{!if(AND(isAcedmicE,strterm = 'EndTerm'),true,false)}" >
+<div class="content mt-50"  style="margin-top: 10px;">
+<apex:commandButton styleClass="slds-button slds-button_neutral" value="Show Optional Questions" action="{!displaybutton}"  />
+</div> 
+</apex:outputPanel>            
+   
+            <div class="content mt-50">   
+            <apex:outputPanel rendered="{!if(AND(display, strterm = 'EndTerm'),true,false)}" >
+            <div style="margin-bottom: 10px; font-weight:bold;">
+            <apex:outputText ><Left><h4 style="font-size: 1.0rem;"><br></br>
+            The next few questions concern course outcomes. Describe the degree to which you agree with the following statements.<br></br> 
+            Answer only those which you think are relevant to this course
+        
+            (1-Strongly disagree, 2-Disagree, 3-Neutral, 4-Agree, 5-Strongly agree).
+            <br></br>
+            <div style="margin-top: 10px; font-weight:bold;">
+            This course helped me to:
+            </div>
+            </h4></Left></apex:outputText>
+            </div> 
+            <!---
+            <div class="slds-form-element">
+            <apex:outputText >
+            <Left> <h4 style="font-size: 1.0rem;"> Section-C </h4></Left>
+            </apex:outputText>
+            </div>  
+            ---->
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que16}</label>
+            <div class="slds-form-element__control  myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE16" value="{!ans16}" layout="lineDirection" label="Q16" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que17}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE17" value="{!ans17}" layout="lineDirection" label="Q17" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que18}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE18" value="{!ans18}" layout="lineDirection" label="Q18" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que19}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE19" value="{!ans19}" layout="lineDirection" label="Q19" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que20}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE20" value="{!ans20}" layout="lineDirection" label="Q20" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que21}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE21" value="{!ans21}" layout="lineDirection" label="Q21" >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+
+            <div class="slds-form-element " style="margin-bottom: 8px; font-size: 16px; border-bottom: 1px solid #F5F5F5;">
+            <label class="slds-form-element" >{!Que22}</label>
+            <div class="slds-form-element__control myCheckBox">                                    
+            <apex:selectRadio id="radioSelectE22" value="{!ans22}" layout="lineDirection" label="Q22"  >
+            <apex:selectOptions value="{!ARadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>
+            </apex:outputPanel>
+            </div>
+    
+<!--Save the Course FeedBack for Sports Course  --> 
+
+<div class="content mt-50" style="margin-top: 10px;">      
+    <apex:outputPanel rendered="{!isSports}" >
+
+            <div style="margin-bottom: 10px; font-weight:bold;">
+            <apex:outputText ><Left><h4 style="font-size: 1.0rem;">
+            Please rate the coach in each area on scale 1 to 5 With 1 being poor and 5 being excellent.
+            </h4></Left></apex:outputText>
+            </div>
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element">{!Sque1}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;"> 
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect01" value="{!Sans1}" layout="lineDirection" label="Q1" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+             <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element">{!Sque2}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;"> 
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect02" value="{!Sans2}" layout="lineDirection" label="Q2" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>    
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!Sque3}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                  
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect03" value="{!Sans3}" layout="lineDirection" label="Q3" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" style="font-size: 16px;" >{!Sque4}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                    
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect04" value="{!Sans4}" layout="lineDirection" label="Q4" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!Sque5}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                  
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect05" value="{!Sans5}" layout="lineDirection" label="Q5" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!SQue6}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                   
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect06" value="{!Sans6}" layout="lineDirection" label="Q6" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!SQue7}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect07" value="{!Sans7}" layout="lineDirection" label="Q7" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!SQue8}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                    
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect08" value="{!Sans8}" layout="lineDirection" label="Q8" required="true" >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!SQue9}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                    
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect09" value="{!Sans9}" layout="lineDirection" label="Q9" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+
+            </div>   
+
+            <div class="slds-form-element" style="margin-bottom: 8px; font-size: 16px;">
+            <label class="slds-form-element" >{!SQue10}</label>
+            <div class="slds-form-element__control" style="margin-bottom: 10px;">                                 
+            <apex:selectRadio style="width:250px; font-size: 16px;" id="radioSelect010" value="{!Sans10}" layout="lineDirection" label="Q10" required="true"  >
+            <apex:selectOptions value="{!SRadioOptions}"/>
+            </apex:selectRadio>
+            </div>
+            </div>    
+            
+            <div class="slds-form-element" style=" margin-bottom: 20px;  font-size: 16px;">
+            <label class="slds-form-element" >{!SQue31}</label>
+            <div class="slds-form-element__control ">                                    
+            <apex:inputField styleClass="slds-input"  value="{!objCF.Q31A__c}"/>
+            </div>
+            </div>        
+
+    </apex:outputPanel>
+
+    
+<div id="IdPageBtn" class="slds-align_absolute-center hideComponent" style="margin-bottom: 40px; padding-top: 25px;">
+<apex:commandButton styleClass="slds-button slds-button_neutral  saveBtn" onclick="doSave();this.disabled=true;"  oncomplete="funcOnComp()"  style="float:right;" value="Submit"/>
+</div>
+</div>
+</apex:outputPanel>
+          
+</div></div></div>
+</apex:form>        
+</body>    
+</apex:page>

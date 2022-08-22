@@ -1,0 +1,38 @@
+<apex:page controller="WebToCaseController" showHeader="false" >
+
+<apex:form >
+<apex:pageBlock title="Associated Cases" >
+
+<apex:pageBlockTable value="{!lstoCase}" var="objCase">
+
+<apex:column headerValue="Case Number">
+ <apex:outputLink value="/{!objCase.Id}" target="_blank">{!objCase.CaseNumber}</apex:outputLink> </apex:column>
+<!---
+<apex:column headerValue="Contact Name">
+ <apex:outputLink value="/{!objCase.Id}" target="_blank">{!objCase.Contact.Name}</apex:outputLink> </apex:column>
+
+<apex:column headerValue="Web Name">
+ <apex:outputLink value="/{!objCase.Id}" target="_blank">{!objCase.SuppliedName}</apex:outputLink> </apex:column>
+  --->
+<apex:column headerValue="Created Date" value="{!objCase.CreatedDate}"/>
+<apex:column headerValue="Closed Date" value="{!objCase.ClosedDate}"/>
+<apex:column headerValue="Case Status" value="{!objCase.Status}"/>
+<apex:column headerValue="Case Title" value="{!objCase.Subject}"/>
+<apex:column headerValue="Executive Assigned" value="{!objCase.Field_Executive_Assigned__c}"/>
+<apex:column headerValue="Marketing Team Comments" value="{!objCase.Marketing_Team_Comments__c}"/>
+<apex:column headerValue="Marketing Team Follow Up Status" value="{!objCase.Follow_Up_Status_MKTG__c}"/>
+<apex:column headerValue="Web Name" value="{!objCase.SuppliedName}"/>
+<apex:column headerValue="Web Email" value="{!objCase.SuppliedEmail }"/>
+<apex:column headerValue="Contact Name" value="{!objCase.Contact.Name}"/>
+<!--- <apex:column headerValue="Contact Email" value="{!objCase.Contact.Email}"/>
+ <apex:column headerValue="Description" value="{!objCase.Description}"/>
+<apex:column headerValue="Phone" value="{!objCase.SuppliedPhone}"/> 
+<apex:column headerValue="Company" value="{!objCase.SuppliedCompany}"/> -->
+
+</apex:pageBlockTable>
+
+</apex:pageBlock>
+
+</apex:form>
+ 
+</apex:page>

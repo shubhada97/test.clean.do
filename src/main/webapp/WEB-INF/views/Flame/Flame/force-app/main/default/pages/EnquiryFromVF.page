@@ -1,0 +1,76 @@
+<apex:page controller="Flame_Community" showHeader="false"  readOnly="" showChat="false" sidebar="false" standardStylesheets="false" docType="HTML-5.0">
+<html>
+<div style="color:Black;">
+<p>Dear Applicant,</p>
+
+<p>You may email or call us using contact details provided below.</p>
+
+<p>Admissions inquiries: admission@flame.edu.in </p>
+<p>Technical support: techsupport@flame.edu.in </p>
+<p>Toll free number: 1800-209-4567 </p>
+
+<p>Sincerely,</p>
+
+<p>FLAME Admissions Support Team </p>
+</div>
+<script src="js/html5shiv.js"></script>
+<script src="js/respond.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no "/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToCase?encoding=UTF-8" method="POST">
+        <input type="hidden" name="orgid" value="00D280000014pp8"/>
+        <input type="hidden" name="recordType" value="01228000000itLg"/>
+        <input type="hidden" name="retURL" value="https://application.flame.edu.in/application/EnquiryThankyouVF"/>
+        <input type="hidden" name="debug" value="1"/>
+     <!--     *******************{!FlameCont.Email} -->
+        <div class="form-group">
+           <input  type="hidden" id="name" class="form-control" maxlength="80" name="name" size="20"/>
+        </div>
+        
+        <div class="form-group">
+            <input  type="hidden" id="SuppliedEmail" class="form-control" maxlength="80" name="SuppliedEmail" size="20" value='{!FlameCont.Email}' />
+        </div>
+        
+         <div class="form-group">
+            <input  type="hidden" id="email" class="form-control" maxlength="80" name="email" size="20" value='{!FlameCont.Email}' />
+        </div>
+        
+        
+    <!--    <div class="form-group">
+            <!--<label for="phone1">Phone</label>
+            <input  id="phone1" class="form-control" maxlength="40" name="phone" size="20" type="text" /> -->
+    <!--        <input  type="hidden" id="phone" class="form-control" maxlength="40" name="phone" size="20"/>
+        </div>
+        <div class="form-group">
+            <label for="subject">Subject<font color="red">*</font></label>
+            <input required="true" id="subject" class="form-control" maxlength="80" name="subject" size="20" type="text" oninput="dataChange()"/>
+        </div>
+        <div class="form-group">
+        <label for="description">Description<font color="red">*</font></label>
+        <textarea required="true" style="height:200px !important"  name="description" id="descriptionId" class="form-control" oninput="dataChange()"></textarea>
+        </div>
+        <input type="hidden"  id="external" name="external" value="1" />
+        
+        <div class="text-center">
+            <input type="submit" id="submitId" name="submit" value="Submit Request" class="btn btn-primary"/>
+        </div> -->
+    </form>
+    
+    <script>
+    
+    
+        
+        function dataChange(){
+            if($('#subject').val().trim() != '' && $('#descriptionId').val().trim() != ''){
+                $('#submitId').removeAttr('disabled');
+            }
+            else{
+                $('#submitId').attr('disabled','disabled');
+            }
+        }
+        
+    </script>
+    </html>
+</apex:page>

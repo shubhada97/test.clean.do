@@ -1,0 +1,10 @@
+<aura:component controller="StudentInOutDashboardController">
+    <aura:attribute name="contacts" type="Contact[]" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <lightning:select label="Primary Contact Type" name="primaryContact" aura:id="primaryContact" onchange="{!c.changeContact}">
+        <option value="all" seletect="true">--All--</option>
+        <aura:iteration items="{!v.contacts}" var="contact">
+            <option value="{!contact.id}">{!contact.name}</option>
+        </aura:iteration>
+    </lightning:select>
+</aura:component>
