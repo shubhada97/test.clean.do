@@ -185,3 +185,12 @@ html {
 {
 	color:blue;
 }
+
+/*tabel style*/
+table{
+	 border: 6px solid white;
+  border-collapse: collapse;
+	font-family: Tahoma, Verdana, Segoe, sans-serif;
+	width: 100%;
+	table-layout: fixed;
+}

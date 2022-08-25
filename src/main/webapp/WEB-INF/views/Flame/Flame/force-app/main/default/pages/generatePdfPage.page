@@ -1,5 +1,0 @@
-<apex:page applyHtmlTag="false" showHeader="false" renderAs="PDF">
-
-<apex:variable var="cellsPerRow" value="{!2}"/>
-
-</apex:page>

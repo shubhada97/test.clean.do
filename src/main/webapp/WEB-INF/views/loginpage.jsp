@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
- <link href="/css/loginpage.css" rel="stylesheet">
+ <link href="css/loginpage.css" rel="stylesheet">
 <meta charset="ISO-8859-1">
 
 <title>Login To Salesforce</title>
@@ -70,7 +70,7 @@
 			<div class="sections-row-col col-md-5">
 
 				  <div  class="logo-img-wrapper">
-					<img src="/images/cleando.PNG" alt=""
+					<img src="https://app.clean.do/assets/img/Salesforce-checkup-logo.png" alt=""
 						width="200px" class="img-fluid">
 				</div>
 
@@ -85,7 +85,7 @@
 
 					<div class="type-of-env-and-form-wrapper" style="margin-top: 2%;">
 						<div class="env-wrapper"
-							style="position: relative; margin-top: 5px; display: flex; justify-content: center; align-items: center;">
+							>
 							<span style="color: #545454; font-size: 18px; font-weight: 600;">Type
 								of Environment</span>
 						</div>

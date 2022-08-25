@@ -1,9 +1,0 @@
-<apex:page controller="Flame_Community" showHeader="false" showChat="false" sidebar="false" standardStylesheets="false">
-
-    <p style="font-family: 'Open Sans', sans-serif;">
-    <!--    Dear <b>{!FlameCont.Name}</b>,<br/><br/> -->
-        We have received your request, FLAME University admissions team member will reach out to you shortly.
-        <br/><br/>
-        Thank you.
-    </p>
-</apex:page>

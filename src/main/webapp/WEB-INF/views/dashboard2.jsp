@@ -159,7 +159,7 @@
 }
 
 .nav-tabs {
-	border-bottom: 1px solid #ddd;
+	border-bottom: 1px solid white;
 }
 
 .nav-tabs>li {
@@ -175,17 +175,16 @@
 	-moz-border-radius: 4px 4px 0 0;
 	border-radius: 4px 4px 0 0;
 }
-
+/*
 .nav-tabs>li>a:hover {
 	border-color: #eeeeee #eeeeee #dddddd;
-}
+}*/
 
 .nav-tabs>.active>a, .nav-tabs>.active>a:hover {
 	color: #555555;
 	cursor: default;
-	background-color: #ffffff;
-	border: 1px solid #ddd;
-	border-bottom-color: transparent;
+	
+	
 }
 
 li {
@@ -216,7 +215,7 @@ tr:hover {
 }
 
 table, td {
-	 border: 6px solid white;
+	 
   border-collapse: collapse;
 	font-family: Tahoma, Verdana, Segoe, sans-serif;
 	width: 100%;
@@ -234,7 +233,7 @@ tr {
 }
 
 th {
-	 border: 6px solid white;
+	
   border-collapse: collapse;
 	background: none repeat scroll 0 0 #c0c0c0;
 	  background-color: #f6f9fc;
@@ -248,7 +247,7 @@ td
 }
 #hidden_table_row, #hidden_table_header 
 {
-border: 4px solid white;
+
   border-collapse: collapse;
 }
 #hidden_table_data
@@ -399,19 +398,87 @@ body {
     background-color: white;
     background-clip: border-box;
 }
+.sidebar
+{
+ width: 250px;
+  background-color: white;
+  position: fixed;
+  
+  overflow: auto;
+  height: 100%;
+      padding-right: 0;
+    padding-left: 0;
+}
+.tabcontent
+{
+ margin-left: 250px;
+  padding: 1px 16px;
+  height: 1000px;
+ margin-top: 30px;
+ 
+  
+}
+.profile
+{
+ margin-left: 250px;
 
+}
+.logo-img-wrapper {
+	   position: fixed;
+  
+  overflow: auto;  
+	top: 5%;
+	display: flex;
+	justify-content: left;
+	align-items: left;
+	width: 250px;
+}
+
+/* Header*/
+.text-sm {
+    margin: 20px;
+    font-size: .875rem!important;
+}
+
+.font-weight-bold {
+    font-weight: 600!important;
+}
+.mb-0, .my-0 {
+    margin-bottom: 0!important;
+}
+.button {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  color: white;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 10px 2px;
+  transition-duration: 0.4s;
+  cursor: pointer;
+}
+
+
+.button2 {
+  background-color: #009FFF; 
+  color: black; 
+  border: 2px solid #008CBA;
+}
+
+.button2:hover {
+  background-color: #008CBA;
+  color: white;
+}
 </style>
 </head>
 <body>
 
-	<!--  <div class="sidenav-header  align-items-center">
-        <a class="navbar-brand" href="javascript:void(0)">
-              
-            <img src="https://app.clean.do/images/web.webp" class="navbar-brand-img" alt="salesforce checkup logo">
-                  </a>
-      </div>
-      -->
-
+	 <div  class="logo-img-wrapper">
+					<img src="https://app.clean.do/assets/img/Salesforce-checkup-logo.png" alt=""
+						width="200px" class="img-fluid">
+				</div>
 
        
 	<section class="profile">
@@ -420,22 +487,26 @@ body {
 		
 			<div class="details">
 
-				<h1 class="heading">${user.name}</h1>
-				<h1 class="heading">${user.email}</h1>
+				<h1 class="mb-0 text-sm  font-weight-bold">${user.name}</h1>
+				<!--  <h1 class="mb-0 text-sm  font-weight-bold">${user.email}</h1>-->
 				<form id="logoutForm" method="POST" action="/logout">
-					<button type="submit"
-						style="margin-top: 2rem; align-items: flex-end;">Log Out</button>
+					<button class="button button2"
+						style=" align-items: flex-end;">Sign Out</button>
 				</form>
 			</div>
 		</header>
 	</section>
-	<div>
+	<div  class="sidebar">
 		<ul class="nav nav-tabs nav nav-tabs flex-column">
 			<li class="active"><a href="#tab1">Dashboard</a></li>
 			<li><a href="#tab2">Objects</a></li>
 
 		</ul>
 	</div>
+	
+	
+	<div class="tabcontent">
+	<div class="card1">
 	<section id="tab1" class="tab-content active">
 		
 		
@@ -470,24 +541,14 @@ body {
   
 </div>
 
-
-
-
-			
-
-
-
-
 		</div>
 	
 
-
-
-
 	</section>
 
+
 	<section id="tab2" class="tab-content hide">
-<div class="card1">
+
 		<table >
 			
 				<tr>
@@ -527,10 +588,10 @@ body {
 					<c:forEach items="${allObjects}" var="stop" varStatus="status">
 
 						<tr   data-toggle="collapse" data-target="#${stop.getValue() }" aria-controls="collapseExample" >
-							<td style="color: darkred;"> <c:out
+							<td style="color: #cbcdcf;"> <c:out
 										value="${stop.getKey()}" /></td>
-							<td style="color: darkred;"><c:out value="${stop.getValue()}" /></td>
-							<td style="color: darkred;"><c:out value="${result.get(stop.getValue())}%" /></td>
+							<td style="color: #cbcdcf;"><c:out value="${stop.getValue()}" /></td>
+							<td style="color: #cbcdcf;"><c:out value="${result.get(stop.getValue())}%" /></td>
 							</tr >
 							
 	
@@ -577,12 +638,13 @@ body {
 
 
 			</div>
-
+</section>
 
 		</div>
+		
 		</div>
-	</section>
-
+	
+</div>
 	
 
 

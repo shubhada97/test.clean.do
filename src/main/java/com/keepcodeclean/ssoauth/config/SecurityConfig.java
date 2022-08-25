@@ -37,10 +37,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.csrf().disable().antMatcher("/**").authorizeRequests()
-				.antMatchers("/login/**", "/logout/**", "/css/**", "/images/**").permitAll().anyRequest()
-				.authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/").permitAll().and()
-				.addFilterAt(ssoFilter(), BasicAuthenticationFilter.class).logout().clearAuthentication(true)
-				.logoutSuccessUrl("/login").deleteCookies("JSESSIONID").invalidateHttpSession(true).permitAll();
+				.antMatchers("/login/**", "/css/**", "/images/**").permitAll().anyRequest()
+				.authenticated().and().formLogin().loginPage("/login").defaultSuccessUrl("/dashboard").permitAll().and()
+				.addFilterAt(ssoFilter(), BasicAuthenticationFilter.class).logout().invalidateHttpSession(true).logoutSuccessUrl("/login").permitAll()
+				.deleteCookies("JSESSIONID").permitAll();
 	}
 
 	@Bean

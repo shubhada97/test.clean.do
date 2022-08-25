@@ -1,11 +1,10 @@
 package com.keepcodeclean.ssoauth.service;
 
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.IntSummaryStatistics;
 import java.util.List;
 import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -22,14 +21,12 @@ import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.keepcodeclean.ssoauth.entity.Account;
 import com.keepcodeclean.ssoauth.entity.AllSobjects;
-import com.keepcodeclean.ssoauth.entity.Fields;
-import com.keepcodeclean.ssoauth.entity.ObjectDetails;
 import com.keepcodeclean.ssoauth.entity.ObjectRecord;
 import com.keepcodeclean.ssoauth.entity.ObjectResponse;
-import com.keepcodeclean.ssoauth.entity.Sobjects;
 
 import lombok.NonNull;
 
@@ -80,7 +77,7 @@ public class SocialAuthService {
 		Map<String, String> params = new HashMap<>();
 
 		params.put("q",
-				"SELECT Label, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true and IsQueryable=true and QualifiedApiName LIKE '%__c' order by Label  ");
+				"SELECT Label, QualifiedApiName FROM EntityDefinition WHERE IsCustomizable = true and IsQueryable=true and QualifiedApiName LIKE '%__c' order by Label LIMIT 4 ");
 
 		List<Account> acc = restTemplate.getForObject(url, QueryResultAccount.class, params).records;
 		System.out.println("Objects  size:" + acc.size());
@@ -167,14 +164,9 @@ public class SocialAuthService {
 		public List<T> records;
 	}
 
-	private static class QueryResultAccount extends QueryResult<com.keepcodeclean.ssoauth.entity.Account> {
+	private static class QueryResultAccount extends QueryResult<Account> {
 	}
 
-	
-	
-	
-	
-	
 	
 	
 	public AllSobjects getSObjects(@NonNull Principal principal) {

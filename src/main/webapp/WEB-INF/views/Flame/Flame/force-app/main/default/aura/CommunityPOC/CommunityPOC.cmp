@@ -1,3 +1,0 @@
-<aura:component implements="force:appHostable,flexipage:availableForAllPageTypes,forceCommunity:availableForAllPageTypes">
-	
-</aura:component>

@@ -1,1 +1,0 @@
-global with sharing class FLM_communitysampletest{}

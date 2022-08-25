@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<AuraDefinitionBundle xmlns="http://soap.sforce.com/2006/04/metadata">
-    <apiVersion>52.0</apiVersion>
-    <description>This component is used in vf page MarkAttendance for pointing geolocation of user.</description>
-</AuraDefinitionBundle>

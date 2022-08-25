@@ -8,7 +8,7 @@
 	padding-left: 15px;
 }
 
-@media ( min-width : 1200px) {
+@media  screen and ( min-width : 1200px) {
 	.container, .container-lg, .container-md, .container-sm, .container-xl {
 		max-width: 1140px;
 	}
@@ -252,4 +252,12 @@ input.btn.btn-success.logBtn {
 	letter-spacing: .025em;
 	text-transform: none;
 	will-change: transform;
+}
+.env-wrapper
+{
+	position: relative;
+	 margin-top: 5px; 
+	 display: flex; 
+	 justify-content: center;
+	  align-items: center;
 }

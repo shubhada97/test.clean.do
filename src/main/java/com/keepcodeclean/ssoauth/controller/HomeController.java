@@ -17,11 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.keepcodeclean.ssoauth.entity.Account;
-import com.keepcodeclean.ssoauth.entity.AllSobjects;
 import com.keepcodeclean.ssoauth.entity.Fields;
 import com.keepcodeclean.ssoauth.entity.ObjectDetails;
 import com.keepcodeclean.ssoauth.entity.ObjectResponse;
-import com.keepcodeclean.ssoauth.entity.Sobjects;
 import com.keepcodeclean.ssoauth.service.SocialAuthService;
 
 @Controller
@@ -53,10 +51,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/logout")
-	public String logout() {
-		return "login";
-	}
+	
 
 
 	
@@ -171,7 +166,7 @@ public class HomeController {
 		System.out.println("MapObject:"+MapObject.get("Account"));
 
 		model.addAttribute("overallPercentage", Overallpercentage);
-		ModelAndView mv = new ModelAndView("dashboard");
+		ModelAndView mv = new ModelAndView("dashboard2");
 		return mv;
 
 	}

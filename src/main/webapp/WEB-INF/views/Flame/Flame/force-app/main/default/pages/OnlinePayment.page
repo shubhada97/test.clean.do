@@ -1,9 +1,0 @@
-<apex:page controller="Flame_Community" action="{!OnlinePayment}" docType="html" sidebar="false" showChat="false" showHeader="false" standardStylesheets="false">
-    
-    <form id="nonseamless" method="post" name="redirect" action="{!endPointUrl}"> 
-    
-    <input type="hidden" name="encRequest" value="{!Enc_Request}"/>
-    <input type="hidden" name="access_code" value="{!Access_Code}"/>
-        <script>document.redirect.submit();</script>
-    </form>
-</apex:page>

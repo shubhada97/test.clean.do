@@ -1,7 +1,0 @@
-<apex:component >
-<a href="{!$Site.BaseUrl}/apex/FLAME_Jobs_Portal" class="custom-logo-link" rel="home" itemprop="url">
-<img width="240" height="79" src="{!URLFOR($Resource.flamejobportal)}" class="custom-logo" alt="cropped-flame-job-portal.jpg" itemprop="logo" />
-</a>              
-    
-    
-</apex:component>
