@@ -10,7 +10,7 @@
 	<groupId>com.keepcodeclean</groupId>
 	<artifactId>oauth-web-tutorial</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>war</packaging>  
+	<packaging>jar</packaging>  
 	<name>oauth-web</name>
 	<description>Springboot clean.do Application</description>
 
